@@ -50,6 +50,7 @@
 enum
 {
   GET_CONTEXT_MENU,
+  PASTE_SELECTION_REQUEST,
   LAST_SIGNAL,
 };
 
@@ -91,7 +92,7 @@ static void     terminal_widget_drag_data_received    (GtkWidget        *widget,
 static gboolean terminal_widget_key_press_event       (GtkWidget        *widget,
                                                        GdkEventKey      *event);
 static void     terminal_widget_open_uri              (TerminalWidget   *widget,
-                                                       const gchar      *link,
+                                                       const gchar      *wlink,
                                                        gint              tag);
 static void     terminal_widget_update_highlight_urls (TerminalWidget   *widget);
 
@@ -160,6 +161,17 @@ terminal_widget_class_init (TerminalWidgetClass *klass)
                   0, NULL, NULL,
                   _terminal_marshal_OBJECT__VOID,
                   GTK_TYPE_MENU, 0);
+
+  /**
+   * TerminalWidget::paste-selection-request:
+   **/
+  widget_signals[PASTE_SELECTION_REQUEST] =
+    g_signal_new (I_("paste-selection-request"),
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 }
 
 
@@ -293,7 +305,7 @@ terminal_widget_context_menu (TerminalWidget *widget,
       /* prepend a separator to the menu if it does not already contain one */
       children = gtk_container_get_children (GTK_CONTAINER (menu));
       item_separator = g_list_nth_data (children, 0);
-      if (G_LIKELY (item_separator != NULL && !GTK_IS_SEPARATOR_MENU_ITEM (item_separator)))
+      if (!GTK_IS_SEPARATOR_MENU_ITEM (item_separator))
         {
           item_separator = gtk_separator_menu_item_new ();
           gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), item_separator);
@@ -351,7 +363,6 @@ terminal_widget_context_menu (TerminalWidget *widget,
   gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (GTK_WIDGET (widget)));
 
   /* run our custom main loop */
-  gtk_grab_add (menu);
 #if GTK_CHECK_VERSION (3, 22, 0)
   gtk_menu_popup_at_pointer (GTK_MENU (menu), NULL);
 #else
@@ -360,7 +371,6 @@ terminal_widget_context_menu (TerminalWidget *widget,
 #endif
   g_main_loop_run (loop);
   g_main_loop_unref (loop);
-  gtk_grab_remove (menu);
 
   /* remove the additional items (if any) */
   if (item_separator != NULL) gtk_widget_destroy (item_separator);
@@ -417,6 +427,13 @@ terminal_widget_button_press_event (GtkWidget       *widget,
               return TRUE;
             }
         }
+
+      /* intercept middle button click that would paste the selection */
+      if (event->button == 2)
+        {
+          g_signal_emit (G_OBJECT (widget), widget_signals[PASTE_SELECTION_REQUEST], 0, NULL);
+          return TRUE;
+        }
       else if (event->button == 3)
         {
           signal_id = g_signal_connect (G_OBJECT (widget), "commit",
@@ -453,7 +470,7 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
                                     gint              y,
                                     GtkSelectionData *selection_data,
                                     guint             info,
-                                    guint32           drag_time)
+                                    guint             time)
 {
   const guint16 *ucs;
   GdkRGBA        color;
@@ -474,7 +491,7 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
       text = (gchar *) gtk_selection_data_get_text (selection_data);
       if (G_LIKELY (text != NULL))
         {
-          if (G_LIKELY (IS_STRING (text)))
+          if (G_LIKELY (*text != '\0'))
             vte_terminal_feed_child (VTE_TERMINAL (widget), text, strlen (text));
           g_free (text);
         }
@@ -518,6 +535,7 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
             {
               vte_terminal_feed_child (VTE_TERMINAL (widget), str->str, str->len);
             }
+          vte_terminal_feed_child (VTE_TERMINAL (widget), " ", 1);
           g_string_free (str, TRUE);
         }
       break;
@@ -553,6 +571,7 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
 
           text = g_strjoinv (" ", uris);
           vte_terminal_feed_child (VTE_TERMINAL (widget), text, strlen (text));
+          vte_terminal_feed_child (VTE_TERMINAL (widget), " ", 1);
           g_strfreev (uris);
           g_free (text);
         }
@@ -586,12 +605,12 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
       break;
 
     case TARGET_GTK_NOTEBOOK_TAB:
-      /* 'send' the drag to the parent widget (TerminalScreen) */
-      screen = gtk_widget_get_parent (widget);
+      /* 'send' the drag to the parent's parent widget (TerminalWidget -> GtkBox -> TerminalScreen) */
+      screen = gtk_widget_get_parent (gtk_widget_get_parent (widget));
       if (G_LIKELY (screen))
         {
           g_signal_emit_by_name (G_OBJECT (screen), "drag-data-received", context,
-                                 x, y, selection_data, info, drag_time);
+                                 x, y, selection_data, info, time);
         }
       break;
 
@@ -601,7 +620,7 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
     }
 
   if (info != TARGET_GTK_NOTEBOOK_TAB)
-    gtk_drag_finish (context, TRUE, FALSE, drag_time);
+    gtk_drag_finish (context, TRUE, FALSE, time);
 }
 
 
@@ -749,6 +768,13 @@ terminal_widget_update_highlight_urls (TerminalWidget *widget)
           regex = vte_regex_new_for_match (pattern->pattern, -1,
                                            PCRE2_CASELESS | PCRE2_UTF | PCRE2_NO_UTF_CHECK | PCRE2_MULTILINE,
                                            &error);
+
+          if (error == NULL && (!vte_regex_jit (regex, PCRE2_JIT_COMPLETE, &error) ||
+                                !vte_regex_jit (regex, PCRE2_JIT_PARTIAL_SOFT, &error)))
+            {
+              g_critical ("Failed to JIT regular expression '%s': %s\n", pattern->pattern, error->message);
+              g_clear_error (&error);
+            }
 #else
           regex = g_regex_new (pattern->pattern,
                                G_REGEX_CASELESS | G_REGEX_OPTIMIZE | G_REGEX_MULTILINE,

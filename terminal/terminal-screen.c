@@ -44,6 +44,7 @@
 #include <sys/wait.h>
 
 #include <libxfce4ui/libxfce4ui.h>
+#include <xfconf/xfconf.h>
 
 #include <terminal/terminal-util.h>
 #include <terminal/terminal-enum-types.h>
@@ -102,6 +103,7 @@ static void       terminal_screen_set_property                  (GObject        
                                                                  GParamSpec            *pspec);
 static void       terminal_screen_realize                       (GtkWidget             *widget);
 static void       terminal_screen_unrealize                     (GtkWidget             *widget);
+static void       terminal_screen_style_updated                 (GtkWidget             *widget);
 static gboolean   terminal_screen_draw                          (GtkWidget             *widget,
                                                                  cairo_t               *cr,
                                                                  gpointer               user_data);
@@ -159,6 +161,10 @@ static void       terminal_screen_set_custom_command            (TerminalScreen 
                                                                  gchar                **command);
 static void       terminal_screen_set_tab_label_color           (TerminalScreen        *screen,
                                                                  const GdkRGBA         *color);
+static GtkWidget* terminal_screen_unsafe_paste_dialog_new       (TerminalScreen        *screen,
+                                                                 const gchar           *text);
+static void       terminal_screen_paste_unsafe_text             (TerminalScreen        *screen,
+                                                                 const gchar           *text);
 
 
 
@@ -227,6 +233,7 @@ terminal_screen_class_init (TerminalScreenClass *klass)
   gtkwidget_class = GTK_WIDGET_CLASS (klass);
   gtkwidget_class->realize = terminal_screen_realize;
   gtkwidget_class->unrealize = terminal_screen_unrealize;
+  gtkwidget_class->style_updated = terminal_screen_style_updated;
 
   /**
    * TerminalScreen:custom-title:
@@ -313,6 +320,8 @@ terminal_screen_init (TerminalScreen *screen)
       G_CALLBACK (terminal_screen_vte_resize_window), screen);
   g_signal_connect (G_OBJECT (screen->terminal), "draw",
       G_CALLBACK (terminal_screen_draw), screen);
+  g_signal_connect_swapped (G_OBJECT (screen->terminal), "paste-selection-request",
+      G_CALLBACK (terminal_screen_paste_primary), screen);
   gtk_box_pack_start (GTK_BOX (screen->hbox), screen->terminal, TRUE, TRUE, 0);
 
   screen->scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL,
@@ -509,6 +518,16 @@ terminal_screen_unrealize (GtkWidget *widget)
   g_signal_handlers_disconnect_by_func (G_OBJECT (screen), terminal_screen_update_background, widget);
 
   (*GTK_WIDGET_CLASS (terminal_screen_parent_class)->unrealize) (widget);
+}
+
+
+
+static void
+terminal_screen_style_updated (GtkWidget *widget)
+{
+  (*GTK_WIDGET_CLASS (terminal_screen_parent_class)->style_updated) (widget);
+
+  terminal_screen_update_colors (TERMINAL_SCREEN (widget));
 }
 
 
@@ -1035,6 +1054,9 @@ terminal_screen_update_colors (TerminalScreen *screen)
   gdouble    hsv[N_HSV];
   gdouble    sat_min, sat_max;
   gboolean   bold_is_bright;
+  gboolean   use_theme;
+
+  GtkStyleContext *context = gtk_widget_get_style_context (gtk_widget_get_toplevel (GTK_WIDGET (screen)));
 
   g_object_get (screen->preferences,
                 "color-palette", &palette_str,
@@ -1043,6 +1065,7 @@ terminal_screen_update_colors (TerminalScreen *screen)
                 "color-bold-use-default", &bold_use_default,
                 "color-background-vary", &vary_bg,
                 "color-bold-is-bright", &bold_is_bright,
+                "color-use-theme", &use_theme,
                 NULL);
 
   if (G_LIKELY (palette_str != NULL))
@@ -1063,12 +1086,26 @@ terminal_screen_update_colors (TerminalScreen *screen)
     }
 
   if (G_LIKELY (screen->custom_bg_color == NULL))
-    has_bg = terminal_preferences_get_color (screen->preferences, "color-background", &bg);
+    {
+      has_bg = terminal_preferences_get_color (screen->preferences, "color-background", &bg);
+      if (use_theme || !has_bg)
+        {
+          gtk_style_context_get_background_color (context, GTK_STATE_ACTIVE, &bg);
+          has_bg = TRUE;
+        }
+    }
   else
     has_bg = gdk_rgba_parse (&bg, screen->custom_bg_color);
 
   if (G_LIKELY (screen->custom_fg_color == NULL))
-    has_fg = terminal_preferences_get_color (screen->preferences, "color-foreground", &fg);
+    {
+      has_fg = terminal_preferences_get_color (screen->preferences, "color-foreground", &fg);
+      if (use_theme || !has_fg)
+        {
+          gtk_style_context_get_color (context, GTK_STATE_ACTIVE, &fg);
+          has_fg = TRUE;
+        }
+    }
   else
     has_fg = gdk_rgba_parse (&fg, screen->custom_fg_color);
 
@@ -1146,8 +1183,14 @@ terminal_screen_update_colors (TerminalScreen *screen)
   /* bold color */
   if (!bold_use_default)
     bold_use_default = !terminal_preferences_get_color (screen->preferences, "color-bold", &bold);
+#if VTE_CHECK_VERSION (0, 52, 0)
+  /* the meaning of NULL for bold color changed in vte 0.52: see bug #15019 */
+  vte_terminal_set_color_bold (VTE_TERMINAL (screen->terminal), bold_use_default ? NULL : &bold);
+#else
+  /* avoid computed bold color for older vte versions */
   if (!bold_use_default || has_fg)
     vte_terminal_set_color_bold (VTE_TERMINAL (screen->terminal), bold_use_default ? &fg : &bold);
+#endif
 
 #if VTE_CHECK_VERSION (0, 51, 3)
   /* "bold-is-bright" supported since vte 0.51.3 */
@@ -1345,7 +1388,7 @@ relaunch_bar_response (GtkInfoBar     *info_bar,
       GList           *children = gtk_container_get_children (GTK_CONTAINER (content_area));
       GtkToggleButton *checkbox = g_list_nth_data (children, 1);
 
-      if (G_LIKELY (checkbox != NULL) && GTK_IS_TOGGLE_BUTTON (checkbox) && gtk_toggle_button_get_active (checkbox))
+      if (GTK_IS_TOGGLE_BUTTON (checkbox) && gtk_toggle_button_get_active (checkbox))
         g_object_set (G_OBJECT (screen->preferences), "misc-show-relaunch-dialog", FALSE, NULL);
     }
 
@@ -1543,7 +1586,6 @@ terminal_screen_vte_window_contents_changed (TerminalScreen *screen)
 
   /* leave if we should not start an update */
   if (screen->tab_label == NULL
-      || !gtk_window_is_active (GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (screen))))
       || (gtk_widget_get_state_flags (screen->terminal) & GTK_STATE_FLAG_FOCUSED) != 0
       || time (NULL) - screen->activity_resize_time <= 1)
     return;
@@ -1736,6 +1778,86 @@ terminal_screen_set_tab_label_color (TerminalScreen *screen,
 
 
 
+static gboolean
+terminal_screen_is_text_unsafe (const gchar *text)
+{
+  return text != NULL && (strstr (text, "sudo") != NULL || strchr (text, '\n') != NULL);
+}
+
+
+
+static GtkWidget*
+terminal_screen_unsafe_paste_dialog_new (TerminalScreen *screen,
+                                         const gchar    *text)
+{
+  GtkWindow     *parent = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (screen)));
+  GtkTextBuffer *buffer = gtk_text_buffer_new (gtk_text_tag_table_new ());
+  GtkWidget     *tv = gtk_text_view_new_with_buffer (buffer);
+  GtkWidget     *sw = gtk_scrolled_window_new (NULL, NULL);
+  GtkWidget     *dialog = xfce_titled_dialog_new_with_buttons (_("Warning: Unsafe Paste"), parent,
+                                                               GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                               _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                                               _("_Paste"), GTK_RESPONSE_YES,
+                                                               NULL);
+
+  xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (dialog),
+                                   _("Pasting this text to the terminal may be dangerous as it looks like\n"
+                                     "some commands may be executed, potentially involving root access ('sudo')."));
+
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (tv), TRUE);
+  gtk_text_view_set_monospace (GTK_TEXT_VIEW (tv), TRUE);
+  gtk_text_view_set_top_margin (GTK_TEXT_VIEW (tv), 6);
+  gtk_text_view_set_bottom_margin (GTK_TEXT_VIEW (tv), 6);
+  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (tv), 6);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (tv), 6);
+
+  gtk_scrolled_window_set_min_content_width (GTK_SCROLLED_WINDOW (sw), 400);
+  gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (sw), 150);
+
+  gtk_container_add (GTK_CONTAINER (sw), tv);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), sw);
+
+  gtk_text_buffer_set_text (buffer, text, -1);
+
+  return dialog;
+}
+
+
+
+static void
+terminal_screen_paste_unsafe_text (TerminalScreen *screen,
+                                   const gchar    *text)
+{
+  GtkWidget *dialog = terminal_screen_unsafe_paste_dialog_new (screen, text);
+
+  gtk_widget_show_all (dialog);
+  /* set focus to the Paste button */
+  gtk_widget_grab_focus (gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES));
+
+  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
+    {
+      GtkWidget     *content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+      GtkWidget     *sw = g_list_first (gtk_container_get_children (GTK_CONTAINER (content_area)))->data;
+      GtkTextView   *tv = GTK_TEXT_VIEW (gtk_bin_get_child (GTK_BIN (sw)));
+      GtkTextBuffer *buffer = gtk_text_view_get_buffer (tv);
+      GtkTextIter    start, end;
+      char          *res_text;
+
+      gtk_text_buffer_get_bounds (buffer, &start, &end);
+      res_text = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
+
+      if (res_text != NULL)
+        {
+          vte_terminal_feed_child (VTE_TERMINAL (screen->terminal), res_text, strlen (res_text));
+          g_free (res_text);
+        }
+    }
+
+  gtk_widget_destroy (dialog);
+}
+
+
+
 #if VTE_CHECK_VERSION (0, 48, 0)
 static void
 terminal_screen_spawn_async_cb (VteTerminal *terminal,
@@ -1751,8 +1873,19 @@ terminal_screen_spawn_async_cb (VteTerminal *terminal,
   screen->pid = pid;
 
   if (error)
-    xfce_dialog_show_error (GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (screen))),
-                            error, _("Failed to execute child"));
+    {
+      xfce_dialog_show_error (GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (screen))),
+                              error, _("Failed to execute child"));
+    }
+#ifdef HAVE_LIBUTEMPTER
+  else
+    {
+      gboolean update_records;
+      g_object_get (G_OBJECT (screen->preferences), "command-update-records", &update_records, NULL);
+      if (update_records)
+        utempter_add_record (vte_pty_get_fd (vte_terminal_get_pty (VTE_TERMINAL (screen->terminal))), NULL);
+    }
+#endif // HAVE_LIBUTEMPTER
 }
 #endif
 
@@ -1811,12 +1944,9 @@ terminal_screen_launch_child (TerminalScreen *screen)
   gchar       **argv;
   gchar       **env;
   gchar       **argv2;
-  guint         i;
+  guint         i, argc;
   VtePtyFlags   pty_flags = VTE_PTY_DEFAULT;
   GSpawnFlags   spawn_flags = G_SPAWN_CHILD_INHERITS_STDIN | G_SPAWN_SEARCH_PATH;
-#ifdef HAVE_LIBUTEMPTER
-  gboolean      update_records;
-#endif
 
   terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
@@ -1836,7 +1966,8 @@ terminal_screen_launch_child (TerminalScreen *screen)
     {
       env = terminal_screen_get_child_environment (screen);
 
-      argv2 = g_new0 (gchar *, g_strv_length (argv) + 2);
+      argc = argv != NULL ? g_strv_length (argv) : 0;
+      argv2 = g_new0 (gchar *, argc + 2);
       argv2[0] = command;
 
       if (argv != NULL)
@@ -1869,12 +2000,15 @@ terminal_screen_launch_child (TerminalScreen *screen)
                                   error, _("Failed to execute child"));
           g_error_free (error);
         }
-#endif
-
 #ifdef HAVE_LIBUTEMPTER
-      g_object_get (G_OBJECT (screen->preferences), "command-update-records", &update_records, NULL);
-      if (update_records)
-        utempter_add_record (vte_pty_get_fd (vte_terminal_get_pty (VTE_TERMINAL (screen->terminal))), NULL);
+      else
+        {
+          gboolean update_records;
+          g_object_get (G_OBJECT (screen->preferences), "command-update-records", &update_records, NULL);
+          if (update_records)
+            utempter_add_record (vte_pty_get_fd (vte_terminal_get_pty (VTE_TERMINAL (screen->terminal))), NULL);
+        }
+#endif // HAVE_LIBUTEMPTER
 #endif
 
       g_free (argv2);
@@ -2347,8 +2481,19 @@ terminal_screen_copy_clipboard_html (TerminalScreen *screen)
 void
 terminal_screen_paste_clipboard (TerminalScreen *screen)
 {
+  gboolean  show_dialog;
+  gchar    *text = gtk_clipboard_wait_for_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD));
+
   terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  vte_terminal_paste_clipboard (VTE_TERMINAL (screen->terminal));
+
+  g_object_get (G_OBJECT (screen->preferences), "misc-show-unsafe-paste-dialog", &show_dialog, NULL);
+
+  if (show_dialog && terminal_screen_is_text_unsafe (text))
+    terminal_screen_paste_unsafe_text (screen, text);
+  else
+    vte_terminal_paste_clipboard (VTE_TERMINAL (screen->terminal));
+
+  g_free (text);
 }
 
 
@@ -2365,8 +2510,19 @@ terminal_screen_paste_clipboard (TerminalScreen *screen)
 void
 terminal_screen_paste_primary (TerminalScreen *screen)
 {
+  gboolean  show_dialog;
+  gchar    *text = gtk_clipboard_wait_for_text (gtk_clipboard_get (GDK_SELECTION_PRIMARY));
+
   terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  vte_terminal_paste_primary (VTE_TERMINAL (screen->terminal));
+
+  g_object_get (G_OBJECT (screen->preferences), "misc-show-unsafe-paste-dialog", &show_dialog, NULL);
+
+  if (show_dialog && terminal_screen_is_text_unsafe (text))
+    terminal_screen_paste_unsafe_text (screen, text);
+  else
+    vte_terminal_paste_primary (VTE_TERMINAL (screen->terminal));
+
+  g_free (text);
 }
 
 
@@ -2663,10 +2819,11 @@ terminal_screen_update_font (TerminalScreen *screen)
 {
   GtkWidget            *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (screen));
   gboolean              font_use_system, font_allow_bold;
-  gchar                *font_name;
+  gchar                *font_name = NULL;
   PangoFontDescription *font_desc;
   glong                 grid_w = 0, grid_h = 0;
   GSettings            *settings;
+  XfconfChannel        *channel;
 #if VTE_CHECK_VERSION (0, 51, 3)
   gdouble cell_width_scale, cell_height_scale;
 #endif
@@ -2682,9 +2839,21 @@ terminal_screen_update_font (TerminalScreen *screen)
 
   if (font_use_system)
     {
-      settings = g_settings_new ("org.gnome.desktop.interface");
-      font_name = g_settings_get_string (settings, "monospace-font-name");
-      g_object_unref (settings);
+      /* read Xfce settings */
+      xfconf_init (NULL);
+      channel = xfconf_channel_get ("xsettings");
+      if (xfconf_channel_has_property (channel, "/Gtk/MonospaceFontName"))
+        font_name = xfconf_channel_get_string (channel, "/Gtk/MonospaceFontName", "");
+      xfconf_shutdown ();
+
+      /* if font isn't set, read GNOME settings */
+      if (!IS_STRING (font_name))
+        {
+          g_free (font_name);
+          settings = g_settings_new ("org.gnome.desktop.interface");
+          font_name = g_settings_get_string (settings, "monospace-font-name");
+          g_object_unref (settings);
+        }
     }
   else
     g_object_get (G_OBJECT (screen->preferences), "font-name", &font_name, NULL);

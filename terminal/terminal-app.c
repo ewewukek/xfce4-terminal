@@ -55,6 +55,11 @@
 
 static void     terminal_app_finalize                 (GObject            *object);
 static void     terminal_app_update_accels            (TerminalApp        *app);
+static void     terminal_app_update_tab_key_accels    (gpointer            data,
+                                                       const gchar        *accel_path,
+                                                       guint               accel_key,
+                                                       GdkModifierType     accel_mods,
+                                                       gboolean            changed);
 static void     terminal_app_update_mnemonics         (TerminalApp        *app);
 static void     terminal_app_update_windows_accels    (gpointer            user_data);
 static gboolean terminal_app_accel_map_load           (gpointer            user_data);
@@ -65,7 +70,7 @@ static gboolean terminal_app_unset_urgent_bell        (TerminalWindow     *windo
 static void     terminal_app_new_window               (TerminalWindow     *window,
                                                        const gchar        *working_directory,
                                                        TerminalApp        *app);
-static void     terminal_app_new_window_with_terminal (TerminalWindow     *window,
+static void     terminal_app_new_window_with_terminal (TerminalWindow     *existing,
                                                        TerminalScreen     *terminal,
                                                        gint                x,
                                                        gint                y,
@@ -95,6 +100,7 @@ struct _TerminalApp
   guint                accel_map_load_id;
   guint                accel_map_save_id;
   GtkAccelMap         *accel_map;
+  GSList              *tab_key_accels;
 };
 
 
@@ -188,6 +194,10 @@ terminal_app_finalize (GObject *object)
   if (app->session_client != NULL)
     g_object_unref (G_OBJECT (app->session_client));
 
+  for (lp = app->tab_key_accels; lp != NULL; lp = lp->next)
+    g_free (((TerminalAccel*) lp->data)->path);
+  g_slist_free_full (app->tab_key_accels, g_free);
+
   (*G_OBJECT_CLASS (terminal_app_parent_class)->finalize) (object);
 }
 
@@ -221,6 +231,27 @@ terminal_app_update_accels (TerminalApp *app)
 
 
 static void
+terminal_app_update_tab_key_accels (gpointer         data,
+                                    const gchar     *accel_path,
+                                    guint            accel_key,
+                                    GdkModifierType  accel_mods,
+                                    gboolean         changed)
+{
+  if (accel_key == GDK_KEY_Tab || accel_key == GDK_KEY_ISO_Left_Tab)
+    {
+      TerminalApp *app = TERMINAL_APP (data);
+      TerminalAccel *accel = g_new0 (TerminalAccel, 1);
+
+      accel->path = g_strdup (g_strrstr (accel_path, "/") + 1); // <Actions>/terminal-window/action
+      accel->mods = accel_mods;
+
+      app->tab_key_accels = g_slist_prepend (app->tab_key_accels, accel);
+    }
+}
+
+
+
+static void
 terminal_app_update_mnemonics (TerminalApp *app)
 {
   gboolean no_mnemonics;
@@ -242,7 +273,10 @@ terminal_app_update_windows_accels (gpointer user_data)
   GSList      *lp;
 
   for (lp = app->windows; lp != NULL; lp = lp->next)
-    terminal_window_rebuild_tabs_menu (TERMINAL_WINDOW (lp->data));
+    {
+      terminal_window_rebuild_tabs_menu (TERMINAL_WINDOW (lp->data));
+      terminal_window_update_tab_key_accels (TERMINAL_WINDOW (lp->data), app->tab_key_accels);
+    }
 
   app->accel_map_load_id = 0;
 }
@@ -316,6 +350,17 @@ terminal_app_accel_map_load (gpointer user_data)
         gtk_accel_map_change_entry (name, GDK_KEY_0 + i, GDK_MOD1_MASK, FALSE);
     }
 
+  /* identify accelerators containing the Tab key */
+  if (app->tab_key_accels != NULL)
+    {
+      GSList *lp;
+      for (lp = app->tab_key_accels; lp != NULL; lp = lp->next)
+        g_free (((TerminalAccel*) lp->data)->path);
+      g_slist_free_full (app->tab_key_accels, g_free);
+      app->tab_key_accels = NULL;
+    }
+  gtk_accel_map_foreach (app, terminal_app_update_tab_key_accels);
+
   return FALSE;
 }
 
@@ -367,6 +412,8 @@ terminal_app_take_window (TerminalApp *app,
   g_signal_connect (G_OBJECT (window), "key-release-event",
                     G_CALLBACK (terminal_app_unset_urgent_bell), app);
   app->windows = g_slist_prepend (app->windows, window);
+
+  terminal_window_update_tab_key_accels (TERMINAL_WINDOW (window), app->tab_key_accels);
 }
 
 
@@ -385,7 +432,7 @@ terminal_app_create_window (TerminalApp       *app,
   if (role == NULL)
     {
       /* create a new window role */
-      new_role = g_strdup_printf ("%s-%u-%d", PACKAGE_NAME, (guint) time (NULL), g_random_int ());
+      new_role = g_strdup_printf ("%s-%u-%u", PACKAGE_NAME, (guint) time (NULL), g_random_int ());
       role = new_role;
     }
 
@@ -500,9 +547,27 @@ terminal_app_new_window_with_terminal (TerminalWindow *existing,
 
   terminal_window_add (TERMINAL_WINDOW (window), terminal);
 
-  /* resize new window to the original terminal geometry */
-  terminal_screen_get_size (terminal, &width, &height);
-  terminal_screen_force_resize_window (terminal, GTK_WINDOW (window), width, height);
+  if (G_UNLIKELY (terminal_window_is_drop_down (existing)))
+    {
+      /* resize new window to the default geometry */
+#ifdef GDK_WINDOWING_X11
+      gchar *geo;
+      guint  w, h;
+      g_object_get (G_OBJECT (app->preferences), "misc-default-geometry", &geo, NULL);
+      if (G_LIKELY (geo != NULL))
+        {
+          XParseGeometry (geo, NULL, NULL, &w, &h);
+          g_free (geo);
+          terminal_screen_force_resize_window (terminal, GTK_WINDOW (window), w, h);
+        }
+#endif
+    }
+  else
+    {
+      /* resize new window to the original terminal geometry */
+      terminal_screen_get_size (terminal, &width, &height);
+      terminal_screen_force_resize_window (terminal, GTK_WINDOW (window), width, height);
+    }
 
   gtk_widget_show (window);
 }
@@ -544,6 +609,11 @@ terminal_app_save_yourself (XfceSMClient *client,
         result = g_slist_append (result, g_strdup ("--window"));
       result = g_slist_concat (result, terminal_window_get_restart_command (lp->data));
     }
+
+  /* no windows were saved - this can happen if there is only a dropdown window
+     that we don't want to save */
+  if (result == NULL)
+    return;
 
   argc = g_slist_length (result) + 1;
   argv = g_new (gchar*, argc + 1);

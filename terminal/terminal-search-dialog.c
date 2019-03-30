@@ -29,10 +29,12 @@
 #include <libxfce4ui/libxfce4ui.h>
 
 #include <terminal/terminal-search-dialog.h>
+#include <terminal/terminal-preferences.h>
 
 
 
 static void terminal_search_dialog_finalize           (GObject              *object);
+static void terminal_search_dialog_opacity_changed    (TerminalSearchDialog *dialog);
 static void terminal_search_dialog_clear_gregex       (TerminalSearchDialog *dialog);
 static void terminal_search_dialog_entry_icon_release (GtkWidget            *entry,
                                                        GtkEntryIconPosition  icon_pos);
@@ -47,19 +49,21 @@ struct _TerminalSearchDialogClass
 
 struct _TerminalSearchDialog
 {
-  GtkDialog parent_instance;
+  GtkDialog      parent_instance;
 
-  GRegex    *last_gregex;
+  GRegex        *last_gregex;
 
-  GtkWidget *button_prev;
-  GtkWidget *button_next;
+  GtkWidget     *button_prev;
+  GtkWidget     *button_next;
 
-  GtkWidget *entry;
+  GtkWidget     *entry;
 
-  GtkWidget *match_case;
-  GtkWidget *match_regex;
-  GtkWidget *match_word;
-  GtkWidget *wrap_around;
+  GtkWidget     *match_case;
+  GtkWidget     *match_regex;
+  GtkWidget     *match_word;
+  GtkWidget     *wrap_around;
+
+  GtkAdjustment *opacity_adjustment;
 };
 
 
@@ -82,13 +86,20 @@ terminal_search_dialog_class_init (TerminalSearchDialogClass *klass)
 static void
 terminal_search_dialog_init (TerminalSearchDialog *dialog)
 {
-  GtkWidget *close_button;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *label;
+  GtkWidget     *close_button;
+  GtkWidget     *hbox;
+  GtkWidget     *vbox;
+  GtkWidget     *label;
+  GtkWidget     *opacity_box;
+  GtkWidget     *opacity_scale;
+  GtkWidget     *opacity_label;
+  GtkWidget     *percent_label;
+  GdkScreen     *screen = gtk_widget_get_screen (GTK_WIDGET (dialog));
+  GtkAccelGroup *group = gtk_accel_group_new ();
+  GtkAccelKey    key_prev = {0}, key_next = {0};
 
-  gtk_window_set_title (GTK_WINDOW (dialog), _("Find"));
   gtk_window_set_default_size (GTK_WINDOW (dialog), 400, -1);
+  gtk_window_add_accel_group (GTK_WINDOW (dialog), group);
 
   close_button = xfce_gtk_button_new_mixed ("window-close", _("_Close"));
   gtk_dialog_add_action_widget (GTK_DIALOG (dialog), close_button, GTK_RESPONSE_CLOSE);
@@ -100,6 +111,13 @@ terminal_search_dialog_init (TerminalSearchDialog *dialog)
 
   dialog->button_next = xfce_gtk_button_new_mixed ("go-next", _("_Next"));
   gtk_dialog_add_action_widget (GTK_DIALOG (dialog), dialog->button_next, TERMINAL_RESPONSE_SEARCH_NEXT);
+
+  gtk_accel_map_lookup_entry ("<Actions>/terminal-window/search-prev", &key_prev);
+  if (key_prev.accel_key != 0)
+    gtk_widget_add_accelerator (dialog->button_prev, "activate", group, key_prev.accel_key, key_prev.accel_mods, key_prev.accel_flags);
+  gtk_accel_map_lookup_entry ("<Actions>/terminal-window/search-next", &key_next);
+  if (key_next.accel_key != 0)
+    gtk_widget_add_accelerator (dialog->button_next, "activate", group, key_next.accel_key, key_next.accel_mods, key_next.accel_flags);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), vbox, TRUE, TRUE, 0);
@@ -137,9 +155,35 @@ terminal_search_dialog_init (TerminalSearchDialog *dialog)
       G_CALLBACK (terminal_search_dialog_clear_gregex), dialog);
 
   dialog->wrap_around = gtk_check_button_new_with_mnemonic (_("_Wrap around"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->wrap_around), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->wrap_around, FALSE, FALSE, 0);
   g_signal_connect_swapped (G_OBJECT (dialog->wrap_around), "toggled",
       G_CALLBACK (terminal_search_dialog_clear_gregex), dialog);
+
+  opacity_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_widget_set_margin_start (opacity_box, 6);
+
+  opacity_label = gtk_label_new_with_mnemonic (_("_Opacity:"));
+  gtk_box_pack_start (GTK_BOX (opacity_box), opacity_label, FALSE, FALSE, 0);
+
+  opacity_scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, 10.0, 100.0, 1.0);
+  gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_RIGHT);
+  gtk_box_pack_start (GTK_BOX (opacity_box), opacity_scale, TRUE, TRUE, 0);
+
+  percent_label = gtk_label_new ("%");
+  gtk_box_pack_start (GTK_BOX (opacity_box), percent_label, FALSE, FALSE, 0);
+
+  /* connect opacity properties */
+  dialog->opacity_adjustment = gtk_range_get_adjustment (GTK_RANGE (opacity_scale));
+  g_object_bind_property (G_OBJECT (terminal_preferences_get ()), "misc-search-dialog-opacity",
+                          G_OBJECT (dialog->opacity_adjustment), "value",
+                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  g_signal_connect_swapped (G_OBJECT (dialog->opacity_adjustment), "value-changed",
+                            G_CALLBACK (terminal_search_dialog_opacity_changed), dialog);
+
+  /* don't show opacity controls if compositing is not enabled */
+  if (gdk_screen_is_composited (screen))
+    gtk_box_pack_start (GTK_BOX (vbox), opacity_box, FALSE, TRUE, 0);
 
   terminal_search_dialog_entry_changed (dialog->entry, dialog);
 }
@@ -152,6 +196,18 @@ terminal_search_dialog_finalize (GObject *object)
   terminal_search_dialog_clear_gregex (TERMINAL_SEARCH_DIALOG (object));
 
   (*G_OBJECT_CLASS (terminal_search_dialog_parent_class)->finalize) (object);
+}
+
+
+
+static void
+terminal_search_dialog_opacity_changed (TerminalSearchDialog *dialog)
+{
+  GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (dialog));
+  gdouble    opacity = gdk_screen_is_composited (screen)
+                           ? gtk_adjustment_get_value (dialog->opacity_adjustment) / 100.0
+                           : 1.0;
+  gtk_widget_set_opacity (GTK_WIDGET (dialog), opacity);
 }
 
 
@@ -290,11 +346,21 @@ terminal_search_dialog_get_regex (TerminalSearchDialog  *dialog,
 
 
 void
-terminal_search_dialog_present (TerminalSearchDialog  *dialog)
+terminal_search_dialog_present (TerminalSearchDialog *dialog)
 {
+  GtkWidget *header_bar = gtk_header_bar_new ();
+
   terminal_return_if_fail (TERMINAL_IS_SEARCH_DIALOG (dialog));
 
+  gtk_header_bar_set_title (GTK_HEADER_BAR (header_bar), _("Find"));
+  gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (header_bar), TRUE);
+  gtk_window_set_titlebar (GTK_WINDOW (dialog), header_bar);
+
   gtk_widget_show_all (GTK_WIDGET (dialog));
+
+  /* Manjaro's version of GTK doesn't like this placed before show_all() */
+  terminal_search_dialog_opacity_changed (dialog);
+
   gtk_window_present (GTK_WINDOW (dialog));
   gtk_widget_grab_focus (dialog->entry);
 }

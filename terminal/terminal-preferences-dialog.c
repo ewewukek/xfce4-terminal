@@ -91,7 +91,7 @@ struct _TerminalPreferencesDialog
 
   gulong               bg_image_signal_id;
   gulong               palette_signal_id;
-  gulong               geometry_sigal_id;
+  gulong               geometry_signal_id;
 };
 
 enum
@@ -171,7 +171,7 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
                                        "scrolling-unlimited", "misc-cursor-shape",
                                        "misc-cursor-blinks", "font-allow-bold",
                                        "font-use-system", "text-blink-mode",
-                                       "misc-menubar-default",
+                                       "misc-show-unsafe-paste-dialog", "misc-menubar-default",
                                        "misc-toolbar-default", "misc-borders-default",
                                        "misc-tab-close-middle-click", "misc-middle-click-opens-uri",
                                        "misc-mouse-autohide", "misc-rewrap-on-resize",
@@ -182,7 +182,7 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
                                        "binding-backspace", "binding-delete",
                                        "binding-ambiguous-width", "background-mode",
                                        "background-image-style", "color-background-vary",
-                                       "color-bold-is-bright",
+                                       "color-bold-is-bright", "color-use-theme",
                                        "dropdown-keep-open-default", "dropdown-keep-above",
                                        "dropdown-toggle-focus", "dropdown-status-icon",
                                        "dropdown-move-to-active", "dropdown-always-show-tabs",
@@ -381,6 +381,19 @@ error:
     gtk_scale_add_mark (GTK_SCALE (object), i, GTK_POS_BOTTOM, NULL);
 
   /* inverted custom colors and set sensitivity */
+  object = gtk_builder_get_object (GTK_BUILDER (dialog), "color-use-theme");
+  terminal_return_if_fail (G_IS_OBJECT (object));
+  object2 = gtk_builder_get_object (GTK_BUILDER (dialog), "color-foreground");
+  terminal_return_if_fail (G_IS_OBJECT (object2));
+  g_object_bind_property (object, "active",
+                          object2, "sensitive",
+                          G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+  object2 = gtk_builder_get_object (GTK_BUILDER (dialog), "color-background");
+  terminal_return_if_fail (G_IS_OBJECT (object2));
+  g_object_bind_property (object, "active",
+                          object2, "sensitive",
+                          G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE);
+
   object = gtk_builder_get_object (GTK_BUILDER (dialog), "color-cursor-custom");
   terminal_return_if_fail (G_IS_OBJECT (object));
   g_object_bind_property (G_OBJECT (dialog->preferences), "color-cursor-use-default",
@@ -426,7 +439,7 @@ error:
 
 #ifdef GDK_WINDOWING_X11
   terminal_preferences_dialog_geometry_changed (dialog);
-  dialog->geometry_sigal_id = g_signal_connect_swapped (G_OBJECT (dialog->preferences),
+  dialog->geometry_signal_id = g_signal_connect_swapped (G_OBJECT (dialog->preferences),
       "notify::misc-default-geometry",
       G_CALLBACK (terminal_preferences_dialog_geometry_changed), dialog);
 
@@ -499,8 +512,8 @@ terminal_preferences_dialog_finalize (GObject *object)
     g_signal_handler_disconnect (dialog->preferences, dialog->bg_image_signal_id);
   if (G_LIKELY (dialog->palette_signal_id != 0))
     g_signal_handler_disconnect (dialog->preferences, dialog->palette_signal_id);
-  if (G_LIKELY (dialog->geometry_sigal_id != 0))
-    g_signal_handler_disconnect (dialog->preferences, dialog->geometry_sigal_id);
+  if (G_LIKELY (dialog->geometry_signal_id != 0))
+    g_signal_handler_disconnect (dialog->preferences, dialog->geometry_signal_id);
 
   /* release the preferences */
   g_object_unref (G_OBJECT (dialog->preferences));
@@ -656,14 +669,14 @@ terminal_preferences_dialog_geometry (TerminalPreferencesDialog *dialog,
 
   /* if there is an x or y value, preserve this */
   if ((mask & XValue) != 0 || (mask & YValue) != 0)
-    geo = g_strdup_printf ("%dx%d%+d%+d", w, h, x, y);
+    geo = g_strdup_printf ("%ux%u%+d%+d", w, h, x, y);
   else
-    geo = g_strdup_printf ("%dx%d", w, h);
+    geo = g_strdup_printf ("%ux%u", w, h);
 
   /* save */
-  g_signal_handler_block (G_OBJECT (dialog->preferences), dialog->geometry_sigal_id);
+  g_signal_handler_block (G_OBJECT (dialog->preferences), dialog->geometry_signal_id);
   g_object_set (G_OBJECT (dialog->preferences), "misc-default-geometry", geo, NULL);
-  g_signal_handler_unblock (G_OBJECT (dialog->preferences), dialog->geometry_sigal_id);
+  g_signal_handler_unblock (G_OBJECT (dialog->preferences), dialog->geometry_signal_id);
   g_free (geo);
 }
 

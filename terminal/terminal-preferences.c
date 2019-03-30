@@ -64,6 +64,7 @@ enum
   PROP_COLOR_BOLD_USE_DEFAULT,
   PROP_COLOR_PALETTE,
   PROP_COLOR_BOLD_IS_BRIGHT,
+  PROP_COLOR_USE_THEME,
   PROP_COMMAND_LOGIN_SHELL,
   PROP_COMMAND_UPDATE_RECORDS,
   PROP_RUN_CUSTOM_COMMAND,
@@ -112,6 +113,8 @@ enum
   PROP_MISC_USE_SHIFT_ARROWS_TO_SCROLL,
   PROP_MISC_SLIM_TABS,
   PROP_MISC_NEW_TAB_ADJACENT,
+  PROP_MISC_SEARCH_DIALOG_OPACITY,
+  PROP_MISC_SHOW_UNSAFE_PASTE_DIALOG,
   PROP_SCROLLING_BAR,
   PROP_SCROLLING_LINES,
   PROP_SCROLLING_ON_OUTPUT,
@@ -540,6 +543,16 @@ terminal_preferences_class_init (TerminalPreferencesClass *klass)
                             NULL,
                             "ColorBoldIsBright",
                             TRUE,
+                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  /**
+   * TerminalPreferences:color-use-theme:
+   **/
+  preferences_props[PROP_COLOR_USE_THEME] =
+      g_param_spec_boolean ("color-use-theme",
+                            NULL,
+                            "ColorUseTheme",
+                            FALSE,
                             G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   /**
@@ -1044,6 +1057,26 @@ terminal_preferences_class_init (TerminalPreferencesClass *klass)
       g_param_spec_boolean ("misc-show-relaunch-dialog",
                             NULL,
                             "MiscShowRelaunchDialog",
+                            TRUE,
+                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  /**
+   * TerminalPreferences:misc-search-dialog-opacity:
+   **/
+  preferences_props[PROP_MISC_SEARCH_DIALOG_OPACITY] =
+      g_param_spec_uint ("misc-search-dialog-opacity",
+                         NULL,
+                         "MiscSearchDialogOpacity",
+                         0, 100, 100,
+                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  /**
+   * TerminalPreferences:misc-show-unsafe-paste-dialog:
+   **/
+  preferences_props[PROP_MISC_SHOW_UNSAFE_PASTE_DIALOG] =
+      g_param_spec_boolean ("misc-show-unsafe-paste-dialog",
+                            NULL,
+                            "MiscShowUnsafePasteDialog",
                             TRUE,
                             G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
@@ -1674,6 +1707,16 @@ terminal_preferences_monitor_connect (TerminalPreferences *preferences,
 
   /* get new file location */
   new_file = g_file_new_for_path (filename);
+
+  /* filename could be a symlink: read the actual path to rc file then */
+  info = g_file_query_info (new_file, G_FILE_ATTRIBUTE_STANDARD_IS_SYMLINK","G_FILE_ATTRIBUTE_STANDARD_SYMLINK_TARGET,
+                            G_FILE_QUERY_INFO_NONE, NULL, NULL);
+  if (g_file_info_get_is_symlink (info))
+    {
+      g_object_unref (new_file);
+      new_file = g_file_new_for_path (g_file_info_get_symlink_target (info));
+      g_object_unref (info);
+    }
 
   /* check if we need to start or update file monitoring */
   if (preferences->file == NULL
