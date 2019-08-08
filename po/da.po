@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Xfce Apps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-21 18:31+0100\n"
-"PO-Revision-Date: 2019-03-24 10:50+0000\n"
+"PO-Revision-Date: 2019-06-17 18:43+0000\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish (http://www.transifex.com/xfce/xfce-apps/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -151,7 +151,7 @@ msgstr "Læs manualsiden %s for alle forklaringer til tilvalgene foroven."
 #: ../terminal/main.c:196 ../xfce4-terminal.desktop.in.h:1
 #: ../xfce4-terminal-settings.desktop.in.h:1
 msgid "Xfce Terminal"
-msgstr "Xfce-terminal"
+msgstr "Xfce Terminal"
 
 #: ../terminal/main.c:212
 msgid "The Xfce development team. All rights reserved."
@@ -423,7 +423,7 @@ msgstr "Billedfiler"
 
 #: ../terminal/terminal-preferences-dialog.c:951
 msgid "Load Presets..."
-msgstr "Indlæs forudinstillinger..."
+msgstr "Indlæs forudinstillinger ..."
 
 #: ../terminal/terminal-preferences.c:1186
 msgid "Terminal"
@@ -478,12 +478,12 @@ msgstr "_Indsæt"
 msgid ""
 "Pasting this text to the terminal may be dangerous as it looks like\n"
 "some commands may be executed, potentially involving root access ('sudo')."
-msgstr "Det kan være farligt at indsætte teksten i terminalen da det ser ud til at\nnogle kommandoer vil blive udført, hvilket potentielt indebærer root-adgang ('sudo')."
+msgstr "Det kan være farligt at indsætte teksten i terminalen da det ser ud til at\nnogle kommandoer vil blive kørt, hvilket potentielt indebærer root-adgang ('sudo')."
 
 #: ../terminal/terminal-screen.c:1868 ../terminal/terminal-screen.c:1952
 #: ../terminal/terminal-screen.c:1990
 msgid "Failed to execute child"
-msgstr "Kunne ikke afvikle underproces"
+msgstr "Kunne ikke køre underproces"
 
 #: ../terminal/terminal-screen.c:2656
 msgid "Close this tab"
@@ -541,11 +541,11 @@ msgstr "Xfce-terminalemulator"
 
 #: ../terminal/terminal-util.c:88
 msgid "translator-credits"
-msgstr "Per Kongstad <p_kongstad@op.pl>\n\nDansk-gruppen <dansk@dansk-gruppen.dk>\nMere info: http://www.dansk-gruppen.dk"
+msgstr "Per Kongstad <p_kongstad@op.pl>\n\nDansk-gruppen\nWebsted http://dansk-gruppen.dk\nE-mail <dansk@dansk-gruppen.dk>"
 
 #: ../terminal/terminal-util.c:91
 msgid "Visit Xfce Terminal website"
-msgstr "Besøg Xfce-terminalens websted"
+msgstr "Besøg webstedet for Xfce Terminal"
 
 #: ../terminal/terminal-widget.c:329
 msgid "Copy Email Address"
@@ -678,11 +678,11 @@ msgstr "Væl_g alt"
 
 #: ../terminal/terminal-window.c:351
 msgid "Copy _Input To All Tabs..."
-msgstr "Kopiér _input til alle faneblade..."
+msgstr "Kopiér _input til alle faneblade ..."
 
 #: ../terminal/terminal-window.c:352
 msgid "Pr_eferences..."
-msgstr "_Præferencer..."
+msgstr "_Præferencer ..."
 
 #: ../terminal/terminal-window.c:352
 msgid "Open the preferences dialog"
@@ -722,15 +722,15 @@ msgstr "_Terminal"
 
 #: ../terminal/terminal-window.c:358
 msgid "_Set Title..."
-msgstr "_Angiv titel..."
+msgstr "_Angiv titel ..."
 
 #: ../terminal/terminal-window.c:359
 msgid "Set Title Co_lor..."
-msgstr "Angiv _titelfarve..."
+msgstr "Angiv _titelfarve ..."
 
 #: ../terminal/terminal-window.c:360
 msgid "_Find..."
-msgstr "_Find..."
+msgstr "_Find ..."
 
 #: ../terminal/terminal-window.c:360
 msgid "Search terminal contents"
@@ -746,7 +746,7 @@ msgstr "Find f_orrige"
 
 #: ../terminal/terminal-window.c:363
 msgid "Sa_ve Contents..."
-msgstr "_Gem indhold..."
+msgstr "_Gem indhold ..."
 
 #: ../terminal/terminal-window.c:364 ../terminal/terminal-window.c:2298
 msgid "_Reset"
@@ -842,7 +842,7 @@ msgstr "_Fuldskærm"
 
 #: ../terminal/terminal-window.c:383
 msgid "Toggle fullscreen mode"
-msgstr "Skift mellem fuldskærmstilstande"
+msgstr "Fuldskærmstilstand til/fra"
 
 #: ../terminal/terminal-window.c:384
 msgid "_Read-Only"
@@ -952,7 +952,7 @@ msgstr "Kunne ikke oprette det regulære udtryk"
 
 #: ../terminal/terminal-window.c:2435
 msgid "Save contents..."
-msgstr "Gem indhold..."
+msgstr "Gem indhold ..."
 
 #: ../terminal/terminal-window.c:2439
 msgid "_Save"
@@ -964,15 +964,15 @@ msgstr "Kunne ikke gemme terminalens indhold"
 
 #: ../terminal/terminal-preferences.glade.h:1
 msgid "Replaces initial title"
-msgstr "Erstatter opstarttitel"
+msgstr "Erstatter indledende titel"
 
 #: ../terminal/terminal-preferences.glade.h:2
 msgid "Goes before initial title"
-msgstr "Kommer før opstarttitel"
+msgstr "Kommer før indledende titel"
 
 #: ../terminal/terminal-preferences.glade.h:3
 msgid "Goes after initial title"
-msgstr "Kommer efter opstarttitel"
+msgstr "Kommer efter indledende titel"
 
 #: ../terminal/terminal-preferences.glade.h:4
 msgid "Isn't displayed"
@@ -1004,7 +1004,7 @@ msgstr "Gennemsigtig baggrund"
 
 #: ../terminal/terminal-preferences.glade.h:11
 msgid "Auto-detect"
-msgstr "Auto-detekter"
+msgstr "Automatisk registrering"
 
 #: ../terminal/terminal-preferences.glade.h:12
 msgid "ASCII DEL"
@@ -1081,7 +1081,7 @@ msgstr "Terminal-præferencer"
 
 #: ../terminal/terminal-preferences.glade.h:30
 msgid "_Initial title:"
-msgstr "_Opstarttitel:"
+msgstr "_Indledende titel:"
 
 #: ../terminal/terminal-preferences.glade.h:31
 msgid "_Dynamically-set title:"
@@ -1216,7 +1216,7 @@ msgstr "Vis usikker _indsæt-dialog"
 msgid ""
 "Show a dialog that allows to edit text that is considered unsafe for "
 "pasting."
-msgstr "Vis en dialog som giver mulighed for at redigere tekst der betragtes som værende usikkert at indsætte."
+msgstr "Vis en dialog som giver mulighed for at redigere tekst der anses som værende usikkert at indsætte."
 
 #: ../terminal/terminal-preferences.glade.h:60
 msgid "Clipboard"
@@ -1242,11 +1242,11 @@ msgstr "Brug genvej til at _fokusere synligt vindue"
 msgid ""
 "If enabled, the shortcut to open and retract the window will give focus, "
 "rather than closing it, if it has previously lost focus"
-msgstr "Hvis aktiveret, så vil genvejen der åbnes og tilbagetrækningen af vindue, give fokus, frem for at lukke det, hvis det tidligere har mistet fokus"
+msgstr "Hvis den aktiveres, så vil genvejen der åbner og tilbagetrækker vinduet, give fokus, frem for at lukke det, hvis det tidligere mistede fokus"
 
 #: ../terminal/terminal-preferences.glade.h:66
 msgid "Show _status icon in notification area"
-msgstr "Vis _statusikon i notifikationsområde"
+msgstr "Vis _statusikon i underretningsområde"
 
 #: ../terminal/terminal-preferences.glade.h:67
 msgid "Behavior"
@@ -1276,7 +1276,7 @@ msgstr "ms"
 msgid ""
 "Opacity setting is not available since compositing is either disabled\n"
 "or not supported by your Window Manager."
-msgstr "Opacity-indstilling er ikke tilgængelig eftersom compositing enten er deaktiveret\neller ikke understøttes af din vindueshåndtering."
+msgstr "Opacity-indstilling er ikke tilgængelig eftersom komposition enten er deaktiveret\neller ikke understøttes af din vindueshåndtering."
 
 #: ../terminal/terminal-preferences.glade.h:76
 msgid "Show window _borders"
@@ -1334,7 +1334,7 @@ msgstr "Tillad fed s_krift"
 msgid ""
 "Enable this option to allow applications running inside the terminal windows"
 " to use bold text."
-msgstr "Aktivér denne indstilling for at tillade programmer der køres i terminalens vindue at bruge fed skrift."
+msgstr "Aktivér denne indstilling for at tillade programmer der køres i terminalens vindue at bruge fed tekst."
 
 #: ../terminal/terminal-preferences.glade.h:90
 msgid ""
@@ -1397,7 +1397,7 @@ msgstr "Vis _menulinjen i nye vinduer"
 #: ../terminal/terminal-preferences.glade.h:104
 msgid ""
 "Enable this option to show the menubar in newly created terminal windows."
-msgstr "Aktivér denne indstilling for at vise menulinjen i nye oprettede terminalvinduer."
+msgstr "Aktivér denne indstilling for at vise menulinjen i nyligt oprettede terminalvinduer."
 
 #: ../terminal/terminal-preferences.glade.h:105
 msgid "Display _toolbar in new windows"
@@ -1406,7 +1406,7 @@ msgstr "Vis _værktøjslinjer i nye vinduer"
 #: ../terminal/terminal-preferences.glade.h:106
 msgid ""
 "Enable this option to show the toolbar in newly created terminal windows."
-msgstr "Aktivér denne indstilling for at vise værktøjslinjerne i nye terminalvinduer."
+msgstr "Aktivér denne indstilling for at vise værktøjslinjerne i nyligt oprettede terminalvinduer."
 
 #: ../terminal/terminal-preferences.glade.h:107
 msgid "Display _borders around new windows"
@@ -1416,7 +1416,7 @@ msgstr "Vis _kanter rundt om nye vinduer"
 msgid ""
 "Enable this option to show window decorations around newly created terminal "
 "windows."
-msgstr "Aktivér denne indstilling for at vise vinduesdekorationer rundt om nye terminalvinduer."
+msgstr "Aktivér denne indstilling for at vise vinduesdekorationer rundt om nyligt oprettede terminalvinduer."
 
 #: ../terminal/terminal-preferences.glade.h:109
 msgid "Default geometry:"
@@ -1456,7 +1456,7 @@ msgstr "_Udseende"
 
 #: ../terminal/terminal-preferences.glade.h:118
 msgid "_Text color:"
-msgstr "_Tekstfarve:"
+msgstr "Farve for _tekst:"
 
 #: ../terminal/terminal-preferences.glade.h:119
 msgid "Choose text color"
@@ -1472,7 +1472,7 @@ msgstr "Åbn en dialog for at indstille farven"
 
 #: ../terminal/terminal-preferences.glade.h:122
 msgid "_Background color:"
-msgstr "_Baggrundsfarve:"
+msgstr "Farve for _baggrund:"
 
 #: ../terminal/terminal-preferences.glade.h:123
 msgid "Choose background color"
@@ -1484,7 +1484,7 @@ msgstr "Bemærk: Ctrl+klik for farveredigering."
 
 #: ../terminal/terminal-preferences.glade.h:125
 msgid "Tab activit_y color:"
-msgstr "Aktivitetsfarve for f_aneblad:"
+msgstr "Farve for fanebladsaktivitet:"
 
 #: ../terminal/terminal-preferences.glade.h:126
 msgid "Choose tab activity color"
@@ -1510,13 +1510,13 @@ msgstr "Generelt"
 
 #: ../terminal/terminal-preferences.glade.h:131
 msgid "B_old text color:"
-msgstr "Tekstfarve for _fed skrift:"
+msgstr "Farve for _fed tekst:"
 
 #: ../terminal/terminal-preferences.glade.h:132
 msgid ""
 "Enable this option to set a custom bold color. If disabled the text color "
 "will be used."
-msgstr "Aktivér denne indstilling for at sætte en brugerdefineret farve for fed tekst. Hvis deaktiveret, så vil tekstfarven blive anvendt."
+msgstr "Aktivér denne indstilling for at sætte en brugerdefineret farve for fed tekst. Hvis den deaktiveres, så vil tekstfarven blive anvendt."
 
 #: ../terminal/terminal-preferences.glade.h:133
 msgid "Choose bold font color"
@@ -1524,13 +1524,13 @@ msgstr "Vælg farve for fed tekst"
 
 #: ../terminal/terminal-preferences.glade.h:134
 msgid "Text _selection color:"
-msgstr "_Markeret tekstfarve:"
+msgstr "Farve for _markeret tekst:"
 
 #: ../terminal/terminal-preferences.glade.h:135
 msgid ""
 "Enable this option to set custom text and background colors for the "
 "selection. If disabled the background and text colors will be reversed."
-msgstr "Aktivér denne indstilling for at sætte brugerdefineret baggrundsfarver for markeringen. Hvis den deaktiveres vil baggrunds- og tekstfarverne blive tilbageført."
+msgstr "Aktivér denne indstilling for at sætte brugerdefineret baggrundsfarver for markeringen. Hvis den deaktiveres, så vil baggrunds- og tekstfarverne blive tilbageført."
 
 #: ../terminal/terminal-preferences.glade.h:136
 msgid "Choose text selection foreground color"
@@ -1542,13 +1542,13 @@ msgstr "Vælg baggrundsfarven for markeret tekst"
 
 #: ../terminal/terminal-preferences.glade.h:138
 msgid "Cu_rsor color:"
-msgstr "Mar_kørfarve:"
+msgstr "Farve for _markør:"
 
 #: ../terminal/terminal-preferences.glade.h:139
 msgid ""
 "Enable this option to set custom text and background colors for the cursor. "
 "If disabled the background and text colors will be reversed."
-msgstr "Aktivér denne indstilling for at sætte brugerdefineret tekst og baggrundsfarver for markøren. Hvis den deaktiveres vil baggrunds- og tekstfarverne blive tilbageført."
+msgstr "Aktivér denne indstilling for at sætte brugerdefineret tekst og baggrundsfarver for markøren. Hvis den deaktiveres, så vil baggrunds- og tekstfarverne blive tilbageført."
 
 #: ../terminal/terminal-preferences.glade.h:140
 msgid "Choose cursor background color"
@@ -1635,7 +1635,7 @@ msgid ""
 "Enable this option to allow escape sequences such as '\\e[1;35m' to switch "
 "text to bright colors in addition to bold. If disabled, text color will "
 "remain intact."
-msgstr "Aktivér denne indstilling for at tillade at undvigesekvenser såsom '\\e[1;35m' skifter teksten til lyse farver, ud over til fed. Hvis den deaktiveres vil tekstfarven være den samme."
+msgstr "Aktivér denne indstilling for at tillade at undvigesekvenser såsom '\\e[1;35m' skifter teksten til lyse farver, ud over til fed. Hvis den deaktiveres, så vil tekstfarven være den samme."
 
 #: ../terminal/terminal-preferences.glade.h:161
 msgid "Palette"
@@ -1643,7 +1643,7 @@ msgstr "Palet"
 
 #: ../terminal/terminal-preferences.glade.h:162
 msgid "Presets"
-msgstr "Forvalg"
+msgstr "Forudindstillinger"
 
 #: ../terminal/terminal-preferences.glade.h:163
 msgid "_Colors"
@@ -1655,7 +1655,7 @@ msgid ""
 "incorrectly. They are only here to allow you to work around\n"
 "certain applications and operating systems that expect\n"
 "different terminal behavior."
-msgstr "Disse indstillinger kan få visse programmer til at opføre\nsig forkert. De er kun her for at give dig mulighed for at\narbejde med indstillinger, som forskellige programmer\nog operativsystemer måske forventer."
+msgstr "Disse indstillinger kan få visse programmer til at opføre\nsig forkert. De er kun her for at give dig mulighed for at\narbejde med indstillinger, som forskellige programmer\nog styresystemer måske forventer."
 
 #: ../terminal/terminal-preferences.glade.h:168
 msgid "_Backspace key generates:"
@@ -1686,7 +1686,7 @@ msgid ""
 "Consider the following\n"
 "characters part of a _word\n"
 "when double clicking:"
-msgstr "Betragt følgende\ntegn som del af et _ord\nved dobbeltklik:"
+msgstr "Anse følgende\ntegn som del af et _ord\nved dobbeltklik:"
 
 #: ../terminal/terminal-preferences.glade.h:177
 msgid "Reset double click options to defaults"
@@ -1730,7 +1730,7 @@ msgstr "Brug midterklik med musen for at åbne _URL'er"
 
 #: ../terminal/terminal-preferences.glade.h:187
 msgid "If disabled, URLs can be opened by Ctrl + left mouse click."
-msgstr "Hvis deaktiveret, så kan URL'er åbens med Ctrl + venstreklik med musen."
+msgstr "Hvis den deaktiveres, så kan URL'er åbens med Ctrl + venstreklik med musen."
 
 #: ../terminal/terminal-preferences.glade.h:188
 msgid "Auto-hi_de mouse pointer"
@@ -1746,7 +1746,7 @@ msgstr "Åbn nyt faneblad til _højre for det aktive faneblad"
 
 #: ../terminal/terminal-preferences.glade.h:191
 msgid "If disabled, new tab will be opened in the rightmost position."
-msgstr "Hvis deaktiveret, så vil nyt faneblad blive åbnet yderst til højre."
+msgstr "Hvis den deaktiveres, så vil nyt faneblad blive åbnet yderst til højre."
 
 #: ../terminal/terminal-preferences.glade.h:192
 msgid "_Audible bell"
@@ -1780,4 +1780,4 @@ msgstr "Terminalemulator"
 
 #: ../xfce4-terminal-settings.desktop.in.h:2
 msgid "Configure Xfce Terminal"
-msgstr "Konfigurer Xfce-terminal"
+msgstr "Konfigurer Xfce Terminal"

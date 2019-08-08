@@ -371,18 +371,8 @@ terminal_app_unset_urgent_bell (TerminalWindow *window,
                                 GdkEvent       *event,
                                 TerminalApp    *app)
 {
-  GtkWidget *toplevel;
-  gboolean   enabled;
-
-  g_object_get (G_OBJECT (app->preferences),
-                "misc-bell-urgent", &enabled,
-                NULL);
-
-  if (enabled)
-    {
-      toplevel = gtk_widget_get_toplevel (GTK_WIDGET (window));
-      gtk_window_set_urgency_hint (GTK_WINDOW (toplevel), FALSE);
-    }
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (window));
+  gtk_window_set_urgency_hint (GTK_WINDOW (toplevel), FALSE);
 
   return FALSE;
 }
@@ -805,6 +795,10 @@ terminal_app_open_window (TerminalApp        *app,
                                                   attr->fullscreen,
                                                   attr->menubar,
                                                   attr->toolbar);
+
+          /* drop-down window can be maximized */
+          if (attr->maximize)
+            gtk_window_maximize (GTK_WINDOW (window));
 
           /* put it on the correct screen/display */
           screen = terminal_app_find_screen (attr_display, attr_screen_num);

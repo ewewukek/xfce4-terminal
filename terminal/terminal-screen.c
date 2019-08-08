@@ -152,9 +152,6 @@ static void       terminal_screen_vte_resize_window             (VteTerminal    
 static void       terminal_screen_vte_window_contents_changed   (TerminalScreen        *screen);
 static void       terminal_screen_vte_window_contents_resized   (TerminalScreen        *screen);
 static void       terminal_screen_update_label_orientation      (TerminalScreen        *screen);
-static gchar     *terminal_screen_zoom_font                     (TerminalScreen        *screen,
-                                                                 gchar                 *font_name,
-                                                                 TerminalZoomLevel      zoom);
 static void       terminal_screen_urgent_bell                   (TerminalWidget        *widget,
                                                                  TerminalScreen        *screen);
 static void       terminal_screen_set_custom_command            (TerminalScreen        *screen,
@@ -200,6 +197,7 @@ struct _TerminalScreen
 
   TerminalTitle        dynamic_title_mode;
   guint                hold : 1;
+  guint                has_random_bg_color : 1;
 #if !VTE_CHECK_VERSION (0, 51, 1)
   guint                scroll_on_output : 1;
 #endif
@@ -1085,69 +1083,87 @@ terminal_screen_update_colors (TerminalScreen *screen)
       valid_palette = (n == 16);
     }
 
-  if (G_LIKELY (screen->custom_bg_color == NULL))
-    {
-      has_bg = terminal_preferences_get_color (screen->preferences, "color-background", &bg);
-      if (use_theme || !has_bg)
-        {
-          gtk_style_context_get_background_color (context, GTK_STATE_ACTIVE, &bg);
-          has_bg = TRUE;
-        }
-    }
-  else
-    has_bg = gdk_rgba_parse (&bg, screen->custom_bg_color);
-
   if (G_LIKELY (screen->custom_fg_color == NULL))
     {
       has_fg = terminal_preferences_get_color (screen->preferences, "color-foreground", &fg);
       if (use_theme || !has_fg)
         {
-          gtk_style_context_get_color (context, GTK_STATE_ACTIVE, &fg);
+          gtk_style_context_get_color (context, GTK_STATE_FLAG_ACTIVE, &fg);
           has_fg = TRUE;
         }
     }
   else
     has_fg = gdk_rgba_parse (&fg, screen->custom_fg_color);
 
-  /* we pick a random hue value to keep readability */
-  if (G_LIKELY (screen->custom_bg_color == NULL) && vary_bg && has_bg)
+  if (G_LIKELY (screen->custom_bg_color == NULL))
     {
-      gtk_rgb_to_hsv (bg.red, bg.green, bg.blue,
-                      NULL, &hsv[HSV_SATURATION], &hsv[HSV_VALUE]);
-
-      /* pick random hue */
-      hsv[HSV_HUE] = g_random_double_range (0.00, 1.00);
-
-      /* saturation moving window, depending on the value */
-      if (hsv[HSV_SATURATION] <= SATURATION_WINDOW)
+      has_bg = terminal_preferences_get_color (screen->preferences, "color-background", &bg);
+      if (use_theme || !has_bg)
         {
-          sat_min = 0.00;
-          sat_max = (2 * SATURATION_WINDOW);
-        }
-      else if (hsv[HSV_SATURATION] >= (1.00 - SATURATION_WINDOW))
-        {
-          sat_min = 1.00 - (2 * SATURATION_WINDOW);
-          sat_max = 1.00;
-        }
-      else
-        {
-          sat_min = hsv[HSV_SATURATION] - SATURATION_WINDOW;
-          sat_max = hsv[HSV_SATURATION] + SATURATION_WINDOW;
+          gtk_style_context_get_background_color (context, GTK_STATE_FLAG_ACTIVE, &bg);
+          has_bg = TRUE;
         }
 
-      hsv[HSV_SATURATION] = g_random_double_range (sat_min, sat_max);
+      /* we pick a random hue value to keep readability */
+      if (vary_bg && !screen->has_random_bg_color)
+        {
+          gtk_rgb_to_hsv (bg.red, bg.green, bg.blue,
+                          NULL, &hsv[HSV_SATURATION], &hsv[HSV_VALUE]);
 
-      /* and back to a rgb color */
-      gtk_hsv_to_rgb (hsv[HSV_HUE], hsv[HSV_SATURATION], hsv[HSV_VALUE],
-                      &bg.red, &bg.green, &bg.blue);
+          /* pick random hue */
+          hsv[HSV_HUE] = g_random_double_range (0.00, 1.00);
+
+          /* saturation moving window, depending on the value */
+          if (hsv[HSV_SATURATION] <= SATURATION_WINDOW)
+            {
+              sat_min = 0.00;
+              sat_max = (2 * SATURATION_WINDOW);
+            }
+          else if (hsv[HSV_SATURATION] >= (1.00 - SATURATION_WINDOW))
+            {
+              sat_min = 1.00 - (2 * SATURATION_WINDOW);
+              sat_max = 1.00;
+            }
+          else
+            {
+              sat_min = hsv[HSV_SATURATION] - SATURATION_WINDOW;
+              sat_max = hsv[HSV_SATURATION] + SATURATION_WINDOW;
+            }
+
+          hsv[HSV_SATURATION] = g_random_double_range (sat_min, sat_max);
+
+          /* and back to a rgb color */
+          gtk_hsv_to_rgb (hsv[HSV_HUE], hsv[HSV_SATURATION], hsv[HSV_VALUE],
+                          &bg.red, &bg.green, &bg.blue);
+
+          /* save the color */
+          screen->background_color.red = bg.red;
+          screen->background_color.green = bg.green;
+          screen->background_color.blue = bg.blue;
+
+          /* it seems that random color may not be generated on the first run
+           * so add a check here */
+          if (bg.red != 0 && bg.green != 0 && bg.blue != 0)
+            screen->has_random_bg_color = 1;
+        }
+      else if (vary_bg && screen->has_random_bg_color)
+        {
+          /* we already have a random bg color - do nothing */
+        }
+      else if (!vary_bg)
+        {
+          /* update the color if the vary setting is unchecked */
+          screen->background_color.red = bg.red;
+          screen->background_color.green = bg.green;
+          screen->background_color.blue = bg.blue;
+          screen->has_random_bg_color = 0;
+        }
     }
+  else
+    has_bg = gdk_rgba_parse (&screen->background_color, screen->custom_bg_color);
 
   if (G_LIKELY (valid_palette))
     {
-      screen->background_color.red = bg.red;
-      screen->background_color.green = bg.green;
-      screen->background_color.blue = bg.blue;
-
       vte_terminal_set_colors (VTE_TERMINAL (screen->terminal),
                                has_fg ? &fg : NULL,
                                has_bg ? &screen->background_color : NULL,
@@ -1266,7 +1282,9 @@ terminal_screen_update_misc_rewrap_on_resize (TerminalScreen *screen)
 {
   gboolean bval;
   g_object_get (G_OBJECT (screen->preferences), "misc-rewrap-on-resize", &bval, NULL);
+#if !VTE_CHECK_VERSION (0, 58, 0)
   vte_terminal_set_rewrap_on_resize (VTE_TERMINAL (screen->terminal), bval);
+#endif
 }
 
 
@@ -1674,62 +1692,6 @@ terminal_screen_update_label_orientation (TerminalScreen *screen)
 
 
 
-static gchar*
-terminal_screen_zoom_font (TerminalScreen   *screen,
-                           gchar            *font_name,
-                           TerminalZoomLevel zoom)
-{
-  gdouble               scale;
-  PangoFontDescription *font_desc;
-  gchar                *font_zoomed;
-
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
-  terminal_return_val_if_fail (font_name != NULL, NULL);
-
-  switch (zoom)
-    {
-      case TERMINAL_ZOOM_LEVEL_MINIMUM:     scale = PANGO_SCALE_XX_SMALL/1.2/1.2/1.2/1.2; break;
-      case TERMINAL_ZOOM_LEVEL_XXXXX_SMALL: scale = PANGO_SCALE_XX_SMALL/1.2/1.2/1.2;     break;
-      case TERMINAL_ZOOM_LEVEL_XXXX_SMALL:  scale = PANGO_SCALE_XX_SMALL/1.2/1.2;         break;
-      case TERMINAL_ZOOM_LEVEL_XXX_SMALL:   scale = PANGO_SCALE_XX_SMALL/1.2;             break;
-      case TERMINAL_ZOOM_LEVEL_XX_SMALL:    scale = PANGO_SCALE_XX_SMALL;                 break;
-      case TERMINAL_ZOOM_LEVEL_X_SMALL:     scale = PANGO_SCALE_X_SMALL;                  break;
-      case TERMINAL_ZOOM_LEVEL_SMALL:       scale = PANGO_SCALE_SMALL;                    break;
-      case TERMINAL_ZOOM_LEVEL_LARGE:       scale = PANGO_SCALE_LARGE;                    break;
-      case TERMINAL_ZOOM_LEVEL_X_LARGE:     scale = PANGO_SCALE_X_LARGE;                  break;
-      case TERMINAL_ZOOM_LEVEL_XX_LARGE:    scale = PANGO_SCALE_XX_LARGE;                 break;
-      case TERMINAL_ZOOM_LEVEL_XXX_LARGE:   scale = PANGO_SCALE_XX_LARGE*1.2;             break;
-      case TERMINAL_ZOOM_LEVEL_XXXX_LARGE:  scale = PANGO_SCALE_XX_LARGE*1.2*1.2;         break;
-      case TERMINAL_ZOOM_LEVEL_XXXXX_LARGE: scale = PANGO_SCALE_XX_LARGE*1.2*1.2*1.2;     break;
-      case TERMINAL_ZOOM_LEVEL_MAXIMUM:     scale = PANGO_SCALE_XX_LARGE*1.2*1.2*1.2*1.2; break;
-      default:
-        return font_name;
-    }
-
-  font_desc = pango_font_description_from_string (font_name);
-  if (font_desc == NULL)
-    return font_name;
-
-  if (pango_font_description_get_size_is_absolute (font_desc))
-    pango_font_description_set_absolute_size (font_desc,
-                                              scale * pango_font_description_get_size (font_desc));
-  else
-    pango_font_description_set_size (font_desc,
-                                     scale * pango_font_description_get_size (font_desc));
-
-  font_zoomed = pango_font_description_to_string (font_desc);
-  pango_font_description_free (font_desc);
-
-  if (font_zoomed == NULL)
-    return font_name;
-
-  g_free (font_name);
-
-  return font_zoomed;
-}
-
-
-
 static void
 terminal_screen_urgent_bell (TerminalWidget *widget,
                              TerminalScreen *screen)
@@ -1781,7 +1743,7 @@ terminal_screen_set_tab_label_color (TerminalScreen *screen,
 static gboolean
 terminal_screen_is_text_unsafe (const gchar *text)
 {
-  return text != NULL && (strstr (text, "sudo") != NULL || strchr (text, '\n') != NULL);
+  return text != NULL && strchr (text, '\n') != NULL;
 }
 
 
@@ -1794,15 +1756,20 @@ terminal_screen_unsafe_paste_dialog_new (TerminalScreen *screen,
   GtkTextBuffer *buffer = gtk_text_buffer_new (gtk_text_tag_table_new ());
   GtkWidget     *tv = gtk_text_view_new_with_buffer (buffer);
   GtkWidget     *sw = gtk_scrolled_window_new (NULL, NULL);
-  GtkWidget     *dialog = xfce_titled_dialog_new_with_buttons (_("Warning: Unsafe Paste"), parent,
-                                                               GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                               _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                                               _("_Paste"), GTK_RESPONSE_YES,
-                                                               NULL);
+  GtkWidget     *dialog = xfce_titled_dialog_new ();
+  GtkWidget     *button;
 
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), parent);
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Warning: Unsafe Paste"));
   xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (dialog),
                                    _("Pasting this text to the terminal may be dangerous as it looks like\n"
                                      "some commands may be executed, potentially involving root access ('sudo')."));
+
+  button = xfce_gtk_button_new_mixed ("gtk-cancel", _("_Cancel"));
+  gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, GTK_RESPONSE_CANCEL);
+  button = xfce_gtk_button_new_mixed ("gtk-ok", _("_Paste"));
+  gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, GTK_RESPONSE_YES);
 
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (tv), TRUE);
   gtk_text_view_set_monospace (GTK_TEXT_VIEW (tv), TRUE);
@@ -1848,6 +1815,12 @@ terminal_screen_paste_unsafe_text (TerminalScreen *screen,
 
       if (res_text != NULL)
         {
+          /* convert LF to CR before feeding: see https://gitlab.gnome.org/GNOME/vte/issues/106 */
+          size_t i;
+          for (i = 0; i < strlen (res_text); ++i)
+            if (res_text[i] == '\x0A')
+              res_text[i] = '\x0D';
+
           vte_terminal_feed_child (VTE_TERMINAL (screen->terminal), res_text, strlen (res_text));
           g_free (res_text);
         }
@@ -2824,6 +2797,7 @@ terminal_screen_update_font (TerminalScreen *screen)
   glong                 grid_w = 0, grid_h = 0;
   GSettings            *settings;
   XfconfChannel        *channel;
+  gdouble               font_scale = PANGO_SCALE_MEDIUM;
 #if VTE_CHECK_VERSION (0, 51, 3)
   gdouble cell_width_scale, cell_height_scale;
 #endif
@@ -2866,9 +2840,24 @@ terminal_screen_update_font (TerminalScreen *screen)
           font_name = g_strdup (terminal_window_get_font (TERMINAL_WINDOW (toplevel)));
         }
 
-      if (terminal_window_get_zoom_level (TERMINAL_WINDOW (toplevel)) != TERMINAL_ZOOM_LEVEL_DEFAULT)
-        font_name = terminal_screen_zoom_font (screen, font_name,
-                                               terminal_window_get_zoom_level (TERMINAL_WINDOW (toplevel)));
+      switch (terminal_window_get_zoom_level (TERMINAL_WINDOW (toplevel)))
+        {
+          case TERMINAL_ZOOM_LEVEL_MINIMUM:     font_scale = PANGO_SCALE_XX_SMALL/1.2/1.2/1.2/1.2; break;
+          case TERMINAL_ZOOM_LEVEL_XXXXX_SMALL: font_scale = PANGO_SCALE_XX_SMALL/1.2/1.2/1.2;     break;
+          case TERMINAL_ZOOM_LEVEL_XXXX_SMALL:  font_scale = PANGO_SCALE_XX_SMALL/1.2/1.2;         break;
+          case TERMINAL_ZOOM_LEVEL_XXX_SMALL:   font_scale = PANGO_SCALE_XX_SMALL/1.2;             break;
+          case TERMINAL_ZOOM_LEVEL_XX_SMALL:    font_scale = PANGO_SCALE_XX_SMALL;                 break;
+          case TERMINAL_ZOOM_LEVEL_X_SMALL:     font_scale = PANGO_SCALE_X_SMALL;                  break;
+          case TERMINAL_ZOOM_LEVEL_SMALL:       font_scale = PANGO_SCALE_SMALL;                    break;
+          case TERMINAL_ZOOM_LEVEL_LARGE:       font_scale = PANGO_SCALE_LARGE;                    break;
+          case TERMINAL_ZOOM_LEVEL_X_LARGE:     font_scale = PANGO_SCALE_X_LARGE;                  break;
+          case TERMINAL_ZOOM_LEVEL_XX_LARGE:    font_scale = PANGO_SCALE_XX_LARGE;                 break;
+          case TERMINAL_ZOOM_LEVEL_XXX_LARGE:   font_scale = PANGO_SCALE_XX_LARGE*1.2;             break;
+          case TERMINAL_ZOOM_LEVEL_XXXX_LARGE:  font_scale = PANGO_SCALE_XX_LARGE*1.2*1.2;         break;
+          case TERMINAL_ZOOM_LEVEL_XXXXX_LARGE: font_scale = PANGO_SCALE_XX_LARGE*1.2*1.2*1.2;     break;
+          case TERMINAL_ZOOM_LEVEL_MAXIMUM:     font_scale = PANGO_SCALE_XX_LARGE*1.2*1.2*1.2*1.2; break;
+          default:                              font_scale = PANGO_SCALE_MEDIUM;                   break;
+        }
     }
 
   if (gtk_widget_get_realized (GTK_WIDGET (screen)))
@@ -2879,6 +2868,7 @@ terminal_screen_update_font (TerminalScreen *screen)
       font_desc = pango_font_description_from_string (font_name);
       vte_terminal_set_allow_bold (VTE_TERMINAL (screen->terminal), font_allow_bold);
       vte_terminal_set_font (VTE_TERMINAL (screen->terminal), font_desc);
+      vte_terminal_set_font_scale (VTE_TERMINAL (screen->terminal), font_scale);
       pango_font_description_free (font_desc);
       g_free (font_name);
     }

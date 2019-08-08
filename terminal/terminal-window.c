@@ -702,7 +702,11 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (window->priv->action_fullscreen)) != fullscreen)
         gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (window->priv->action_fullscreen), fullscreen);
 G_GNUC_END_IGNORE_DEPRECATIONS
-    }
+
+      /* update drop-down window geometry, otherwise it'll be incorrect */
+      if (!fullscreen && window->priv->drop_down)
+        terminal_window_dropdown_update_geometry (TERMINAL_WINDOW_DROPDOWN (window));
+  }
 
   if (GTK_WIDGET_CLASS (terminal_window_parent_class)->window_state_event != NULL)
     return (*GTK_WIDGET_CLASS (terminal_window_parent_class)->window_state_event) (widget, event);
@@ -877,12 +881,14 @@ terminal_window_confirm_close (TerminalScreen *screen,
   if ((screen != NULL || n_tabs < 2) && !confirm_close)
     return (screen != NULL) ? CONFIRMED_CLOSE_TAB : CONFIRMED_CLOSE_WINDOW;
 
-  dialog = gtk_dialog_new_with_buttons (_("Warning"), GTK_WINDOW (window),
-                                        GTK_DIALOG_DESTROY_WITH_PARENT
-                                        | GTK_DIALOG_MODAL,
-                                        _("_Cancel"),
-                                        GTK_RESPONSE_CANCEL,
-                                        NULL);
+  dialog = gtk_dialog_new ();
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
+  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Warning"));
+
+  button = xfce_gtk_button_new_mixed ("gtk-cancel", _("_Cancel"));
+  gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, GTK_RESPONSE_CANCEL);
 
   if (screen == NULL && n_tabs > 1)
     {
@@ -1303,6 +1309,10 @@ terminal_window_notebook_page_removed (GtkNotebook    *notebook,
       return;
     }
 
+  /* clear last_active tab if it has just been closed */
+  if (child == GTK_WIDGET (window->priv->last_active))
+    window->priv->last_active = NULL;
+
   /* show the tabs when needed */
   terminal_window_notebook_show_tabs (window);
 
@@ -1388,7 +1398,7 @@ terminal_window_notebook_button_press_event (GtkNotebook    *notebook,
           g_object_get (G_OBJECT (window->priv->preferences),
                         "misc-tab-close-middle-click", &close_middle_click, NULL);
           if (close_middle_click)
-            gtk_widget_destroy (page);
+            terminal_window_close_tab_request (TERMINAL_SCREEN (page), window);
         }
       else
         {
@@ -2028,13 +2038,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
       if (fullscreen)
         gtk_window_fullscreen (GTK_WINDOW (window));
       else
-        {
-          gtk_window_unfullscreen (GTK_WINDOW (window));
-
-          /* update drop-down window geometry, otherwise it'll be incorrect */
-          if (window->priv->drop_down)
-            terminal_window_dropdown_update_geometry (TERMINAL_WINDOW_DROPDOWN (window));
-        }
+        gtk_window_unfullscreen (GTK_WINDOW (window));
     }
 }
 
@@ -2677,10 +2681,6 @@ terminal_window_do_close_tab (TerminalScreen *screen,
       gint page_num = gtk_notebook_page_num (notebook, GTK_WIDGET (window->priv->last_active));
       gtk_notebook_set_current_page (notebook, page_num);
     }
-
-  /* clean last_active if we've just closed it */
-  if (screen == window->priv->last_active)
-    window->priv->last_active = NULL;
 
   gtk_widget_destroy (GTK_WIDGET (screen));
 }
