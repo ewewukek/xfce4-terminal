@@ -492,12 +492,9 @@ terminal_screen_realize (GtkWidget *widget)
 
   (*GTK_WIDGET_CLASS (terminal_screen_parent_class)->realize) (widget);
 
-#if !GTK_CHECK_VERSION (3, 20, 0)
-  /* make sure the TerminalWidget is realized as well
-     (produces "Drawing a gadget with negative dimensions" Gtk-WARNING) */
+  /* make sure the TerminalWidget is realized as well */
   if (!gtk_widget_get_realized (TERMINAL_SCREEN (widget)->terminal))
     gtk_widget_realize (TERMINAL_SCREEN (widget)->terminal);
-#endif
 
   /* connect to the "composited-changed" signal */
   screen = gtk_widget_get_screen (widget);
@@ -1159,8 +1156,13 @@ terminal_screen_update_colors (TerminalScreen *screen)
           screen->has_random_bg_color = 0;
         }
     }
-  else
-    has_bg = gdk_rgba_parse (&screen->background_color, screen->custom_bg_color);
+  else if ((has_bg = gdk_rgba_parse (&bg, screen->custom_bg_color)))
+    {
+      /* preserve the alpha value which is responsible for transparency */
+      screen->background_color.red = bg.red;
+      screen->background_color.green = bg.green;
+      screen->background_color.blue = bg.blue;
+    }
 
   if (G_LIKELY (valid_palette))
     {
@@ -2181,7 +2183,7 @@ terminal_screen_force_resize_window (TerminalScreen *screen,
                                      glong           rows)
 {
   GtkRequisition terminal_requisition;
-  GtkRequisition window_requisition;
+  GtkRequisition vbox_requisition;
   gint           width;
   gint           height;
   gint           xpad, ypad;
@@ -2194,7 +2196,7 @@ terminal_screen_force_resize_window (TerminalScreen *screen,
 
   terminal_screen_set_window_geometry_hints (screen, window);
 
-  gtk_widget_get_preferred_size (GTK_WIDGET (window), NULL, &window_requisition);
+  gtk_widget_get_preferred_size (terminal_window_get_vbox (TERMINAL_WINDOW (window)), NULL, &vbox_requisition);
   gtk_widget_get_preferred_size (screen->terminal, NULL, &terminal_requisition);
 
   if (columns < 1)
@@ -2206,12 +2208,12 @@ terminal_screen_force_resize_window (TerminalScreen *screen,
                                 &char_width, &char_height,
                                 &xpad, &ypad);
 
-  width = window_requisition.width - terminal_requisition.width;
+  width = vbox_requisition.width - terminal_requisition.width;
   if (width < 0)
     width = 0;
   width += xpad + char_width * columns;
 
-  height = window_requisition.height - terminal_requisition.height;
+  height = vbox_requisition.height - terminal_requisition.height;
   if (height < 0)
     height = 0;
   height += ypad + char_height * rows;

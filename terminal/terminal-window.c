@@ -135,6 +135,7 @@ static void         terminal_window_set_size_force_grid           (TerminalWindo
 static void         terminal_window_update_actions                (TerminalWindow      *window);
 static void         terminal_window_update_slim_tabs              (TerminalWindow      *window);
 static void         terminal_window_update_scroll_on_output       (TerminalWindow      *window);
+static void         terminal_window_update_mnemonic_modifier      (TerminalWindow      *window);
 static void         terminal_window_notebook_page_switched        (GtkNotebook         *notebook,
                                                                    GtkWidget           *page,
                                                                    guint                page_num,
@@ -464,7 +465,7 @@ terminal_window_init (TerminalWindow *window)
 
   GClosure *toggle_menubar_closure = g_cclosure_new (G_CALLBACK (terminal_window_toggle_menubar), window, NULL);
 
-  window->priv = G_TYPE_INSTANCE_GET_PRIVATE (window, TERMINAL_TYPE_WINDOW, TerminalWindowPrivate);
+  window->priv = terminal_window_get_instance_private (window);
 
   window->priv->preferences = terminal_preferences_get ();
 
@@ -578,6 +579,8 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 G_GNUC_END_IGNORE_DEPRECATIONS
   gtk_box_pack_start (GTK_BOX (window->priv->vbox), window->priv->menubar, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (window->priv->vbox), window->priv->menubar, 0);
+  /* don't show menubar by default */
+  gtk_widget_hide (window->priv->menubar);
   /* auto-hide menubar if it was shown temporarily */
   g_signal_connect (G_OBJECT (window->priv->menubar), "deactivate",
       G_CALLBACK (terminal_window_menubar_deactivate), window);
@@ -600,6 +603,11 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   g_signal_connect_swapped (G_OBJECT (window->priv->preferences), "notify::scrolling-on-output",
                             G_CALLBACK (terminal_window_update_scroll_on_output), window);
 
+  /* monitor the shortcuts-no-mnemonics setting */
+  terminal_window_update_mnemonic_modifier (window);
+  g_signal_connect_swapped (G_OBJECT (window->priv->preferences), "notify::shortcuts-no-mnemonics",
+                            G_CALLBACK (terminal_window_update_mnemonic_modifier), window);
+
 #if defined(GDK_WINDOWING_X11)
   if (GDK_IS_X11_SCREEN (screen))
     {
@@ -621,9 +629,11 @@ terminal_window_finalize (GObject *object)
 {
   TerminalWindow *window = TERMINAL_WINDOW (object);
 
-  /* disconnect the scrolling-on-output watch */
+  /* disconnect scrolling-on-output and shortcuts-no-mnemonics watches */
   g_signal_handlers_disconnect_by_func (G_OBJECT (window->priv->preferences),
                                         G_CALLBACK (terminal_window_update_scroll_on_output), window);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (window->priv->preferences),
+                                        G_CALLBACK (terminal_window_update_mnemonic_modifier), window);
 
   if (window->priv->preferences_dialog != NULL)
     gtk_widget_destroy (window->priv->preferences_dialog);
@@ -729,7 +739,7 @@ terminal_window_style_set (GtkWidget *widget,
 
   /* delay the pop until after size allocate */
   if (previous_style != NULL)
-    g_idle_add (terminal_window_size_pop, window);
+    gdk_threads_add_idle (terminal_window_size_pop, window);
 }
 
 
@@ -1073,7 +1083,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   /* update the actions for the current terminal screen */
   if (G_LIKELY (window->priv->active != NULL))
     {
-      gboolean can_go_left, can_go_right, can_search;
+      gboolean can_go_left, can_go_right, can_search, input_enabled;
 
       page_num = gtk_notebook_page_num (notebook, GTK_WIDGET (window->priv->active));
 
@@ -1103,9 +1113,15 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       gtk_action_set_sensitive (window->priv->action_search_prev, can_search);
 
       /* update read-only mode */
+      input_enabled = terminal_screen_get_input_enabled (window->priv->active);
       action = terminal_window_get_action (window, "read-only");
-      gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-                                    !terminal_screen_get_input_enabled (window->priv->active));
+      gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), !input_enabled);
+
+      /* update "Paste" actions */
+      action = terminal_window_get_action (window, "paste");
+      gtk_action_set_sensitive (action, input_enabled);
+      action = terminal_window_get_action (window, "paste-selection");
+      gtk_action_set_sensitive (action, input_enabled);
 
       /* update scroll on output mode */
       action = terminal_window_get_action (window, "scroll-on-output");
@@ -1158,6 +1174,22 @@ terminal_window_update_scroll_on_output (TerminalWindow *window)
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), scroll);
 G_GNUC_END_IGNORE_DEPRECATIONS
+}
+
+
+
+static void
+terminal_window_update_mnemonic_modifier (TerminalWindow *window)
+{
+  gboolean no_mnemonics;
+
+  g_object_get (G_OBJECT (window->priv->preferences),
+                "shortcuts-no-mnemonics", &no_mnemonics,
+                NULL);
+  if (no_mnemonics)
+    gtk_window_set_mnemonic_modifier (GTK_WINDOW (window), GDK_MODIFIER_MASK & ~GDK_RELEASE_MASK);
+  else
+    gtk_window_set_mnemonic_modifier (GTK_WINDOW (window), GDK_MOD1_MASK);
 }
 
 
@@ -1249,6 +1281,10 @@ terminal_window_notebook_page_added (GtkNotebook    *notebook,
 
   /* release to the grid size applies */
   gtk_widget_realize (GTK_WIDGET (screen));
+
+  /* match zoom and font */
+  if (window->priv->font || window->priv->zoom != TERMINAL_ZOOM_LEVEL_DEFAULT)
+    terminal_screen_update_font (screen);
 
   if (G_LIKELY (window->priv->active != NULL))
     {
@@ -2058,6 +2094,8 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     {
       gtk_action_set_sensitive (terminal_window_get_action (window, "reset"), input_enabled);
       gtk_action_set_sensitive (terminal_window_get_action (window, "reset-and-clear"), input_enabled);
+      gtk_action_set_sensitive (terminal_window_get_action (window, "paste"), input_enabled);
+      gtk_action_set_sensitive (terminal_window_get_action (window, "paste-selection"), input_enabled);
       terminal_screen_set_input_enabled (window->priv->active, input_enabled);
     }
 G_GNUC_END_IGNORE_DEPRECATIONS
@@ -2792,10 +2830,6 @@ terminal_window_add (TerminalWindow *window,
   if (window->priv->scrollbar_visibility != TERMINAL_VISIBILITY_DEFAULT)
     terminal_screen_update_scrolling_bar (screen);
 
-  /* update screen font from window */
-  if (window->priv->font || window->priv->zoom != TERMINAL_ZOOM_LEVEL_DEFAULT)
-    terminal_screen_update_font (screen);
-
   /* switch to the new tab */
   gtk_notebook_set_current_page (GTK_NOTEBOOK (window->priv->notebook), page);
 
@@ -3299,20 +3333,24 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gboolean show = gtk_toggle_action_get_active (action);
 G_GNUC_END_IGNORE_DEPRECATIONS
 
-  terminal_window_size_push (window);
+  /* don't do anything if the menubar is already in the desired state (shown/hidden) */
+  if (gtk_widget_is_visible (window->priv->menubar) != show)
+    {
+      terminal_window_size_push (window);
 
-  if (show)
-    gtk_widget_show (window->priv->menubar);
-  else
-    gtk_widget_hide (window->priv->menubar);
+      if (show)
+        gtk_widget_show (window->priv->menubar);
+      else
+        gtk_widget_hide (window->priv->menubar);
 
-  terminal_window_size_pop (window);
+      terminal_window_size_pop (window);
+    }
 }
 
 
 
 /**
- * terminal_window_action_show_menubar:
+ * terminal_window_update_tab_key_accels:
  * @window          : A #TerminalWindow.
  * @tab_key_accels  : A list of Tab key accelerators.
  **/

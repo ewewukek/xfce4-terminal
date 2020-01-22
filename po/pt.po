@@ -3,8 +3,8 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2016
-# José Vieira <jvieira33@sapo.pt>, 2016-2018
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2016,2019
+# José Vieira <jvieira33@sapo.pt>, 2016-2018,2020
 # Nuno Miguel <nunomgue@gmail.com>, 2016-2019
 # Rui <xymarior@yandex.com>, 2019
 # Sérgio Marques <smarquespt@gmail.com>, 2014
@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: Xfce Apps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-21 18:31+0100\n"
-"PO-Revision-Date: 2019-03-22 00:14+0000\n"
-"Last-Translator: Rui <xymarior@yandex.com>\n"
+"PO-Revision-Date: 2020-01-21 16:34+0000\n"
+"Last-Translator: José Vieira <jvieira33@sapo.pt>\n"
 "Language-Team: Portuguese (http://www.transifex.com/xfce/xfce-apps/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -281,7 +281,7 @@ msgstr "Outra"
 #: ../terminal/terminal-encoding-action.c:402
 #, c-format
 msgid "Default (%s)"
-msgstr "Omissão (%s)"
+msgstr "Predefinição (%s)"
 
 #: ../terminal/terminal-gdbus.c:104
 msgid "User id mismatch"
@@ -296,14 +296,14 @@ msgstr "Erro de exibição"
 msgid ""
 "Option \"--default-display\" requires specifying the default X display as "
 "its parameter"
-msgstr "A opção \"--default-display\" requer que especifique o ecrã por omissão do X como parâmetro"
+msgstr "A opção \"--default-display\" requer que especifique o ecrã predefinido do X como parâmetro"
 
 #: ../terminal/terminal-options.c:219
 #, c-format
 msgid ""
 "Option \"--default-working-directory\" requires specifying the default "
 "working directory as its parameter"
-msgstr "A opção \"--default-working-directory\" requer que especifique o diretório de trabalho por omissão como parâmetro"
+msgstr "A opção \"--default-working-directory\" requer que especifique o diretório de trabalho predefinido como parâmetro"
 
 #: ../terminal/terminal-options.c:236
 #, c-format
@@ -400,7 +400,7 @@ msgstr "A opção \"--icon/-I\" requer que especifique o nome do ícone ou do fi
 #: ../terminal/terminal-options.c:533
 #, c-format
 msgid "Option \"--font\" requires specifying the font name as its parameter"
-msgstr "A opção \"--font\" requer que indique a fonte (tipo de caracteres) como parâmetro"
+msgstr "A opção \"--font\" requer que indique a fonte como parâmetro"
 
 #: ../terminal/terminal-options.c:551
 #, c-format
@@ -540,7 +540,7 @@ msgstr "Emulador de terminal do Xfce"
 
 #: ../terminal/terminal-util.c:88
 msgid "translator-credits"
-msgstr "Nuno Miguel <nunomgue@gmail.com>"
+msgstr "Hugo Carvalho <hugokarvalho@gmail.com>\nNuno Miguel <nunomgue@gmail.com>"
 
 #: ../terminal/terminal-util.c:91
 msgid "Visit Xfce Terminal website"
@@ -713,7 +713,7 @@ msgstr "Tamanho _normal"
 
 #: ../terminal/terminal-window.c:356
 msgid "Zoom to default size"
-msgstr "Repôr o tamanho pré-definido"
+msgstr "Repôr o tamanho predefinido"
 
 #: ../terminal/terminal-window.c:357
 msgid "_Terminal"
@@ -1104,13 +1104,13 @@ msgstr "Selecionar esta opção para forçar o Terminal a executar a sua shell c
 
 #: ../terminal/terminal-preferences.glade.h:35
 msgid "_Update utmp/wtmp records when command is launched"
-msgstr "_Actualizar os registos utmp/wtmp quando o comando é usado"
+msgstr "_Atualizar os registos utmp/wtmp quando o comando é usado"
 
 #: ../terminal/terminal-preferences.glade.h:36
 msgid ""
 "Select this option to allow commands that use utmp/wtmp records (such as "
 "`write` or `wall`) to work."
-msgstr "Selecionar esta opção para permitir o funcionamento dos comandos que usam registos utmp/wtmp (tais como \"write\" ou \"wall\")."
+msgstr "Selecionar esta opção para permitir o funcionamento dos comandos que usam registos utmp/wtmp (tais como \"write\" ou \"wall\") para funcionar."
 
 #: ../terminal/terminal-preferences.glade.h:37
 msgid "Run a _custom command instead of my shell"
@@ -1209,7 +1209,7 @@ msgstr "_Copiar automaticamente a seleção para área de transferência"
 
 #: ../terminal/terminal-preferences.glade.h:58
 msgid "Show unsafe _paste dialog"
-msgstr "Abrir caixa de diálogo de _colar inseguro"
+msgstr "Mostrar caixa de diálogo de _colar inseguro"
 
 #: ../terminal/terminal-preferences.glade.h:59
 msgid ""
@@ -1359,11 +1359,11 @@ msgstr "x altura"
 
 #: ../terminal/terminal-preferences.glade.h:95
 msgid "Rese_t"
-msgstr "Repôr"
+msgstr "Repo_r"
 
 #: ../terminal/terminal-preferences.glade.h:96
 msgid "Reset cell spacing values to defaults"
-msgstr "Restabelecer os valores do espaço entre células para os pré-definidos"
+msgstr "Restaurar os valores do espaço entre células para os predefinidos"
 
 #: ../terminal/terminal-preferences.glade.h:97
 msgid "Font"
@@ -1379,7 +1379,7 @@ msgstr "_Estilo:"
 
 #: ../terminal/terminal-preferences.glade.h:100
 msgid "Select Background Image File"
-msgstr "Selecionar a imagem de fundo"
+msgstr "Selecionar o ficheiro de imagem de fundo"
 
 #: ../terminal/terminal-preferences.glade.h:101
 msgid "_Shading:"
@@ -1419,7 +1419,7 @@ msgstr "Ativar esta opção para mostrar as decorações da janela nas novas jan
 
 #: ../terminal/terminal-preferences.glade.h:109
 msgid "Default geometry:"
-msgstr "Geometria por omissão:"
+msgstr "Geometria predefinida:"
 
 #: ../terminal/terminal-preferences.glade.h:110
 msgid "c_olumns"
@@ -1435,7 +1435,7 @@ msgstr "A abrir novas janelas"
 
 #: ../terminal/terminal-preferences.glade.h:113
 msgid "Reset tab activity _indicator after"
-msgstr "Repor in_dicador de atividade do separador após"
+msgstr "Restaurar in_dicador de atividade do separador após"
 
 #: ../terminal/terminal-preferences.glade.h:114
 msgid "seconds"
@@ -1634,7 +1634,7 @@ msgid ""
 "Enable this option to allow escape sequences such as '\\e[1;35m' to switch "
 "text to bright colors in addition to bold. If disabled, text color will "
 "remain intact."
-msgstr "Activar esta opção para permitir que as sequências de saída do tipo '\\e[1;35m' alterem o texto para cores claras juntamente com o negrito. Se desactivada, a cor do texto não mudará."
+msgstr "Ativar esta opção para permitir que as sequências de saída do tipo '\\e[1;35m' alterem o texto para cores claras juntamente com o negrito. Se desativada, a cor do texto não mudará."
 
 #: ../terminal/terminal-preferences.glade.h:161
 msgid "Palette"
@@ -1654,7 +1654,7 @@ msgid ""
 "incorrectly. They are only here to allow you to work around\n"
 "certain applications and operating systems that expect\n"
 "different terminal behavior."
-msgstr "Estas opções podem causar um comportamento incorreto\nde algumas aplicações. Estão aqui apenas para permitir\nevitar certas aplicações e sistemas operativos que esperam um comportamento diferente do terminal."
+msgstr "Estas opções podem causar um comportamento incorreto\nde algumas aplicações. Estão aqui apenas para permitir evitar\nque certas aplicações e sistemas operativos que esperam\num comportamento diferente do terminal."
 
 #: ../terminal/terminal-preferences.glade.h:168
 msgid "_Backspace key generates:"
@@ -1666,7 +1666,7 @@ msgstr "Tecla _delete gera:"
 
 #: ../terminal/terminal-preferences.glade.h:170
 msgid "_Reset compatibility options to defaults"
-msgstr "_Repor opções de compatibilidade pré-definidas"
+msgstr "_Restaurar as opções de compatibilidade predefinidas"
 
 #: ../terminal/terminal-preferences.glade.h:171
 msgid "_Ambiguous-width characters:"
@@ -1685,11 +1685,11 @@ msgid ""
 "Consider the following\n"
 "characters part of a _word\n"
 "when double clicking:"
-msgstr "Considerar os seguintes\ncarateres parte duma _palavra\nao fazer duplo clique:"
+msgstr "Considerar os seguintes\ncarateres parte duma _palavra\nao fazer duplo clique:  "
 
 #: ../terminal/terminal-preferences.glade.h:177
 msgid "Reset double click options to defaults"
-msgstr "Repôr opções de duplo clique para as originais"
+msgstr "Repor as opções predefinidas de duplo clique"
 
 #: ../terminal/terminal-preferences.glade.h:178
 msgid "Double Click"
@@ -1697,7 +1697,7 @@ msgstr "Duplo clique"
 
 #: ../terminal/terminal-preferences.glade.h:179
 msgid "Default character e_ncoding:"
-msgstr "Codificação de caracteres por o_missão:"
+msgstr "Codificação de caracteres predefi_nida:"
 
 #: ../terminal/terminal-preferences.glade.h:180
 msgid "Encoding"
@@ -1705,15 +1705,15 @@ msgstr "Codificação"
 
 #: ../terminal/terminal-preferences.glade.h:181
 msgid "Disable all me_nu access keys (such as Alt+f)"
-msgstr "Desligar todas as teclas de acesso do me_nu (como Alt+F)"
+msgstr "Desligar todas as teclas de acesso do me_nu (como Alt+f)"
 
 #: ../terminal/terminal-preferences.glade.h:182
 msgid "Disable m_enu shortcut key (F10 by default)"
-msgstr "Desativar teclas de atalho de m_enu (F10 por pré-definição)"
+msgstr "Desativar teclas de atalho de m_enu (F10 por predefinição)"
 
 #: ../terminal/terminal-preferences.glade.h:183
 msgid "Disable _help window shortcut key (F1 by default)"
-msgstr "Desligar tecla de atalho da janela de ajuda (F1 por omissão)"
+msgstr "Desligar tecla de atalho da janela de _ajuda (F1 por predefinição)"
 
 #: ../terminal/terminal-preferences.glade.h:184
 msgid "Shortcuts"
@@ -1733,7 +1733,7 @@ msgstr "Se desativado, as URLs podem ser abertas com Ctrl+clique esquerdo."
 
 #: ../terminal/terminal-preferences.glade.h:188
 msgid "Auto-hi_de mouse pointer"
-msgstr "Ocultar automático do ponteiro do rato"
+msgstr "Ocultar auto_mático do ponteiro do rato"
 
 #: ../terminal/terminal-preferences.glade.h:189
 msgid "Re_wrap terminal contents on resize"

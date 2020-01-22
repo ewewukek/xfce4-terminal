@@ -1506,8 +1506,8 @@ terminal_preferences_schedule_store (TerminalPreferences *preferences)
   if (preferences->store_idle_id == 0 && !preferences->loading_in_progress)
     {
       preferences->store_idle_id =
-          g_timeout_add_seconds_full (G_PRIORITY_LOW, 1, terminal_preferences_store_idle,
-                                      preferences, terminal_preferences_store_idle_destroy);
+          gdk_threads_add_timeout_seconds_full (G_PRIORITY_LOW, 1, terminal_preferences_store_idle,
+                                                preferences, terminal_preferences_store_idle_destroy);
     }
 }
 
@@ -1552,14 +1552,14 @@ terminal_preferences_store_value (const GValue *value,
 static gboolean
 terminal_preferences_store_idle (gpointer user_data)
 {
-  TerminalPreferences  *preferences = TERMINAL_PREFERENCES (user_data);
-  const gchar          *blurb;
-  GParamSpec           *pspec;
-  XfceRc               *rc = NULL;
-  GValue               *value;
-  GValue                src = { 0, };
-  guint                 n;
-  gchar                *filename;
+  TerminalPreferences *preferences = TERMINAL_PREFERENCES (user_data);
+  const gchar         *blurb;
+  GParamSpec          *pspec;
+  XfceRc              *rc = NULL;
+  GValue              *value;
+  GValue               src = { 0, };
+  guint                n;
+  gchar               *filename;
 
   /* try again later if we're loading */
   if (G_UNLIKELY (preferences->loading_in_progress))
@@ -1567,7 +1567,10 @@ terminal_preferences_store_idle (gpointer user_data)
 
   filename = xfce_resource_save_location (XFCE_RESOURCE_CONFIG, TERMINALRC, TRUE);
   if (G_UNLIKELY (filename == NULL))
-    goto error;
+    {
+      g_warning ("Unable to store terminal preferences.");
+      return FALSE;
+    }
 
   rc = xfce_rc_simple_open (filename, FALSE);
   if (G_UNLIKELY (rc == NULL))

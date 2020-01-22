@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Xfce Apps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-21 18:31+0100\n"
-"PO-Revision-Date: 2019-08-05 04:14+0000\n"
+"PO-Revision-Date: 2019-08-30 08:29+0000\n"
 "Last-Translator: Daniel Muñiz Fontoira <dani@damufo.com>\n"
 "Language-Team: Galician (http://www.transifex.com/xfce/xfce-apps/language/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -339,7 +339,7 @@ msgstr "A opción «--dynamic-title-mode» require que se especifique como pará
 #: ../terminal/terminal-options.c:315
 #, c-format
 msgid "Invalid argument for option \"--dynamic-title-mode\": %s"
-msgstr "Argumento non válido para a opción «--dynamic-title-mode»: %s"
+msgstr "O argumento é incorrecto para a opción «--dynamic-title-mode»: %s"
 
 #: ../terminal/terminal-options.c:325
 #, c-format
@@ -443,7 +443,7 @@ msgstr "_Reiniciar"
 #: ../terminal/terminal-screen.c:1416
 #, c-format
 msgid "The child process exited normally with status %d."
-msgstr "O proceso fillo terminou de correctamente co estado %d."
+msgstr "O proceso fillo terminou correctamente co estado %d."
 
 #: ../terminal/terminal-screen.c:1418
 #, c-format
@@ -581,7 +581,7 @@ msgstr "Non se puido soltar a lista de URIs no terminal: é incorrecto o formato
 #: ../terminal/terminal-widget.c:583
 #, c-format
 msgid "Received invalid color data: Wrong format (%d) or length (%d)\n"
-msgstr "Recibíronse datos de cor incorrectos: Formato incorrecto (%d) ou lonxitude incorrecta (%d)\n"
+msgstr "Recibíronse datos de cor incorrectos: formato (%d) ou lonxitude (%d) errado\n"
 
 #. tell the user that we were unable to open the responsible application
 #: ../terminal/terminal-widget.c:718
@@ -663,7 +663,7 @@ msgstr "Copiar ao portapapeis como HTML"
 
 #: ../terminal/terminal-window.c:348
 msgid "Paste from clipboard"
-msgstr "Pegar dende o portapapeis"
+msgstr "Pegar desde o portapapeis"
 
 #: ../terminal/terminal-window.c:349
 msgid "Paste _Selection"
@@ -864,7 +864,7 @@ msgstr "Definir a _codificación"
 
 #: ../terminal/terminal-window.c:862
 msgid "Warning"
-msgstr "Advertencia"
+msgstr "Aviso"
 
 #. and process running
 #: ../terminal/terminal-window.c:875
@@ -961,7 +961,7 @@ msgstr "Produciuse un fallo ao gardar o contido do terminal"
 
 #: ../terminal/terminal-preferences.glade.h:1
 msgid "Replaces initial title"
-msgstr "Substitúe ó título inicial"
+msgstr "Substitúe o título inicial"
 
 #: ../terminal/terminal-preferences.glade.h:2
 msgid "Goes before initial title"
@@ -973,7 +973,7 @@ msgstr "Despois do título inicial"
 
 #: ../terminal/terminal-preferences.glade.h:4
 msgid "Isn't displayed"
-msgstr "Non se mostra"
+msgstr "Non se amosa"
 
 #: ../terminal/terminal-preferences.glade.h:5
 msgid "Disabled"
@@ -1017,7 +1017,7 @@ msgstr "Control-H"
 
 #: ../terminal/terminal-preferences.glade.h:15
 msgid "Erase TTY"
-msgstr "Eliminar TTY"
+msgstr "Borrar TTY"
 
 #: ../terminal/terminal-preferences.glade.h:16
 msgid "Tiled"
@@ -1273,7 +1273,7 @@ msgstr "ms"
 msgid ""
 "Opacity setting is not available since compositing is either disabled\n"
 "or not supported by your Window Manager."
-msgstr "A configuración da opacidade non está dispoñible xa que a composición está desactivada\n ou non a admite o xestor de xanelas."
+msgstr "A configuración da opacidade non está dispoñíbel pois a composición\nestá desactivada ou non é admitida polo xestor de xanelas."
 
 #: ../terminal/terminal-preferences.glade.h:76
 msgid "Show window _borders"
@@ -1317,7 +1317,7 @@ msgstr "Usar o tipo de _letra do sistema"
 
 #: ../terminal/terminal-preferences.glade.h:86
 msgid "Enable this option to use system-wide monospace font."
-msgstr "Active esta opción para usar a letra monoespazada en todo o sistema."
+msgstr "Active esta opción para usar a letra monoespazo en todo o sistema."
 
 #: ../terminal/terminal-preferences.glade.h:87
 msgid "Choose Terminal Font"
@@ -1331,7 +1331,7 @@ msgstr "Permitir te_xto en negra"
 msgid ""
 "Enable this option to allow applications running inside the terminal windows"
 " to use bold text."
-msgstr "Active esta opción para permitir que os aplicativos que se executen dentro da xanela do terminal usen texto en grosa."
+msgstr "Active esta opción para permitir que as aplicacións que se executen dentro da xanela do terminal usen texto en grosa."
 
 #: ../terminal/terminal-preferences.glade.h:90
 msgid ""
@@ -1507,13 +1507,13 @@ msgstr "Xeral"
 
 #: ../terminal/terminal-preferences.glade.h:131
 msgid "B_old text color:"
-msgstr "Cor de letra grosa:"
+msgstr "Cor do texto _groso:"
 
 #: ../terminal/terminal-preferences.glade.h:132
 msgid ""
 "Enable this option to set a custom bold color. If disabled the text color "
 "will be used."
-msgstr "Active esta opción para definir unha cor de letra grosa personalizada. Se está desactivada empregarase a cor do texto."
+msgstr "Active esta opción para definir unha cor personalizada para o texto groso. Se desactivar esta opción empregarase a cor do texto."
 
 #: ../terminal/terminal-preferences.glade.h:133
 msgid "Choose bold font color"
@@ -1527,7 +1527,7 @@ msgstr "Cor de texto _seleccionado:"
 msgid ""
 "Enable this option to set custom text and background colors for the "
 "selection. If disabled the background and text colors will be reversed."
-msgstr "Active esta opción para definir o texto personalizado e as cores de fondo para a selección. Se se desactiva o fondo e as cores do texto serán revertidas."
+msgstr "Active esta opción para definir o texto personalizado e as cores de fondo para a selección. Se desactivar esta opción o fondo e as cores do texto serán revertidas."
 
 #: ../terminal/terminal-preferences.glade.h:136
 msgid "Choose text selection foreground color"
@@ -1545,7 +1545,7 @@ msgstr "Cor do cu_rsor:"
 msgid ""
 "Enable this option to set custom text and background colors for the cursor. "
 "If disabled the background and text colors will be reversed."
-msgstr "Active esta opción para definir o texto personalizado e as cores de fondo para o cursor. Se se desactiva as cores do texto e o fondo serán revertidas."
+msgstr "Active esta opción para definir o texto personalizado e as cores de fondo para o cursor. Se desactivar esta opción as cores do texto e o fondo serán revertidas."
 
 #: ../terminal/terminal-preferences.glade.h:140
 msgid "Choose cursor background color"
@@ -1632,7 +1632,7 @@ msgid ""
 "Enable this option to allow escape sequences such as '\\e[1;35m' to switch "
 "text to bright colors in addition to bold. If disabled, text color will "
 "remain intact."
-msgstr "Active esta opción para permitir que secuencias de escape como '\\e[1; 35m' cambien a letra a cores brillantes alén de grosa. Se está desactivada, a cor da letra permanecerá intacta."
+msgstr "Active esta opción para permitir que secuencias de escape como '\\e[1; 35m' cambien o texto a cores brillantes alén de groso. Se desactivar esta opción a cor do texto permanecerá intacta."
 
 #: ../terminal/terminal-preferences.glade.h:161
 msgid "Palette"
@@ -1652,7 +1652,7 @@ msgid ""
 "incorrectly. They are only here to allow you to work around\n"
 "certain applications and operating systems that expect\n"
 "different terminal behavior."
-msgstr "Estas opcións poden provocar que algúns aplicativos\nse comporten incorrectamente. Están aquí só para\npermitirlle obviar determinados aplicativos e sistemas\noperativos que agardan un comportamento diferente\nda terminal."
+msgstr "Estas opcións poden provocar que algunhas aplicacións\nse comporten incorrectamente. Están aquí só para\npermitirlle obviar determinadas aplicacións e sistemas\noperativos que agardan un comportamento diferente\ndo terminal."
 
 #: ../terminal/terminal-preferences.glade.h:168
 msgid "_Backspace key generates:"
@@ -1727,7 +1727,7 @@ msgstr "Use o clic do medio do rato para abrir os _URLs"
 
 #: ../terminal/terminal-preferences.glade.h:187
 msgid "If disabled, URLs can be opened by Ctrl + left mouse click."
-msgstr "Se está desactivado, os URLs poden ser abertos co Ctrl + clic esquerdo do rato."
+msgstr "Cando se desactiva, os URLs poden ser abertos co Ctrl + clic esquerdo do rato."
 
 #: ../terminal/terminal-preferences.glade.h:188
 msgid "Auto-hi_de mouse pointer"
@@ -1743,7 +1743,7 @@ msgstr "Abrir unha nova lapela á de_reita da lapela activa"
 
 #: ../terminal/terminal-preferences.glade.h:191
 msgid "If disabled, new tab will be opened in the rightmost position."
-msgstr "Se está desactivado, a nova lapela abrirase na posición máis á dereita."
+msgstr "Cando se desactiva, a nova lapela abrirase na posición máis á dereita."
 
 #: ../terminal/terminal-preferences.glade.h:192
 msgid "_Audible bell"
