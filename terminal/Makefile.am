@@ -14,7 +14,8 @@ xfce4_terminal_built_sources = \
 	terminal-enum-types.h \
 	terminal-marshal.c \
 	terminal-marshal.h \
-	terminal-window-ui.h
+	terminal-window-ui.h \
+	terminal-preferences-ui.h
 
 xfce4_terminal_headers = \
 	terminal-app.h \
@@ -78,10 +79,6 @@ if HAVE_UTEMPTER
 xfce4_terminal_LDADD += -lutempter
 endif
 
-uidir = $(datadir)/xfce4/terminal
-ui_DATA = \
-	terminal-preferences.ui
-
 ##
 ## Rules to auto-generate built sources
 ##
@@ -99,7 +96,6 @@ CLEANFILES = \
 	xgen-tmh
 
 DISTCLEANFILES = \
-	$(ui_DATA) \
 	$(xfce4_terminal_built_sources) \
 	stamp-terminal-enum-types.h \
 	stamp-terminal-marshal.h
@@ -107,11 +103,11 @@ DISTCLEANFILES = \
 BUILT_SOURCES = \
 	$(xfce4_terminal_built_sources)
 
-terminal-window-ui.h: Makefile $(srcdir)/terminal-window-ui.xml
-	$(AM_V_GEN) xdt-csource --strip-comments --strip-content --static --name=terminal_window_ui $(srcdir)/terminal-window-ui.xml > terminal-window-ui.h
+terminal-window-ui.h: $(srcdir)/terminal-window-ui.xml Makefile
+	$(AM_V_GEN) xdt-csource --strip-comments --strip-content --static --name=terminal_window_ui $< >$@
 
-terminal-preferences.ui: $(srcdir)/terminal-preferences.glade Makefile
-	$(AM_V_GEN) $(XMLLINT) --nonet --noblanks $< > $@ || cat $< > $@
+terminal-preferences-ui.h: $(srcdir)/terminal-preferences.glade Makefile
+	$(AM_V_GEN) xdt-csource --strip-comments --strip-content --static --name=terminal_preferences_ui $< >$@
 
 terminal-enum-types.h: stamp-terminal-enum-types.h
 	@true
@@ -161,7 +157,6 @@ clean-local:
 	rm -f *.core core core.*
 
 EXTRA_DIST = \
-	$(ui_DATA) \
 	terminal-config.h.in \
 	terminal-marshal.list \
 	terminal-window-ui.xml \

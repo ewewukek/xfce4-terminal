@@ -5,15 +5,16 @@
 # Translators:
 # Andhika Padmawan <andhika.padmawan@gmail.com>, 2010
 # Ardjuna <Asyura.x@gmail.com>, 2013-2014
-# se7entime <se7entime@openmailbox.org>, 2013
-# se7entime <se7entime@openmailbox.org>, 2013
+# se7entime <se7entime@disroot.org>, 2013
+# se7entime <se7entime@disroot.org>, 2013
+# Triyan W. Nugroho <triyan.wn@gmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Apps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-21 18:31+0100\n"
-"PO-Revision-Date: 2019-03-21 17:31+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"PO-Revision-Date: 2020-05-28 15:03+0000\n"
+"Last-Translator: Triyan W. Nugroho <triyan.wn@gmail.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/xfce/xfce-apps/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,7 +106,7 @@ msgstr "mode"
 #. parameter of --color-bg
 #: ../terminal/main.c:136 ../terminal/main.c:138
 msgid "color"
-msgstr ""
+msgstr "warna"
 
 #: ../terminal/main.c:146
 msgid "Window Options"
@@ -352,17 +353,17 @@ msgstr "Opsi \"--initial-title\" membutuhkan penentuan judul awal sebagai parame
 #: ../terminal/terminal-options.c:349 ../terminal/terminal-options.c:368
 #, c-format
 msgid "Option \"%s\" requires specifying the color as its parameter"
-msgstr ""
+msgstr "Opsi \"%s\" membutuhkan penentuan warna sebagai parameternya"
 
 #: ../terminal/terminal-options.c:356 ../terminal/terminal-options.c:375
 #, c-format
 msgid "Unable to parse color: %s"
-msgstr ""
+msgstr "Gagal mengurai warna: %s"
 
 #: ../terminal/terminal-options.c:386
 #, c-format
 msgid "Option \"--display\" requires specifying the X display as its parameter"
-msgstr ""
+msgstr "Opsi \"--display\" membutuhkan penentuan tampilan X sebagai parameternya"
 
 #: ../terminal/terminal-options.c:401
 #, c-format
@@ -439,21 +440,21 @@ msgstr "Tidak dapat menentukan shell login anda."
 
 #: ../terminal/terminal-screen.c:1410
 msgid "_Relaunch"
-msgstr ""
+msgstr "Luncu_r Ulang"
 
 #: ../terminal/terminal-screen.c:1416
 #, c-format
 msgid "The child process exited normally with status %d."
-msgstr ""
+msgstr "Sub-proses keluar secara normal dengan status %d."
 
 #: ../terminal/terminal-screen.c:1418
 #, c-format
 msgid "The child process was aborted by signal %d."
-msgstr ""
+msgstr "Sub-proses dibatalkan oleh sinyal %d."
 
 #: ../terminal/terminal-screen.c:1420
 msgid "The child process was aborted."
-msgstr ""
+msgstr "Sub-proses telah dibatalkan."
 
 #: ../terminal/terminal-screen.c:1426 ../terminal/terminal-window.c:943
 msgid "Do _not ask me again"
@@ -461,7 +462,7 @@ msgstr "Ja_ngan tanya saya lagi"
 
 #: ../terminal/terminal-screen.c:1787
 msgid "Warning: Unsafe Paste"
-msgstr ""
+msgstr "Peringatan: Tempel Tak Aman"
 
 #: ../terminal/terminal-screen.c:1789 ../terminal/terminal-window.c:865
 #: ../terminal/terminal-window.c:2438
@@ -476,7 +477,7 @@ msgstr "_Rekat"
 msgid ""
 "Pasting this text to the terminal may be dangerous as it looks like\n"
 "some commands may be executed, potentially involving root access ('sudo')."
-msgstr ""
+msgstr "Menempel teks ini ke terminal mungkin berbahaya, karena sepertinya\nbeberapa perintah akan dieksekusi, kemungkinan melibatkan akses root ('sudo')."
 
 #: ../terminal/terminal-screen.c:1868 ../terminal/terminal-screen.c:1952
 #: ../terminal/terminal-screen.c:1990
@@ -543,7 +544,7 @@ msgstr "Andhika Padmawan <andhika.padmawan@gmail.com>, 2009.\nKukuh Syafaat <sya
 
 #: ../terminal/terminal-util.c:91
 msgid "Visit Xfce Terminal website"
-msgstr ""
+msgstr "Kunjungi situs web Terminal Xfce"
 
 #: ../terminal/terminal-widget.c:329
 msgid "Copy Email Address"
@@ -676,7 +677,7 @@ msgstr "Pilih _Semua"
 
 #: ../terminal/terminal-window.c:351
 msgid "Copy _Input To All Tabs..."
-msgstr ""
+msgstr "Salin _Masukan Ke Semua Tab..."
 
 #: ../terminal/terminal-window.c:352
 msgid "Pr_eferences..."
@@ -724,7 +725,7 @@ msgstr "Tentukan judu_l..."
 
 #: ../terminal/terminal-window.c:359
 msgid "Set Title Co_lor..."
-msgstr ""
+msgstr "Tentukan Warna Judu_l..."
 
 #: ../terminal/terminal-window.c:360
 msgid "_Find..."
@@ -776,11 +777,11 @@ msgstr "Pindah ke tab berikutnya"
 
 #: ../terminal/terminal-window.c:369
 msgid "Last _Active Tab"
-msgstr ""
+msgstr "Tab _Aktif Terakhir"
 
 #: ../terminal/terminal-window.c:369
 msgid "Switch to last active tab"
-msgstr ""
+msgstr "Pindah ke tab aktif terakhir"
 
 #: ../terminal/terminal-window.c:370
 msgid "Move Tab _Left"
@@ -891,11 +892,11 @@ msgstr "Tutup semua tab?"
 msgid ""
 "There is still a process running.\n"
 "Closing this tab will kill it."
-msgstr ""
+msgstr "Masih ada proses yang berjalan.\nMenutup tab ini akan menghentikannya."
 
 #: ../terminal/terminal-window.c:894
 msgid "Close tab?"
-msgstr ""
+msgstr "Tutup tab?"
 
 #. closing a single tab window, and process running
 #: ../terminal/terminal-window.c:899
@@ -910,15 +911,15 @@ msgstr "Tutup jendela?"
 
 #: ../terminal/terminal-window.c:1881
 msgid "Copy _Input:"
-msgstr ""
+msgstr "Sal_in Masukan:"
 
 #: ../terminal/terminal-window.c:1885
 msgid "Enter the text to be copied to all tabs"
-msgstr ""
+msgstr "Masukkan teks yang akan disalin ke semua tab"
 
 #: ../terminal/terminal-window.c:1893
 msgid "Copy input"
-msgstr ""
+msgstr "Salin masukan"
 
 #: ../terminal/terminal-window.c:2250
 msgid "_Title:"
@@ -930,7 +931,7 @@ msgstr "Masukkan judul untuk tab terminal ini"
 
 #: ../terminal/terminal-window.c:2259
 msgid "Reset"
-msgstr ""
+msgstr "Atur Ulang"
 
 #: ../terminal/terminal-window.c:2269
 msgid "Help"
@@ -942,7 +943,7 @@ msgstr "Tutup"
 
 #: ../terminal/terminal-window.c:2297
 msgid "Choose title color"
-msgstr ""
+msgstr "Pilih warna judul"
 
 #: ../terminal/terminal-window.c:2394
 msgid "Failed to create the regular expression"
@@ -1062,11 +1063,11 @@ msgstr "Tak pernah"
 
 #: ../terminal/terminal-preferences.glade.h:26
 msgid "When focused"
-msgstr ""
+msgstr "Saat fokus"
 
 #: ../terminal/terminal-preferences.glade.h:27
 msgid "When unfocused"
-msgstr ""
+msgstr "Saat keluar fokus"
 
 #: ../terminal/terminal-preferences.glade.h:28
 msgid "Always"
@@ -1109,7 +1110,7 @@ msgstr "_Mutakhirkan catatan utmp/wtmp ketika perintah dijalankan"
 msgid ""
 "Select this option to allow commands that use utmp/wtmp records (such as "
 "`write` or `wall`) to work."
-msgstr ""
+msgstr "Pilih opsi ini untuk mengizinkan perintah yang menggunakan catatan utmp/wtmp (seperti `write` atau `wall`)."
 
 #: ../terminal/terminal-preferences.glade.h:37
 msgid "Run a _custom command instead of my shell"
@@ -1129,11 +1130,11 @@ msgstr "Perintah ters_uai:"
 msgid ""
 "Select this option to make new terminals (tabs or windows) use custom "
 "working directory. Otherwise, current working directory will be used."
-msgstr ""
+msgstr "Pilih opsi ini agar terminal baru (tab atau jendela) menggunakan direktori kerja tersuai. Jika tidak, direktori kerja saat ini akan digunakan."
 
 #: ../terminal/terminal-preferences.glade.h:41
 msgid "_Working directory:"
-msgstr ""
+msgstr "Direktori _Kerja:"
 
 #: ../terminal/terminal-preferences.glade.h:42
 msgid "Command"
@@ -1208,17 +1209,17 @@ msgstr "Se_cara otomatis salin pilihan ke papan klip"
 
 #: ../terminal/terminal-preferences.glade.h:58
 msgid "Show unsafe _paste dialog"
-msgstr ""
+msgstr "Tampilkan dialog _rekat tak aman"
 
 #: ../terminal/terminal-preferences.glade.h:59
 msgid ""
 "Show a dialog that allows to edit text that is considered unsafe for "
 "pasting."
-msgstr ""
+msgstr "Tampilkan sebuah dialog yang mengizinkan untuk menyunting teks yang mungkin berbahaya untuk ditempel."
 
 #: ../terminal/terminal-preferences.glade.h:60
 msgid "Clipboard"
-msgstr ""
+msgstr "Papan klip"
 
 #: ../terminal/terminal-preferences.glade.h:61
 msgid "_General"
@@ -1274,7 +1275,7 @@ msgstr "ms"
 msgid ""
 "Opacity setting is not available since compositing is either disabled\n"
 "or not supported by your Window Manager."
-msgstr ""
+msgstr "Pengaturan kegelapan tidak tersedia karena compositing dinonaktifkan\natau tidak didukung oleh Manajer Jendela."
 
 #: ../terminal/terminal-preferences.glade.h:76
 msgid "Show window _borders"
@@ -1338,23 +1339,23 @@ msgstr "Aktifkan opsi ini agar aplikasi yang berjalan dalam jendela terminal men
 msgid ""
 "Controls whether text in the terminal is allowed to blink when '\\e[5m' "
 "escape codes are used."
-msgstr ""
+msgstr "Mengontrol apakah teks di terminal diizinkan untuk berkedip ketika kode keluar '\\e[5m' digunakan."
 
 #: ../terminal/terminal-preferences.glade.h:91
 msgid "Text blinks:"
-msgstr ""
+msgstr "Teks kedip:"
 
 #: ../terminal/terminal-preferences.glade.h:92
 msgid "Cell spacing:"
-msgstr ""
+msgstr "Spasi sel:"
 
 #: ../terminal/terminal-preferences.glade.h:93
 msgid "x width"
-msgstr ""
+msgstr "lebar x"
 
 #: ../terminal/terminal-preferences.glade.h:94
 msgid "x height"
-msgstr ""
+msgstr "tinggi x"
 
 #: ../terminal/terminal-preferences.glade.h:95
 msgid "Rese_t"
@@ -1362,7 +1363,7 @@ msgstr "A_tur Ulang"
 
 #: ../terminal/terminal-preferences.glade.h:96
 msgid "Reset cell spacing values to defaults"
-msgstr ""
+msgstr "Kembalikan nilai spasi sel ke standar"
 
 #: ../terminal/terminal-preferences.glade.h:97
 msgid "Font"
@@ -1446,7 +1447,7 @@ msgstr "Gunakan gaya ter_suai untuk membuat tab ramping (nyala ulang dibutuhkan)
 
 #: ../terminal/terminal-preferences.glade.h:116
 msgid "Tabs"
-msgstr ""
+msgstr "Tab"
 
 #: ../terminal/terminal-preferences.glade.h:117
 msgid "_Appearance"
@@ -1490,7 +1491,7 @@ msgstr "Pilih warna aktivitas tab"
 
 #: ../terminal/terminal-preferences.glade.h:127
 msgid "_Use system theme colors for text and background"
-msgstr ""
+msgstr "Gunakan warna tema sistem untuk teks dan latar belakang"
 
 #: ../terminal/terminal-preferences.glade.h:128
 msgid "_Vary the background color for each tab"
@@ -1626,14 +1627,14 @@ msgstr "Putih"
 
 #: ../terminal/terminal-preferences.glade.h:159
 msgid "Show bold text in b_right colors"
-msgstr ""
+msgstr "Tampilkan teks tebal dengan warna ce_rah"
 
 #: ../terminal/terminal-preferences.glade.h:160
 msgid ""
 "Enable this option to allow escape sequences such as '\\e[1;35m' to switch "
 "text to bright colors in addition to bold. If disabled, text color will "
 "remain intact."
-msgstr ""
+msgstr "Aktifkan opsi ini untuk mengizinkan sekuensi keluar seperti '\\e[1;35m' untuk mengubah teks ke warna cerah di samping tebal. Jika dinonaktifkan, warna teks tidak diubah."
 
 #: ../terminal/terminal-preferences.glade.h:161
 msgid "Palette"
@@ -1724,11 +1725,11 @@ msgstr "Gunakan klik tengah tetikus untuk _menutup tab"
 
 #: ../terminal/terminal-preferences.glade.h:186
 msgid "Use middle mouse click to open _URLs"
-msgstr ""
+msgstr "Gunakan klik tengah tetikus untuk membuka _URL"
 
 #: ../terminal/terminal-preferences.glade.h:187
 msgid "If disabled, URLs can be opened by Ctrl + left mouse click."
-msgstr ""
+msgstr "Jika dinonaktifkan, URL dapat dibuka dengan Ctrl + klik kiri tetikus."
 
 #: ../terminal/terminal-preferences.glade.h:188
 msgid "Auto-hi_de mouse pointer"
@@ -1744,25 +1745,25 @@ msgstr "Buka tab ba_ru di sebelah kanan tab aktif"
 
 #: ../terminal/terminal-preferences.glade.h:191
 msgid "If disabled, new tab will be opened in the rightmost position."
-msgstr ""
+msgstr "Jika dinonaktifkan, tab baru akan dibuka di posisi paling kanan."
 
 #: ../terminal/terminal-preferences.glade.h:192
 msgid "_Audible bell"
-msgstr ""
+msgstr "Lonceng Su_ara"
 
 #: ../terminal/terminal-preferences.glade.h:193
 msgid "Allows the terminal to play sound to indicate some events."
-msgstr ""
+msgstr "Izinkan terminal memainkan suara untuk menunjukkan even tertentu. "
 
 #: ../terminal/terminal-preferences.glade.h:194
 msgid "_Visual bell"
-msgstr ""
+msgstr "Lonceng _Visual"
 
 #: ../terminal/terminal-preferences.glade.h:195
 msgid ""
 "Allows the terminal to use WM's capability of urgent hint to indicate some "
 "events."
-msgstr ""
+msgstr "Izinkan terminal menggunakan kemampuan petunjuk penting Manajer Jendela untuk menunjukkan beberapa even."
 
 #: ../terminal/terminal-preferences.glade.h:196
 msgid "Misc"
@@ -1778,4 +1779,4 @@ msgstr "Emulator Terminal"
 
 #: ../xfce4-terminal-settings.desktop.in.h:2
 msgid "Configure Xfce Terminal"
-msgstr ""
+msgstr "Konfigurasi Terminal Xfce"

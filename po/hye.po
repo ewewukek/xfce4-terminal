@@ -3,43 +3,44 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Hydonsingore Cia <hydonsingore@educities.edu.tw>, 2005
-# 黃柏諺 <s8321414@gmail.com>, 2016-2019
-# Walter Cheuk <wwycheuk@gmail.com>, 2013-2014
-# 黃柏諺 <s8321414@gmail.com>, 2014
+# Arman Harutyunyan <arman.harut468@gmail.com>, 2020
+# E-Hayq LLC <www.ehayq.am>, 2018
+# Real School <localization@ehayq.am>, 2019-2020
+# Samvel Harutyunyan <samvel@ehayq.am>, 2020
+# Vahe Safaryan <vahe.safaryan@realschool.am>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Apps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-21 18:31+0100\n"
-"PO-Revision-Date: 2019-03-25 00:19+0000\n"
-"Last-Translator: 黃柏諺 <s8321414@gmail.com>\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/xfce/xfce-apps/language/zh_TW/)\n"
+"PO-Revision-Date: 2020-06-04 12:55+0000\n"
+"Last-Translator: Arman Harutyunyan <arman.harut468@gmail.com>\n"
+"Language-Team: Eastern Armenian (http://www.transifex.com/xfce/xfce-apps/language/hye/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_TW\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: hye\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../colorschemes/black-on-white.theme.in.h:1
 msgid "Black on White"
-msgstr "白底黑字"
+msgstr "Սեւ` սպիտակի վրայ"
 
 #: ../colorschemes/dark-pastels.theme.in.h:1
 msgid "Dark Pastels"
-msgstr "深色粉蠟筆"
+msgstr "Գունատ (Մուգ)"
 
 #: ../colorschemes/green-on-black.theme.in.h:1
 msgid "Green on Black"
-msgstr "黑底綠字"
+msgstr "Կանաչ՝ սեւի վրայ"
 
 #: ../colorschemes/solarized-dark.theme.in.h:1
 msgid "Solarized (dark)"
-msgstr "Solarized (暗)"
+msgstr "Արեւային (մուգ)"
 
 #: ../colorschemes/solarized-light.theme.in.h:1
 msgid "Solarized (light)"
-msgstr "Solarized (亮)"
+msgstr "Արեւային (բաց)"
 
 #: ../colorschemes/tango.theme.in.h:1
 msgid "Tango"
@@ -47,7 +48,7 @@ msgstr "Tango"
 
 #: ../colorschemes/white-on-black.theme.in.h:1
 msgid "White on Black"
-msgstr "黑底白字"
+msgstr "Սպիտակ, սեւի վրայ"
 
 #: ../colorschemes/xterm.theme.in.h:1
 msgid "XTerm"
@@ -55,824 +56,824 @@ msgstr "XTerm"
 
 #: ../terminal/main.c:104
 msgid "Usage:"
-msgstr "用法："
+msgstr "Գործածում․"
 
 #: ../terminal/main.c:104
 msgid "OPTION"
-msgstr "選項"
+msgstr "ԸՆՏՐԱՆՔ"
 
 #: ../terminal/main.c:109
 msgid "General Options"
-msgstr "一般選項"
+msgstr "Ընդհանուր ընտրանքներ"
 
 #. parameter of --default-display
 #. parameter of --display
 #: ../terminal/main.c:111 ../terminal/main.c:148
 msgid "display"
-msgstr "display"
+msgstr "ցուցադրիչ"
 
 #. parameter of --default-working-directory
 #. parameter of --working-directory
 #: ../terminal/main.c:113 ../terminal/main.c:134
 msgid "directory"
-msgstr "directory"
+msgstr "նշարան"
 
 #: ../terminal/main.c:117
 msgid "Window or Tab Separators"
-msgstr "視窗或分頁分隔符"
+msgstr "Պատուհանների կամ ներդիրների բաժանարարներ"
 
 #: ../terminal/main.c:124
 msgid "Tab Options"
-msgstr "分頁選項"
+msgstr "Ներդիրների ընտրանքները"
 
 #. parameter of --command
 #: ../terminal/main.c:126
 msgid "command"
-msgstr "command"
+msgstr "հրաման"
 
 #. parameter of --title
 #. parameter of --initial-title
 #: ../terminal/main.c:128 ../terminal/main.c:132
 msgid "title"
-msgstr "title"
+msgstr "անուն"
 
 #. parameter of --dynamic-title-mode
 #: ../terminal/main.c:130
 msgid "mode"
-msgstr "模式"
+msgstr "աշխատակերպ"
 
 #. parameter of --color-text
 #. parameter of --color-bg
 #: ../terminal/main.c:136 ../terminal/main.c:138
 msgid "color"
-msgstr "色彩"
+msgstr "գոյն"
 
 #: ../terminal/main.c:146
 msgid "Window Options"
-msgstr "視窗選項"
+msgstr "Պատուհանի ընտրանքներ"
 
 #. parameter of --geometry
 #: ../terminal/main.c:150
 msgid "geometry"
-msgstr "geometry"
+msgstr "չափեր"
 
 #. parameter of --role
 #: ../terminal/main.c:152
 msgid "role"
-msgstr "role"
+msgstr "նշանակութիւն"
 
 #. parameter of --startup-id
 #: ../terminal/main.c:154
 msgid "string"
-msgstr "string"
+msgstr "տող"
 
 #. parameter of --icon
 #: ../terminal/main.c:156
 msgid "icon"
-msgstr "icon"
+msgstr "պատկերակ"
 
 #. parameter of --font
 #: ../terminal/main.c:158
 msgid "font"
-msgstr "字型"
+msgstr "տառատեսակ"
 
 #. parameter of --zoom
 #: ../terminal/main.c:160
 msgid "zoom"
-msgstr "縮放"
+msgstr "խոշորացում"
 
 #: ../terminal/main.c:162
 #, c-format
 msgid "See the %s man page for full explanation of the options above."
-msgstr "查看 %s 手冊頁面以了解上述選項的完整解釋。"
+msgstr "Այցելէք %s կայք, ընտրանքներին աւելի մանրամասն ծանաւթանալու համար։"
 
 #: ../terminal/main.c:196 ../xfce4-terminal.desktop.in.h:1
 #: ../xfce4-terminal-settings.desktop.in.h:1
 msgid "Xfce Terminal"
-msgstr "Xfce 終端機"
+msgstr "Xfce վահանակ"
 
 #: ../terminal/main.c:212
 msgid "The Xfce development team. All rights reserved."
-msgstr "Xfce 開發團隊。保留所有權利。"
+msgstr "Xfce-ի մշակման խումբ։ Բոլոր իրաւունքները պաշտպանուած են։"
 
 #: ../terminal/main.c:213
 msgid "Written by Benedikt Meurer <benny@xfce.org>,"
-msgstr "撰寫者：Benedikt Meurer <benny@xfce.org>，"
+msgstr "Հեղինակներ․ Բենեդիկտ Միւրեր <benny@xfce.org>,"
 
 #: ../terminal/main.c:214
 msgid "Nick Schermer <nick@xfce.org>"
-msgstr "Nick Schermer <nick@xfce.org>"
+msgstr "Նիք Շերմեր <nick@xfce.org>"
 
 #: ../terminal/main.c:215
 msgid "and Igor Zakharov <f2404@yandex.ru>."
-msgstr "與 Igor Zakharov <f2404@yandex.ru>。"
+msgstr "եւ Իգոր Զախարով <f2404@yandex.ru>."
 
 #: ../terminal/main.c:216
 #, c-format
 msgid "Please report bugs to <%s>."
-msgstr "請回報臭蟲至 <%s>。"
+msgstr "Սխալի դէպքում կարող էք դիմել՝ <%s> հասցէով։"
 
 #: ../terminal/main.c:334
 #, c-format
 msgid "Unable to register terminal service: %s\n"
-msgstr "無法註冊終端機服務：%s\n"
+msgstr "Անհնար է գրանցել վահանակի ծառայութիւնը։ %s\n"
 
 #: ../terminal/terminal-app.c:906
 #, c-format
 msgid "Invalid geometry string \"%s\"\n"
-msgstr "無效的幾何字串 \"%s\"\n"
+msgstr "Չափման անվաւեր \"%s\" տող\n"
 
 #: ../terminal/terminal-app.c:985
 #, c-format
 msgid "Failed to connect to session manager: %s\n"
-msgstr "連線至工作階段管理員時失敗：%s\n"
+msgstr "Չյաջողուեց միանալ նիստի կառավարչին․ %s\n"
 
 #: ../terminal/terminal-encoding-action.c:68
 msgid "Western European"
-msgstr "西歐文字"
+msgstr "Արեւմտաեւրոպական"
 
 #: ../terminal/terminal-encoding-action.c:69
 msgid "Central European"
-msgstr "中歐文字"
+msgstr "Կենտրոնաեւրոպական"
 
 #: ../terminal/terminal-encoding-action.c:70
 msgid "Baltic"
-msgstr "波羅的海文字"
+msgstr "Բալթիկ"
 
 #: ../terminal/terminal-encoding-action.c:71
 msgid "South-Eastern Europe"
-msgstr "東南歐文字"
+msgstr "Հարավ-Արեւելաեւրոպական"
 
 #: ../terminal/terminal-encoding-action.c:72
 msgid "Turkish"
-msgstr "土耳其文"
+msgstr "Թուրքերէն"
 
 #: ../terminal/terminal-encoding-action.c:73
 msgid "Cyrillic"
-msgstr "西里爾文字"
+msgstr "Կիրիլեան"
 
 #: ../terminal/terminal-encoding-action.c:74
 msgid "Chinese Traditional"
-msgstr "中文正體"
+msgstr "Աւանդական չիներէն"
 
 #: ../terminal/terminal-encoding-action.c:75
 msgid "Chinese Simplified"
-msgstr "中文簡體"
+msgstr "Պարզեցուած չիներէն"
 
 #: ../terminal/terminal-encoding-action.c:76
 msgid "Korean"
-msgstr "韓文"
+msgstr "Կորէերէն"
 
 #: ../terminal/terminal-encoding-action.c:77
 msgid "Japanese"
-msgstr "日文"
+msgstr "Ճապոներէն"
 
 #: ../terminal/terminal-encoding-action.c:78
 msgid "Greek"
-msgstr "希臘文"
+msgstr "Հունարէն"
 
 #: ../terminal/terminal-encoding-action.c:79
 msgid "Arabic"
-msgstr "阿拉伯文"
+msgstr "Արաբերէն"
 
 #: ../terminal/terminal-encoding-action.c:80
 msgid "Hebrew"
-msgstr "希伯來文"
+msgstr "Եբրայերէն"
 
 #: ../terminal/terminal-encoding-action.c:81
 msgid "Thai"
-msgstr "泰文"
+msgstr "Թայերէն"
 
 #: ../terminal/terminal-encoding-action.c:82
 msgid "Vietnamese"
-msgstr "越南文"
+msgstr "Վիետնամերէն"
 
 #: ../terminal/terminal-encoding-action.c:83
 msgid "Nordic"
-msgstr "北歐語言"
+msgstr "Հիւսիսային"
 
 #: ../terminal/terminal-encoding-action.c:84
 msgid "Celtic"
-msgstr "塞爾特文"
+msgstr "Սելտիկ"
 
 #: ../terminal/terminal-encoding-action.c:85
 msgid "Romanian"
-msgstr "羅馬尼亞文"
+msgstr "Ռումիներէն"
 
 #: ../terminal/terminal-encoding-action.c:86
 msgid "Armenian"
-msgstr "亞美尼亞文"
+msgstr "Հայերէն"
 
 #: ../terminal/terminal-encoding-action.c:87
 msgid "Georgian"
-msgstr "喬治亞文"
+msgstr "Վրացերէն"
 
 #: ../terminal/terminal-encoding-action.c:88
 msgid "Unicode"
-msgstr "統一碼"
+msgstr "Համահունչ"
 
 #: ../terminal/terminal-encoding-action.c:89
 msgid "Other"
-msgstr "其他"
+msgstr "Այլ"
 
 #. action to reset to the default
 #: ../terminal/terminal-encoding-action.c:273
 #: ../terminal/terminal-encoding-action.c:402
 #, c-format
 msgid "Default (%s)"
-msgstr "預設 (%s)"
+msgstr "Լռելեայն (%s)"
 
 #: ../terminal/terminal-gdbus.c:104
 msgid "User id mismatch"
-msgstr "使用者 ID 不符"
+msgstr "Աւգտագործողի ID-ին՝ չի համապատասխանում"
 
 #: ../terminal/terminal-gdbus.c:110
 msgid "Display mismatch"
-msgstr "顯示不相符"
+msgstr "Ցուցադրել անհամապատասխանութիւնը"
 
 #: ../terminal/terminal-options.c:203
 #, c-format
 msgid ""
 "Option \"--default-display\" requires specifying the default X display as "
 "its parameter"
-msgstr "選項 \"--default-display\" 需要指定預設的 X 螢幕作為其參數"
+msgstr "\"--default-display\" ընտրանքը պահանջում է սահմանել լռելեայն X֊ը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:219
 #, c-format
 msgid ""
 "Option \"--default-working-directory\" requires specifying the default "
 "working directory as its parameter"
-msgstr "選項 \"--default-working-directory\" 需要指定預設的工作目錄作為其參數"
+msgstr "\"--default-working-directory\" ընտրանքը պահանջում է սահմանել, սկզբնադիր աշխատող նշարանը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:236
 #, c-format
 msgid ""
 "Option \"--execute/-x\" requires specifying the command to run on the rest "
 "of the command line"
-msgstr "選項 \"--execute/-x\" 需要指定剩下的命令列中所要執行的命令。"
+msgstr "\"--execute/-x\" ընտրանքը պահանջում է նշել գործարկելի հրամանը"
 
 #: ../terminal/terminal-options.c:253
 #, c-format
 msgid ""
 "Option \"--command/-e\" requires specifying the command to run as its "
 "parameter"
-msgstr "選項 \"--command/-e\" 需要指定命令作為其參數"
+msgstr "\"--command/-e\" ընտրանքը պահանջում է սահմանել գործարկուող հրամանը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:270
 #, c-format
 msgid ""
 "Option \"--working-directory\" requires specifying the working directory as "
 "its parameter"
-msgstr "選項 \"--working-directory\" 需要指定工作目錄作為其參數"
+msgstr "\"--working-directory\" ընտրանքը պահանջում է սահմանել աշխատող նշարանը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:285
 #, c-format
 msgid "Option \"--title/-T\" requires specifying the title as its parameter"
-msgstr "選項 \"--title/-T\" 需要指定標題作為其參數"
+msgstr "\"--title/-T\" ընտրանքը պահանջում է սահմանել անունը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:300
 #, c-format
 msgid ""
 "Option \"--dynamic-title-mode\" requires specifying the dynamic title mode "
 "as its parameter"
-msgstr "選項 \"--dynamic-title-mode\" 需要指定動態標題模式作為其參數"
+msgstr "\"--dynamic-title-mode\" ընտրանքը պահանջում է սահմանել փոփոխուող անունը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:315
 #, c-format
 msgid "Invalid argument for option \"--dynamic-title-mode\": %s"
-msgstr "選項 \"--dynamic-title-mode\" 有無效的參數：%s"
+msgstr "Ընտրանքի անվաւեր յենարկ՝ \"--dynamic-title-mode\"․ %s"
 
 #: ../terminal/terminal-options.c:325
 #, c-format
 msgid ""
 "Option \"--initial-title\" requires specifying the initial title as its "
 "parameter"
-msgstr "選項 \"--initial-title\" 需要指定初始標題作為其參數"
+msgstr "\"--initial-title\" ընտրանքը պահանջում է սահմանել սկզբնանունը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:349 ../terminal/terminal-options.c:368
 #, c-format
 msgid "Option \"%s\" requires specifying the color as its parameter"
-msgstr "選項「%s」必須指定顏色為其參數"
+msgstr "Ընտրանք \"%s\" ֊ը պահանջում է գոյնի բնորոշումը ըստ իր յարաչափի"
 
 #: ../terminal/terminal-options.c:356 ../terminal/terminal-options.c:375
 #, c-format
 msgid "Unable to parse color: %s"
-msgstr "無法解析顏色：%s"
+msgstr "Հնարաւոր չէ վերլուծել գոյնը․ %s"
 
 #: ../terminal/terminal-options.c:386
 #, c-format
 msgid "Option \"--display\" requires specifying the X display as its parameter"
-msgstr "\"--display\" 選項必須指定 X 顯示做為其參數"
+msgstr "Ընտրանք \"--display\" ֊ը պահանջում է X display֊ի բնորոշումը ըստ իւր յարաչափի"
 
 #: ../terminal/terminal-options.c:401
 #, c-format
 msgid ""
 "Option \"--geometry\" requires specifying the window geometry as its "
 "parameter"
-msgstr "選項 \"--geometry\" 需要指定視窗大小作為其參數"
+msgstr "\"--geometry\" ընտրանքը պահանջում է սահմանել պատուհանի չափումը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:416
 #, c-format
 msgid "Option \"--role\" requires specifying the window role as its parameter"
-msgstr "選項 \"--role\" 需要指定視窗識別碼作為其參數"
+msgstr "\"--role\" ընտրանքը պանանջում է սահմանել պատուհանի դերը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:431
 #, c-format
 msgid ""
 "Option \"--sm-client-id\" requires specifying the unique session id as its "
 "parameter"
-msgstr "選項 \"--sm-client-id\" 需要指定獨一的 session id 作為其參數"
+msgstr "\"--sm-client-id\" ընտրանքը պահանջում է սահմանել յատուկ նիստի ID-ն, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:446
 #, c-format
 msgid ""
 "Option \"--startup-id\" requires specifying the startup id as its parameter"
-msgstr "選項 \"--startup-id\" 需要指定啟動 id 作為其參數"
+msgstr "\"--startup-id\" ընտրանքը պահանջում է սահմանել մեկնարկի ID֊ն, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:462
 #, c-format
 msgid ""
 "Option \"--icon/-I\" requires specifying an icon name or filename as its "
 "parameter"
-msgstr "選項 \"--icon/-I\" 需要指定圖示名稱或檔名作為其參數"
+msgstr "\"--icon/-I\" ընտրանքը պահանջում է սահմանել նիշի անունը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:533
 #, c-format
 msgid "Option \"--font\" requires specifying the font name as its parameter"
-msgstr "選項 \"--font\" 需要指定字型名稱作為其參數"
+msgstr "\"--font\" ընտրանքը պահանջում է նշել տառատեսակի անունը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:551
 #, c-format
 msgid "Option \"--zoom\" requires specifying the zoom (%d .. %d) as its parameter"
-msgstr "選項 \"--zoom\" 需要指定縮放等級 (%d .. %d) 作為其參數"
+msgstr "\"--zoom\" ընտրանքը պահանջում է սահմանել (%d .. %d) խոշորացումը, որպէս իւր յարաչափ"
 
 #: ../terminal/terminal-options.c:573
 #, c-format
 msgid "Unknown option \"%s\""
-msgstr "未知的選項 \"%s\""
+msgstr "Անյայտ \"%s\" ընտրանք"
 
 #: ../terminal/terminal-preferences-dialog.c:480
 msgid "All Files"
-msgstr "所有檔案"
+msgstr "Բոլոր նիշերը"
 
 #: ../terminal/terminal-preferences-dialog.c:486
 msgid "Image Files"
-msgstr "影像檔"
+msgstr "Պատկերի նիշերը"
 
 #: ../terminal/terminal-preferences-dialog.c:951
 msgid "Load Presets..."
-msgstr "載入預置設定..."
+msgstr "Տեղադրել նախատրուածները․․․"
 
 #: ../terminal/terminal-preferences.c:1186
 msgid "Terminal"
-msgstr "終端機"
+msgstr "Վահանակ"
 
 #: ../terminal/terminal-screen.c:452 ../terminal/terminal-screen.c:836
 #: ../terminal/terminal-screen.c:2289
 msgid "Untitled"
-msgstr "無標題"
+msgstr "Անանուն"
 
 #: ../terminal/terminal-screen.c:737
 #, c-format
 msgid "Unable to determine your login shell."
-msgstr "無法決定您登入的 shell。"
+msgstr "Անհնար է ճանաչել նիստի վահանակը։"
 
 #: ../terminal/terminal-screen.c:1410
 msgid "_Relaunch"
-msgstr "重新啟動(_R)"
+msgstr "_Վերագոծարկել"
 
 #: ../terminal/terminal-screen.c:1416
 #, c-format
 msgid "The child process exited normally with status %d."
-msgstr "子行程以狀態 %d 正常結束。"
+msgstr "Առաջացած գործընթացն աւարտուել է %d վիճակով։ "
 
 #: ../terminal/terminal-screen.c:1418
 #, c-format
 msgid "The child process was aborted by signal %d."
-msgstr "子行程已被訊號 %d 中斷。"
+msgstr "Առաջացած գործընթացն ընդհատուել է %d ազդանշանով։"
 
 #: ../terminal/terminal-screen.c:1420
 msgid "The child process was aborted."
-msgstr "子行程已被中斷。"
+msgstr "Առաջացած գործընթացն ընդհատուել է։"
 
 #: ../terminal/terminal-screen.c:1426 ../terminal/terminal-window.c:943
 msgid "Do _not ask me again"
-msgstr "不要再問我(_n)"
+msgstr "_Այլեւս չհարցնել"
 
 #: ../terminal/terminal-screen.c:1787
 msgid "Warning: Unsafe Paste"
-msgstr "警告：不安全的貼上"
+msgstr "Զգուշացում․ Անապահով ներդիր"
 
 #: ../terminal/terminal-screen.c:1789 ../terminal/terminal-window.c:865
 #: ../terminal/terminal-window.c:2438
 msgid "_Cancel"
-msgstr "取消(_C)"
+msgstr "_Չեղարկել"
 
 #: ../terminal/terminal-screen.c:1790 ../terminal/terminal-window.c:348
 msgid "_Paste"
-msgstr "貼上(_P)"
+msgstr "_Զետեղել"
 
 #: ../terminal/terminal-screen.c:1794
 msgid ""
 "Pasting this text to the terminal may be dangerous as it looks like\n"
 "some commands may be executed, potentially involving root access ('sudo')."
-msgstr "將此文字貼上至終端機中可能有危險，因為它看起來\n可能會執行某些指令，可能會使用 root 權限 ('sudo')。"
+msgstr "Այս գրոյթի ներածումը վահանակում կարող է լինել վտանգաւոր,\nորոշ հրամանները կարող են լինել գործարկուած, հնարաւոր է ներգրաւում են արմատային մատչում ('sudo'):"
 
 #: ../terminal/terminal-screen.c:1868 ../terminal/terminal-screen.c:1952
 #: ../terminal/terminal-screen.c:1990
 msgid "Failed to execute child"
-msgstr "無法執行子程序"
+msgstr "Չյաջողուեց գործարկել առաջացած գործընթացը"
 
 #: ../terminal/terminal-screen.c:2656
 msgid "Close this tab"
-msgstr "關閉此分頁"
+msgstr "Փակել այս ներդիրը"
 
 #: ../terminal/terminal-screen.c:2709
 #, c-format
 msgid "Failed to set encoding %s\n"
-msgstr "設定編碼 %s 時失敗\n"
+msgstr "Չյաջողուեց սահմանել %s այլագրումը\n"
 
 #: ../terminal/terminal-search-dialog.c:104
 msgid "_Close"
-msgstr "關閉(_C)"
+msgstr "_Փակել"
 
 #: ../terminal/terminal-search-dialog.c:108
 msgid "_Previous"
-msgstr "上一個(_P)"
+msgstr "_Հետ"
 
 #: ../terminal/terminal-search-dialog.c:112
 msgid "_Next"
-msgstr "下一個(_N)"
+msgstr "_Յաջորդը"
 
 #: ../terminal/terminal-search-dialog.c:129
 msgid "_Search for:"
-msgstr "搜尋(_S)："
+msgstr "_Որոնել․"
 
 #: ../terminal/terminal-search-dialog.c:142
 msgid "C_ase sensitive"
-msgstr "區分字母大小寫(_A)"
+msgstr "_Հաշուի առնելով մեծատառերն ու փոքրատառերը"
 
 #: ../terminal/terminal-search-dialog.c:147
 msgid "Match as _regular expression"
-msgstr "比對正規表述式(_R)"
+msgstr "Կիրառել _իբրեւ կանոնաւոր արտայայտութիւն"
 
 #: ../terminal/terminal-search-dialog.c:152
 msgid "Match _entire word only"
-msgstr "僅比對整個單字(_E)"
+msgstr "Որոնել _ամբողջ բառեր"
 
 #: ../terminal/terminal-search-dialog.c:157
 msgid "_Wrap around"
-msgstr "自動換列(_W)"
+msgstr "_Շրջադարձ որոնում"
 
 #: ../terminal/terminal-search-dialog.c:166
 #: ../terminal/terminal-preferences.glade.h:73
 msgid "_Opacity:"
-msgstr "不透明度(_O)："
+msgstr "_Մգութիւն․"
 
 #: ../terminal/terminal-search-dialog.c:355
 msgid "Find"
-msgstr "尋找"
+msgstr "Գտնել"
 
 #: ../terminal/terminal-util.c:80 ../xfce4-terminal-default-apps.xml.in.in.h:1
 msgid "Xfce Terminal Emulator"
-msgstr "Xfce 終端機模擬器"
+msgstr "Xfce վերիրային վահանակ"
 
 #: ../terminal/terminal-util.c:88
 msgid "translator-credits"
-msgstr "Cheng-Chia Tseng <pswo10680@gmail.com>, 2011"
+msgstr "<E-Hayq> LLC, 2018."
 
 #: ../terminal/terminal-util.c:91
 msgid "Visit Xfce Terminal website"
-msgstr "造訪 Xfce 終端機網頁"
+msgstr "Այցելել Xfce վահանակի կայք֊էջ"
 
 #: ../terminal/terminal-widget.c:329
 msgid "Copy Email Address"
-msgstr "複製電子郵件位址"
+msgstr "Պատճէնել էլ֊փոստի հասցէն"
 
 #: ../terminal/terminal-widget.c:330
 msgid "Compose Email"
-msgstr "寫電子郵件"
+msgstr "Գրել նամակ"
 
 #: ../terminal/terminal-widget.c:334
 msgid "Copy Link Address"
-msgstr "複製連結網址"
+msgstr "Պատճէնել յղման հասցէն"
 
 #: ../terminal/terminal-widget.c:335
 msgid "Open Link"
-msgstr "開啟連結"
+msgstr "Բացել յղումը"
 
 #: ../terminal/terminal-widget.c:503
 #, c-format
 msgid ""
 "Unable to drop selection of type text/plain to terminal: Wrong format (%d) "
 "or length (%d)\n"
-msgstr "無法在終端機上放置純文字選取內容：錯誤的格式 (%d) 或長度 (%d)\n"
+msgstr "Հնարաւոր չէ նշուած գրոյթը տեղադրել վահանակում։ Անվաւեր ձեւաչափ (%d) կամ չափս (%d)\n"
 
 #: ../terminal/terminal-widget.c:519
 #, c-format
 msgid ""
 "Unable to drop Mozilla URL on terminal: Wrong format (%d) or length (%d)\n"
-msgstr "無法在終端機上放置 Mozilla 網址：錯誤的格式 (%d) 或長度 (%d)\n"
+msgstr "Հնարաւոր չէ տեղափոխել գերյղումը՝ վահանակ։ Անվաւեր ձեւաչափ (%d) կամ չափս %d)\n"
 
 #: ../terminal/terminal-widget.c:546
 #, c-format
 msgid "Unable to drop URI list on terminal: Wrong format (%d) or length (%d)\n"
-msgstr "無法在終端機上放置網址清單：錯誤的格式 (%d) 或長度 (%d)\n"
+msgstr "Հնարաւոր չէ տեղափոխել URI  ցանկը՝ վահանակ։ Անվաւեր ձեւաչափ (%d) կամ չափս (%d)\n"
 
 #: ../terminal/terminal-widget.c:583
 #, c-format
 msgid "Received invalid color data: Wrong format (%d) or length (%d)\n"
-msgstr "收到無效的顏色資料：錯誤的格式(%d) 或長度 (%d)\n"
+msgstr "Գոյնի անվաւեր տուեալներ․ անվաւեր ձեւաչափ (%d) կամ չափ (%d)\n"
 
 #. tell the user that we were unable to open the responsible application
 #: ../terminal/terminal-widget.c:718
 #, c-format
 msgid "Failed to open the URL '%s'"
-msgstr "無法開啟網址「%s」"
+msgstr "Չյաջողուեց բացել \"%s\" գերյղումը"
 
 #: ../terminal/terminal-window-dropdown.c:283
 msgid "Keep window open when it loses focus"
-msgstr "當視窗失去焦點時仍保持視窗開啟"
+msgstr "Բաց պահել պատուհանը, երբ այն այլեւս նշուած չէ"
 
 #: ../terminal/terminal-window-dropdown.c:409
 msgid "Drop-down Terminal"
-msgstr "下拉式終端機"
+msgstr "Թաքնուած վահանակ"
 
 #: ../terminal/terminal-window-dropdown.c:410
 msgid "Toggle Drop-down Terminal"
-msgstr "切換下拉式終端機"
+msgstr "Փոխանջատել արագ վահանակին"
 
 #: ../terminal/terminal-window.c:335
 msgid "_File"
-msgstr "檔案(_F)"
+msgstr "_Նիշ"
 
 #: ../terminal/terminal-window.c:336
 msgid "Open _Tab"
-msgstr "開啟分頁(_T)"
+msgstr "Նոր _ներդիր"
 
 #: ../terminal/terminal-window.c:336
 msgid "Open a new terminal tab"
-msgstr "開啟新的終端機分頁"
+msgstr "Բացել նոր ներդիր"
 
 #: ../terminal/terminal-window.c:337
 msgid "Open T_erminal"
-msgstr "開啟終端機(_E)"
+msgstr "Նոր _պատուհան"
 
 #: ../terminal/terminal-window.c:337
 msgid "Open a new terminal window"
-msgstr "開啟新的終端機視窗"
+msgstr "Բացել նոր պատուհան"
 
 #: ../terminal/terminal-window.c:338
 msgid "_Undo Close Tab"
-msgstr "復原關閉分頁(_U)"
+msgstr "_Վերականգնել փակ ներդիրը"
 
 #: ../terminal/terminal-window.c:339
 msgid "_Detach Tab"
-msgstr "脫離分頁(_D)"
+msgstr "_Առանձնացնել ներդիրը"
 
 #: ../terminal/terminal-window.c:340 ../terminal/terminal-window.c:907
 msgid "Close T_ab"
-msgstr "關閉分頁(_A)"
+msgstr "Փակել _ներդիրը"
 
 #: ../terminal/terminal-window.c:341
 msgid "Close Other Ta_bs"
-msgstr "關閉其他分頁(_B)"
+msgstr "Փակել այլ ներ_դիրները"
 
 #: ../terminal/terminal-window.c:342 ../terminal/terminal-window.c:914
 msgid "Close _Window"
-msgstr "關閉視窗(_W)"
+msgstr "Փակել _պատուհանը"
 
 #: ../terminal/terminal-window.c:343
 msgid "_Edit"
-msgstr "編輯(_E)"
+msgstr "_Խմբագրում"
 
 #: ../terminal/terminal-window.c:344
 msgid "_Copy"
-msgstr "複製(_C)"
+msgstr "_Պատճէնել"
 
 #: ../terminal/terminal-window.c:344
 msgid "Copy to clipboard"
-msgstr "複製到剪貼簿"
+msgstr "Պատճէնել սեղմատախտակում"
 
 #: ../terminal/terminal-window.c:346
 msgid "Copy as _HTML"
-msgstr "複製為 HTML (_H)"
+msgstr "Պատճէնել _HTML ձեւաչափով"
 
 #: ../terminal/terminal-window.c:346
 msgid "Copy to clipboard as HTML"
-msgstr "複製到剪貼簿為 HTML"
+msgstr "Պատճէնել սեղմատախտակում՝ HTML ձեւաչափով"
 
 #: ../terminal/terminal-window.c:348
 msgid "Paste from clipboard"
-msgstr "從剪貼簿貼上"
+msgstr "Զետեղել սեղմատախտակից"
 
 #: ../terminal/terminal-window.c:349
 msgid "Paste _Selection"
-msgstr "貼上選取內容(_S)"
+msgstr "Զետեղել _ընտրուածը"
 
 #: ../terminal/terminal-window.c:350
 msgid "Select _All"
-msgstr "全選(_A)"
+msgstr "Նշել _ամբողջը"
 
 #: ../terminal/terminal-window.c:351
 msgid "Copy _Input To All Tabs..."
-msgstr "複製輸入到所有分頁……(_I)"
+msgstr "Պատճէնել _ներածումը բոլոր ներդիրներում․․․"
 
 #: ../terminal/terminal-window.c:352
 msgid "Pr_eferences..."
-msgstr "偏好設定(_E)..."
+msgstr "Կար_գաւորումներ..."
 
 #: ../terminal/terminal-window.c:352
 msgid "Open the preferences dialog"
-msgstr "開啟偏好設定對話窗"
+msgstr "Բացել նախընտրութիւնների երկխաւսութիւնը"
 
 #: ../terminal/terminal-window.c:353
 msgid "_View"
-msgstr "檢視(_V)"
+msgstr "_Տեսք"
 
 #: ../terminal/terminal-window.c:354
 msgid "Zoom _In"
-msgstr "拉近(_I)"
+msgstr "_Խոշորացնել"
 
 #: ../terminal/terminal-window.c:354
 msgid "Zoom in with larger font"
-msgstr "以較大的字型拉近"
+msgstr "Խոշորացնել՝ մեծացնելով տառաչափը"
 
 #: ../terminal/terminal-window.c:355
 msgid "Zoom _Out"
-msgstr "拉遠(_O)"
+msgstr "Փոք_րացնել"
 
 #: ../terminal/terminal-window.c:355
 msgid "Zoom out with smaller font"
-msgstr "以較小的字型拉遠"
+msgstr "Փոքրացնել՝ փոքրացնելով տառաչափը"
 
 #: ../terminal/terminal-window.c:356
 msgid "_Normal Size"
-msgstr "正常大小(_N)"
+msgstr "_Սովորական չափ"
 
 #: ../terminal/terminal-window.c:356
 msgid "Zoom to default size"
-msgstr "縮放至預設大小"
+msgstr "Բերել սովորական չափին"
 
 #: ../terminal/terminal-window.c:357
 msgid "_Terminal"
-msgstr "終端機(_T)"
+msgstr "_Վահանակ"
 
 #: ../terminal/terminal-window.c:358
 msgid "_Set Title..."
-msgstr "設定標題(_S)..."
+msgstr "_Անուանել..."
 
 #: ../terminal/terminal-window.c:359
 msgid "Set Title Co_lor..."
-msgstr "設定標題色彩……"
+msgstr "Սահմանել վերնագրի գո_յնը․․․"
 
 #: ../terminal/terminal-window.c:360
 msgid "_Find..."
-msgstr "尋找(_F)..."
+msgstr "_Գտնել..."
 
 #: ../terminal/terminal-window.c:360
 msgid "Search terminal contents"
-msgstr "搜尋終端機內容"
+msgstr "Փնտրել վահանակի բովանդակութիւնը"
 
 #: ../terminal/terminal-window.c:361
 msgid "Find Ne_xt"
-msgstr "尋找下一個(_X)"
+msgstr "Գտնել _յաջորդը"
 
 #: ../terminal/terminal-window.c:362
 msgid "Find Pre_vious"
-msgstr "尋找上一個(_V)"
+msgstr "Գտնել _նախորդը"
 
 #: ../terminal/terminal-window.c:363
 msgid "Sa_ve Contents..."
-msgstr "儲存內容... (_V)"
+msgstr "Պահ_ել բովանդակութիւնը..."
 
 #: ../terminal/terminal-window.c:364 ../terminal/terminal-window.c:2298
 msgid "_Reset"
-msgstr "重設(_R)"
+msgstr "_Վերատեղադրել"
 
 #: ../terminal/terminal-window.c:365
 msgid "_Clear Scrollback and Reset"
-msgstr "清除向回捲動並重設(_C)"
+msgstr "_Մաքրել յետոլորումը եւ վերատեղադրել"
 
 #: ../terminal/terminal-window.c:366
 msgid "T_abs"
-msgstr "分頁(_A)"
+msgstr "Ն_երդիրներ"
 
 #: ../terminal/terminal-window.c:367
 msgid "_Previous Tab"
-msgstr "上一個分頁(_P)"
+msgstr "_Նախկին ներդիրը"
 
 #: ../terminal/terminal-window.c:367
 msgid "Switch to previous tab"
-msgstr "切換到上一個分頁"
+msgstr "Վերադառնալ նախորդ ներդիրին"
 
 #: ../terminal/terminal-window.c:368
 msgid "_Next Tab"
-msgstr "下一個分頁(_N)"
+msgstr "_Յաջորդ ներդիրը"
 
 #: ../terminal/terminal-window.c:368
 msgid "Switch to next tab"
-msgstr "切換到下一個分頁"
+msgstr "Անցնել յաջորդ ներդիրին"
 
 #: ../terminal/terminal-window.c:369
 msgid "Last _Active Tab"
-msgstr "上一個作用中的分頁(_A)"
+msgstr "Վերջին _գործող ներդիրը"
 
 #: ../terminal/terminal-window.c:369
 msgid "Switch to last active tab"
-msgstr "切換到上一個作用中的分頁"
+msgstr "Գնալ դէպի վերջին գործուն սիւնակը"
 
 #: ../terminal/terminal-window.c:370
 msgid "Move Tab _Left"
-msgstr "左移分頁(_L)"
+msgstr "Տեղաշարժել ներդիրը _ձախ"
 
 #: ../terminal/terminal-window.c:371
 msgid "Move Tab _Right"
-msgstr "右移分頁(_R)"
+msgstr "Տեղաշարժել ներդիրը _աջ"
 
 #: ../terminal/terminal-window.c:372
 msgid "_Help"
-msgstr "說明(_H)"
+msgstr "_Աջակցութիւն"
 
 #: ../terminal/terminal-window.c:373
 msgid "_Contents"
-msgstr "目錄(_C)"
+msgstr "_Ձեռնարկ"
 
 #: ../terminal/terminal-window.c:373
 msgid "Display help contents"
-msgstr "顯示說明目錄"
+msgstr "Ցուցադրել աջակցութեան էջը"
 
 #: ../terminal/terminal-window.c:374
 msgid "_About"
-msgstr "關於(_A)"
+msgstr "_Ծրագրի մասին"
 
 #: ../terminal/terminal-window.c:375
 msgid "_Zoom"
-msgstr "縮放(_Z)"
+msgstr "_Խոշորացում"
 
 #: ../terminal/terminal-window.c:380
 msgid "Show _Menubar"
-msgstr "顯示選單列(_M)"
+msgstr "Ցուցադրել _ընտրացանկը"
 
 #: ../terminal/terminal-window.c:380
 msgid "Show/hide the menubar"
-msgstr "顯示/隱藏選單列"
+msgstr "Ցուցադրել/թաքցնել ցանկը"
 
 #: ../terminal/terminal-window.c:381
 msgid "Show _Toolbar"
-msgstr "顯示工作列(_T)"
+msgstr "Ցուցադրել _գործէշերտը"
 
 #: ../terminal/terminal-window.c:381
 msgid "Show/hide the toolbar"
-msgstr "顯示/隱藏工具列"
+msgstr "Ցուցադրել/թաքցնել գործէշերտը "
 
 #: ../terminal/terminal-window.c:382
 msgid "Show Window _Borders"
-msgstr "顯示視窗邊框(_B)"
+msgstr "Ցուցադրել պատուհանի _եզրագծերը"
 
 #: ../terminal/terminal-window.c:382
 msgid "Show/hide the window decorations"
-msgstr "顯示/隱藏視窗裝飾"
+msgstr "Ցուցադրել/թաքցնել պատուհանի եզրագծերը"
 
 #: ../terminal/terminal-window.c:383
 msgid "_Fullscreen"
-msgstr "全螢幕(_F)"
+msgstr "_Ամբողջական ցուցադրիչ"
 
 #: ../terminal/terminal-window.c:383
 msgid "Toggle fullscreen mode"
-msgstr "切換全螢幕模式"
+msgstr "Փոխանջատել ամբողջ ցուցադրիչի աշխատակերպին"
 
 #: ../terminal/terminal-window.c:384
 msgid "_Read-Only"
-msgstr "唯讀(_R)"
+msgstr "_Սոսկընթեռնելի"
 
 #: ../terminal/terminal-window.c:384
 msgid "Toggle read-only mode"
-msgstr "切換唯讀模式"
+msgstr "Փոխանջատել սոսկընթեռնելի աշխատակերպի"
 
 #: ../terminal/terminal-window.c:385
 msgid "Scroll on _Output"
-msgstr "捲動至輸出處(_O)"
+msgstr "Ոլորել գրոյթ _արտածելիս"
 
 #: ../terminal/terminal-window.c:385
 msgid "Toggle scroll on output"
-msgstr "切換捲動至輸出處"
+msgstr "Փոխանջատել «Ոլորել գրոյթ արտածելիս» աշխատակերպին"
 
 #. create encoding action
 #: ../terminal/terminal-window.c:556
 msgid "Set _Encoding"
-msgstr "設定編碼(_E)"
+msgstr "_Սահմանել այլագրում"
 
 #: ../terminal/terminal-window.c:862
 msgid "Warning"
-msgstr "警告"
+msgstr "Զգուշացում"
 
 #. and process running
 #: ../terminal/terminal-window.c:875
 msgid ""
 "There are still processes running in some tabs.\n"
 "Closing this window will kill all of them."
-msgstr "在某些分頁中仍有行程在執行。\n關閉此視窗將會將它們全部砍除。"
+msgstr "Որոշ գործընթացներ դեռ գործարկուում են։\nՊատուհանների փակումը կը դադարեցնի դրանք։"
 
 #. and no process running
 #: ../terminal/terminal-window.c:881
@@ -880,137 +881,137 @@ msgstr "在某些分頁中仍有行程在執行。\n關閉此視窗將會將它�
 msgid ""
 "This window has %d tabs open. Closing this window\n"
 "will also close all its tabs."
-msgstr "這個視窗中有 %d 個分頁。關閉這個視窗會把\n其下分頁全都關閉。"
+msgstr "Պատուհանում բացուած է %d ներդիր։ Պատուհանի փակումը,\nկը փակի բոլոր ներդիրները։"
 
 #: ../terminal/terminal-window.c:885
 msgid "Close all tabs?"
-msgstr "關閉所有分頁？"
+msgstr "Փակե՞լ բոլոր ներդիրները։"
 
 #. closing a tab, and process running
 #: ../terminal/terminal-window.c:892
 msgid ""
 "There is still a process running.\n"
 "Closing this tab will kill it."
-msgstr "仍有行程在執行。\n關閉此分頁將會將它砍除。"
+msgstr "Գործընթացը գործարկուում է։\nՆերդիրի փակումը կը դադարեցնի այն։"
 
 #: ../terminal/terminal-window.c:894
 msgid "Close tab?"
-msgstr "關閉分頁？"
+msgstr "Փակե՞լ ներդիրը։"
 
 #. closing a single tab window, and process running
 #: ../terminal/terminal-window.c:899
 msgid ""
 "There is still a process running.\n"
 "Closing this window will kill it."
-msgstr "仍有行程在執行。\n關閉此視窗將會將它砍除。"
+msgstr "Գործընթացը գործարկուում է։\nՊատուհանի փակումը կը դադարեցնի այն։"
 
 #: ../terminal/terminal-window.c:901
 msgid "Close window?"
-msgstr "關閉視窗？"
+msgstr "Փակե՞լ պատուհանը։"
 
 #: ../terminal/terminal-window.c:1881
 msgid "Copy _Input:"
-msgstr "複製輸入(_I)"
+msgstr "Պատճէնել _ներածումը."
 
 #: ../terminal/terminal-window.c:1885
 msgid "Enter the text to be copied to all tabs"
-msgstr "輸入要複製到所有分頁的文字"
+msgstr "Ներմուծէք գրոյթը, որը պէտք է ներածել բոլոր ներդիրներում"
 
 #: ../terminal/terminal-window.c:1893
 msgid "Copy input"
-msgstr "複製輸入"
+msgstr "Պատճէնել ներածումը"
 
 #: ../terminal/terminal-window.c:2250
 msgid "_Title:"
-msgstr "標題(_T)："
+msgstr "_Անուն․"
 
 #: ../terminal/terminal-window.c:2254
 msgid "Enter the title for the current terminal tab"
-msgstr "請輸入目前終端機分頁的標題"
+msgstr "Մուտքագրել անուն՝ վահանակի ներկայիս ներդիրի համար"
 
 #: ../terminal/terminal-window.c:2259
 msgid "Reset"
-msgstr "重設"
+msgstr "Վերատեղադրել"
 
 #: ../terminal/terminal-window.c:2269
 msgid "Help"
-msgstr "說明"
+msgstr "Աջակցութիւն"
 
 #: ../terminal/terminal-window.c:2275
 msgid "Close"
-msgstr "關閉"
+msgstr "Փակել"
 
 #: ../terminal/terminal-window.c:2297
 msgid "Choose title color"
-msgstr "選擇標題色彩"
+msgstr "Ընտրել վերնագրի գոյնը"
 
 #: ../terminal/terminal-window.c:2394
 msgid "Failed to create the regular expression"
-msgstr "無法建立正規表述式"
+msgstr "Չյաջողուեց ստեղծել կանոնաւոր արտայայտութիւն"
 
 #: ../terminal/terminal-window.c:2435
 msgid "Save contents..."
-msgstr "儲存內容..."
+msgstr "Պահել բովանդակութիւնը..."
 
 #: ../terminal/terminal-window.c:2439
 msgid "_Save"
-msgstr "儲存(_S)"
+msgstr "_Պահել"
 
 #: ../terminal/terminal-window.c:2476
 msgid "Failed to save terminal contents"
-msgstr "儲存終端機內容失敗"
+msgstr "Չյաջողուեց պահել վահանակի բովանդակութիւնը"
 
 #: ../terminal/terminal-preferences.glade.h:1
 msgid "Replaces initial title"
-msgstr "取代初始標題"
+msgstr "Փոխարինում է սկզբնանուանը"
 
 #: ../terminal/terminal-preferences.glade.h:2
 msgid "Goes before initial title"
-msgstr "在初始標題之前"
+msgstr "Սկզբնանունից առաջ"
 
 #: ../terminal/terminal-preferences.glade.h:3
 msgid "Goes after initial title"
-msgstr "在初始標題之後"
+msgstr "Սկզբնանունից յետոյ"
 
 #: ../terminal/terminal-preferences.glade.h:4
 msgid "Isn't displayed"
-msgstr "不顯示"
+msgstr "Չի ցուցադրուում"
 
 #: ../terminal/terminal-preferences.glade.h:5
 msgid "Disabled"
-msgstr "已停用"
+msgstr "Անջատուած է"
 
 #: ../terminal/terminal-preferences.glade.h:6
 msgid "On the left side"
-msgstr "在左邊"
+msgstr "Ձախ կողմում է"
 
 #: ../terminal/terminal-preferences.glade.h:7
 msgid "On the right side"
-msgstr "在右邊"
+msgstr "Աջ կողմում է"
 
 #: ../terminal/terminal-preferences.glade.h:8
 msgid "None (use solid color)"
-msgstr "無(使用固定顏色)"
+msgstr "Ոչինչ (գործածել հոծ գոյն)"
 
 #: ../terminal/terminal-preferences.glade.h:9
 msgid "Background image"
-msgstr "背景圖像"
+msgstr "Յետնապատկեր"
 
 #: ../terminal/terminal-preferences.glade.h:10
 msgid "Transparent background"
-msgstr "透明背景"
+msgstr "Թափանցիկ յետնաշերտ"
 
 #: ../terminal/terminal-preferences.glade.h:11
 msgid "Auto-detect"
-msgstr "自動偵測"
+msgstr "Ինքնայայտնաբերումը"
 
 #: ../terminal/terminal-preferences.glade.h:12
 msgid "ASCII DEL"
-msgstr "ASCII DEL"
+msgstr "ASCII DEL֊ը"
 
 #: ../terminal/terminal-preferences.glade.h:13
 msgid "Escape sequence"
-msgstr "Escape sequence"
+msgstr "Ելքային յաջորդականութիւնը"
 
 #: ../terminal/terminal-preferences.glade.h:14
 msgid "Control-H"
@@ -1018,80 +1019,80 @@ msgstr "Control-H"
 
 #: ../terminal/terminal-preferences.glade.h:15
 msgid "Erase TTY"
-msgstr "抹除 TTY"
+msgstr "Մաքրել հրահանգակը"
 
 #: ../terminal/terminal-preferences.glade.h:16
 msgid "Tiled"
-msgstr "鋪排"
+msgstr "Խորացուած"
 
 #: ../terminal/terminal-preferences.glade.h:17
 msgid "Centered"
-msgstr "置中"
+msgstr "Կենտրոնացուած"
 
 #: ../terminal/terminal-preferences.glade.h:18
 msgid "Scaled"
-msgstr "縮放"
+msgstr "Չափուած"
 
 #: ../terminal/terminal-preferences.glade.h:19
 msgid "Stretched"
-msgstr "延伸"
+msgstr "Ձգուած"
 
 #: ../terminal/terminal-preferences.glade.h:20
 msgid "Block"
-msgstr "區塊"
+msgstr "Փակ"
 
 #: ../terminal/terminal-preferences.glade.h:21
 msgid "I-Beam"
-msgstr "I-Beam"
+msgstr "I-Ճառագայթ"
 
 #: ../terminal/terminal-preferences.glade.h:22
 msgid "Underline"
-msgstr "底線"
+msgstr "Ընդգծուած նշորդ"
 
 #: ../terminal/terminal-preferences.glade.h:23
 msgid "Narrow"
-msgstr "窄"
+msgstr "Նեղ"
 
 #: ../terminal/terminal-preferences.glade.h:24
 msgid "Wide"
-msgstr "寬"
+msgstr "Լայն"
 
 #: ../terminal/terminal-preferences.glade.h:25
 msgid "Never"
-msgstr "從不"
+msgstr "Երբեք"
 
 #: ../terminal/terminal-preferences.glade.h:26
 msgid "When focused"
-msgstr "當取得焦點時"
+msgstr "Երբ նշուած է"
 
 #: ../terminal/terminal-preferences.glade.h:27
 msgid "When unfocused"
-msgstr "當失去焦點時"
+msgstr "Երբ նշուած չէ"
 
 #: ../terminal/terminal-preferences.glade.h:28
 msgid "Always"
-msgstr "總是"
+msgstr "Միշտ"
 
 #: ../terminal/terminal-preferences.glade.h:29
 #: ../xfce4-terminal.desktop.in.h:3
 msgid "Terminal Preferences"
-msgstr "終端機偏好設定"
+msgstr "Վահանակի կարգաւորումներ"
 
 #: ../terminal/terminal-preferences.glade.h:30
 msgid "_Initial title:"
-msgstr "初始標題(_I)："
+msgstr "_Սկզբնանուն."
 
 #: ../terminal/terminal-preferences.glade.h:31
 msgid "_Dynamically-set title:"
-msgstr "動態標題(_D)："
+msgstr "_Փոփոխուող անուն․"
 
 #: ../terminal/terminal-preferences.glade.h:32
 msgid "Title"
-msgstr "標題"
+msgstr "Անուն"
 
 #: ../terminal/terminal-preferences.glade.h:33
 msgid "_Run command as login shell"
-msgstr "如 login shell 般執行指令(_R)"
+msgstr "_Գործարկել հրամանը որպէս նիստի հրահանգակ։"
 
 #: ../terminal/terminal-preferences.glade.h:34
 msgid ""
@@ -1099,553 +1100,553 @@ msgid ""
 " you open new terminals. See the documentation of your shell for details "
 "about differences between running it as interactive shell and running it as "
 "login shell."
-msgstr "選擇此項會強制「終端機」程式在開啟新終端機時，會以 login shell 的方式來運作您的 shell，詳情請見您的 shell 的文件，以得知以 interactive shell 和 login shell 方式運作的差異。"
+msgstr "Թույլատրում է գործարկել  վահանակը որպէս նիստի հրահանգակ, վահանակում  նոր պատուհաններ բացելիս։ Փոխազդող եւ նիստի հրահանգակների միջեւ տարբերութիւնը հասկանալու համար՝ ուսումնասիրէք հրահանգակի նկարագրութիւնը։"
 
 #: ../terminal/terminal-preferences.glade.h:35
 msgid "_Update utmp/wtmp records when command is launched"
-msgstr "當指令執行時更新 utmp/wtmp 紀錄(_U)"
+msgstr "_Թարմացնել utmp/wtmp գրառումները, երբ հրամանը միացուած է"
 
 #: ../terminal/terminal-preferences.glade.h:36
 msgid ""
 "Select this option to allow commands that use utmp/wtmp records (such as "
 "`write` or `wall`) to work."
-msgstr "選擇此選項以允許使用 utmp/wtmp 紀錄（如 'write' 或 'wall'）的指令可以運作。"
+msgstr "Թոյլատրում է հրամաններին աւգտագործել utmp/wtmp գրառումները (աւրինակ՝ `write` կամ `wall`)։"
 
 #: ../terminal/terminal-preferences.glade.h:37
 msgid "Run a _custom command instead of my shell"
-msgstr "執行自訂指令而非我的 shell (_C)"
+msgstr "Գործարկել ընտրովի հրամանը վահանակում՝ հրահանգակի փոխարէն"
 
 #: ../terminal/terminal-preferences.glade.h:38
 msgid ""
 "Select this option to force Terminal to run custom command instead of your "
 "shell when you open new terminals."
-msgstr "選取此選項來強制終端機在您開啟新的終端機時，執行自訂的指令而非您的 shell。"
+msgstr "Թոյլատրում է վահանակի նոր պատուհաններ բացելիս, ընտրովի հրամանները հրահանգակի փոխարէն գործարկել վահանակում։"
 
 #: ../terminal/terminal-preferences.glade.h:39
 msgid "C_ustom command:"
-msgstr "自訂指令(_U)"
+msgstr "Ընտրովի հրա_ման․"
 
 #: ../terminal/terminal-preferences.glade.h:40
 msgid ""
 "Select this option to make new terminals (tabs or windows) use custom "
 "working directory. Otherwise, current working directory will be used."
-msgstr "選擇這個選項來讓新的終端機（分頁或視窗）使用自訂的工作目錄。否則就會使用目前的工作目錄。"
+msgstr "Թոյլատրում է վահանկի նոր (ներդիրներին կամ պատուհաններին) գործածել ընտրովի գործարկուող նշարանը, եթէ ոչ՝ կաւգտագործուի ներկայումս գործարկուող նշարանը։"
 
 #: ../terminal/terminal-preferences.glade.h:41
 msgid "_Working directory:"
-msgstr "工作目錄(_W)："
+msgstr "_Գործարկուող նշարան․"
 
 #: ../terminal/terminal-preferences.glade.h:42
 msgid "Command"
-msgstr "指令"
+msgstr "Հրաման"
 
 #: ../terminal/terminal-preferences.glade.h:43
 msgid "Scroll_back:"
-msgstr "向回捲動(_B)："
+msgstr "_Յետոլորում"
 
 #: ../terminal/terminal-preferences.glade.h:44
 msgid ""
 "Specifies the number of lines that you can scroll back using the scrollbar."
-msgstr "指定您可以用捲動軸向回捲動的行數"
+msgstr "Տողերի քանակը, որոնք կարելի է տեսնել, ոլորագաւտին գործածելիս։"
 
 #: ../terminal/terminal-preferences.glade.h:45
 msgid "Unli_mited scrollback"
-msgstr "無限制捲回(_M)"
+msgstr "Ան_սահմանափակ յետոլորում"
 
 #: ../terminal/terminal-preferences.glade.h:46
 msgid ""
 "This option controls whether the terminal will have no limits on scrollback."
-msgstr "此選項控制了終端機是否可無限制的往上捲動。"
+msgstr "Որոշում է, արդեւաք վահանակը կարող է ունենալ ոլորման անսահմանափակ գաւտի։"
 
 #: ../terminal/terminal-preferences.glade.h:47
 msgid "Scr_ollbar is:"
-msgstr "捲動軸位於(_O)："
+msgstr "Ոլորա_գաւտին․"
 
 #: ../terminal/terminal-preferences.glade.h:48
 msgid "Scroll on ou_tput"
-msgstr "捲動至輸出處(_T)"
+msgstr "Ոլորել գրոյթ _արտածելիս"
 
 #: ../terminal/terminal-preferences.glade.h:49
 msgid ""
 "This option controls whether the terminal will scroll down automatically "
 "whenever new output is generated by the commands running inside the "
 "terminal."
-msgstr "這個選項控制終端機是否自動捲動到最底下。(不論新的輸出是否是由終端機機內執行的指令所產生)"
+msgstr "Որոշում է, արդեւաք վահանակը պէտք է ինքնաշխատաւրէն ոլորի դէպի նոր արդիւնքը։"
 
 #: ../terminal/terminal-preferences.glade.h:50
 msgid "Scroll on _keystroke"
-msgstr "捲動至鍵擊處(_K)"
+msgstr "Ոլորել _ստեղն սեղմելիս"
 
 #: ../terminal/terminal-preferences.glade.h:51
 msgid ""
 "Enables you to press any key on the keyboard to scroll down the terminal "
 "window to the command prompt."
-msgstr "讓您能夠在按下任意鍵時將終端機視窗向下捲動到指令提示。"
+msgstr "Թոյլատրում է սեղմել ցանկացած ստեղն, ոլորելու համար վահանակի պատուհանը` հրամանների գաւտի։"
 
 #: ../terminal/terminal-preferences.glade.h:52
 msgid "Scrolling"
-msgstr "捲動"
+msgstr "Ոլորում"
 
 #: ../terminal/terminal-preferences.glade.h:53
 msgid "Cursor shape:"
-msgstr "游標形狀："
+msgstr "Նշորդի ձեւը․"
 
 #: ../terminal/terminal-preferences.glade.h:54
 msgid "Cursor blinks"
-msgstr "游標閃爍"
+msgstr "Նշորդի թարթում"
 
 #: ../terminal/terminal-preferences.glade.h:55
 msgid "This option controls whether the cursor will be blinking or not."
-msgstr "此選項控制游標是否會閃爍。"
+msgstr "Վերայսկում է նշորդի թարթումը։"
 
 #: ../terminal/terminal-preferences.glade.h:56
 msgid "Cursor"
-msgstr "游標"
+msgstr "Նշորդ"
 
 #: ../terminal/terminal-preferences.glade.h:57
 msgid "Automatically _copy selection to clipboard"
-msgstr "自動複製選取的部份到剪貼簿中(_C)"
+msgstr "Ինքնաշխատաւրէն _պատճէնել նշուածը՝ սեղմատախտակում"
 
 #: ../terminal/terminal-preferences.glade.h:58
 msgid "Show unsafe _paste dialog"
-msgstr "顯示不安全的貼上對話框(_P)"
+msgstr "Ցուցադրել _անապահով ներդիրի երկխաւսութիւնը"
 
 #: ../terminal/terminal-preferences.glade.h:59
 msgid ""
 "Show a dialog that allows to edit text that is considered unsafe for "
 "pasting."
-msgstr "顯示允許編輯被認為是不安全文字的對話框。"
+msgstr "Ցուցադրել երկխաւսութիւն, որը թոյլատրում է խմբագրել ներածման համար անապահով համարուող գրոյթը։"
 
 #: ../terminal/terminal-preferences.glade.h:60
 msgid "Clipboard"
-msgstr "剪貼簿"
+msgstr "Սեղմատախտակ"
 
 #: ../terminal/terminal-preferences.glade.h:61
 msgid "_General"
-msgstr "一般(_G)"
+msgstr "_Ընդհանուր"
 
 #: ../terminal/terminal-preferences.glade.h:62
 msgid "_Keep window open when it loses focus"
-msgstr "當視窗失去焦點時仍保持視窗開啟(_K)"
+msgstr "_Բաց պահել պատուհանը, երբ այն այլեւս նշուած չէ"
 
 #: ../terminal/terminal-preferences.glade.h:63
 msgid "Always keep window on _top"
-msgstr "總是將視窗保持在最頂層(_T)"
+msgstr "Միշտ վերեւում պահել _պատուհանը"
 
 #: ../terminal/terminal-preferences.glade.h:64
 msgid "Use shortcut to _focus visible window"
-msgstr "使用快捷鍵可獲取可見視窗焦點(_F)"
+msgstr "Աւգտագործել դիւրանցումն տեսանելի պատուհանի  _նշման համար"
 
 #: ../terminal/terminal-preferences.glade.h:65
 msgid ""
 "If enabled, the shortcut to open and retract the window will give focus, "
 "rather than closing it, if it has previously lost focus"
-msgstr "若啟用，則開啟視窗與捲收視窗的快捷鍵會引入焦點而不是關閉焦點 (如果之前失去焦點的話)"
+msgstr "Եթէ միացուած է, դիւրանցումը կը բացի եւ կը կենտրոնացնի պատուհանը։"
 
 #: ../terminal/terminal-preferences.glade.h:66
 msgid "Show _status icon in notification area"
-msgstr "在通知區域中顯示狀態圖示(_S)"
+msgstr "Ցուցադրել _վիճակի պատկերակը, ծանուցումների դաշտում"
 
 #: ../terminal/terminal-preferences.glade.h:67
 msgid "Behavior"
-msgstr "行為"
+msgstr "Վարքագիծ"
 
 #: ../terminal/terminal-preferences.glade.h:68
 msgid "Wi_dth:"
-msgstr "寬度(_D)："
+msgstr "_Լայնութիւն․"
 
 #: ../terminal/terminal-preferences.glade.h:69
 msgid "He_ight:"
-msgstr "高度(_I)："
+msgstr "Բարձ_րութիւն․"
 
 #: ../terminal/terminal-preferences.glade.h:70
 msgid "_Always show tabs"
-msgstr "總是顯示分頁(_A)"
+msgstr "_Միշտ ցուցադրել ներդիրները"
 
 #: ../terminal/terminal-preferences.glade.h:71
 msgid "D_uration:"
-msgstr "時間(_U)："
+msgstr "Տեւ_ողութիւն․"
 
 #: ../terminal/terminal-preferences.glade.h:72
 msgid "ms"
-msgstr "ms"
+msgstr "մ/վ"
 
 #: ../terminal/terminal-preferences.glade.h:74
 msgid ""
 "Opacity setting is not available since compositing is either disabled\n"
 "or not supported by your Window Manager."
-msgstr "不透明度設定在合成停用或是不被\n您的視窗管理員支援時不可用。"
+msgstr "Մգութեան կարգաւորումը հասանելի չէ, սկսած բաղադրամասերից, որոնք անջատուած են, կամ չեն աջակցուում Ձեր պատուհանային կառավարչի կողմից։"
 
 #: ../terminal/terminal-preferences.glade.h:76
 msgid "Show window _borders"
-msgstr "顯示視窗邊框(_B)"
+msgstr "Ցուցադրել _պատուհանի սահմանները"
 
 #: ../terminal/terminal-preferences.glade.h:77
 msgid "Appearance and Animation"
-msgstr "外觀與動畫"
+msgstr "Արտաքին տեսք եւ շարժունացում"
 
 #: ../terminal/terminal-preferences.glade.h:78
 msgid "L_eft"
-msgstr "左(_E)"
+msgstr "Ձ_ախ"
 
 #: ../terminal/terminal-preferences.glade.h:79
 msgid "Right"
-msgstr "右"
+msgstr "Աջ"
 
 #: ../terminal/terminal-preferences.glade.h:80
 msgid "U_p"
-msgstr "上(_P)"
+msgstr "Վեր_եւ"
 
 #: ../terminal/terminal-preferences.glade.h:81
 msgid "Down"
-msgstr "下"
+msgstr "Ներքեւ"
 
 #: ../terminal/terminal-preferences.glade.h:82
 msgid "Move to monitor with poi_nter"
-msgstr "移至指標所在的螢幕(_N)"
+msgstr "Սլաքով տեղափոխել _ցուցադրիչի մաւտ"
 
 #: ../terminal/terminal-preferences.glade.h:83
 msgid "Position"
-msgstr "位置"
+msgstr "Դիրք"
 
 #: ../terminal/terminal-preferences.glade.h:84
 msgid "Drop-do_wn"
-msgstr "下拉式(_W)"
+msgstr "Բաց _թողնել"
 
 #: ../terminal/terminal-preferences.glade.h:85
 msgid "Use system _font"
-msgstr "使用系統字型(_F)"
+msgstr "Աւգտագործել լռելեայն _տառատեսակը"
 
 #: ../terminal/terminal-preferences.glade.h:86
 msgid "Enable this option to use system-wide monospace font."
-msgstr "啟用此選項以使用系統設定的等寬字型。"
+msgstr "Թոյլատրում է աւգտագործել լռելեայն Monospace տառատեսակը։"
 
 #: ../terminal/terminal-preferences.glade.h:87
 msgid "Choose Terminal Font"
-msgstr "選擇終端機字型"
+msgstr "Ընտրել վահանակի տառատեսակը"
 
 #: ../terminal/terminal-preferences.glade.h:88
 msgid "Allow bold te_xt"
-msgstr "允許粗體字(_X)"
+msgstr "Թոյլատրել թավ գրոյ_թը"
 
 #: ../terminal/terminal-preferences.glade.h:89
 msgid ""
 "Enable this option to allow applications running inside the terminal windows"
 " to use bold text."
-msgstr "啟用此項使在終端機視窗中執行的應用程式可以使用粗體字"
+msgstr "Թոյլատրում է վահանակում գործող ծրագրերին, գործածել թաւ գրոյթ։"
 
 #: ../terminal/terminal-preferences.glade.h:90
 msgid ""
 "Controls whether text in the terminal is allowed to blink when '\\e[5m' "
 "escape codes are used."
-msgstr "控制在終端機內的文字在使用 '\\e[5m' 跳脫字元時是否應該閃爍。"
+msgstr "Որոշում է, արդեւաք թոյլատրուում է գրոյթի թարթումը \"\\e[5m\" այլագրի աւգտագործման դէպքում։"
 
 #: ../terminal/terminal-preferences.glade.h:91
 msgid "Text blinks:"
-msgstr "文字閃爍："
+msgstr "Գրոյթի թարթում․"
 
 #: ../terminal/terminal-preferences.glade.h:92
 msgid "Cell spacing:"
-msgstr "單位間距："
+msgstr "Վանդակների բացատումը․"
 
 #: ../terminal/terminal-preferences.glade.h:93
 msgid "x width"
-msgstr "x 寬度"
+msgstr "x լայնութիւն"
 
 #: ../terminal/terminal-preferences.glade.h:94
 msgid "x height"
-msgstr "x 高度"
+msgstr "x բարձրութիւն"
 
 #: ../terminal/terminal-preferences.glade.h:95
 msgid "Rese_t"
-msgstr "重設(_T)"
+msgstr "Վերատե_ղադրել"
 
 #: ../terminal/terminal-preferences.glade.h:96
 msgid "Reset cell spacing values to defaults"
-msgstr "重設單位間距為預設值"
+msgstr "Վերատեղադրել վանդակների բացատման լռելեայն արժէքները"
 
 #: ../terminal/terminal-preferences.glade.h:97
 msgid "Font"
-msgstr "字型"
+msgstr "Տառատեսակ"
 
 #: ../terminal/terminal-preferences.glade.h:98
 msgid "_File:"
-msgstr "檔案(_F)："
+msgstr "_Նիշ․"
 
 #: ../terminal/terminal-preferences.glade.h:99
 msgid "St_yle:"
-msgstr "樣式(_Y)："
+msgstr "_Ձեւ․"
 
 #: ../terminal/terminal-preferences.glade.h:100
 msgid "Select Background Image File"
-msgstr "選取背景影像檔"
+msgstr "Ընտրել յետնապատկերը"
 
 #: ../terminal/terminal-preferences.glade.h:101
 msgid "_Shading:"
-msgstr "陰影(_S)："
+msgstr "_Ստուերում"
 
 #: ../terminal/terminal-preferences.glade.h:102
 msgid "Background"
-msgstr "背景"
+msgstr "Յետնաշերտ"
 
 #: ../terminal/terminal-preferences.glade.h:103
 msgid "Display _menubar in new windows"
-msgstr "在新視窗顯示選單列(_M)"
+msgstr "Ցուցադրել _ցանկը նոր պատուհաններում"
 
 #: ../terminal/terminal-preferences.glade.h:104
 msgid ""
 "Enable this option to show the menubar in newly created terminal windows."
-msgstr "啟用此項使新開啟的視窗顯示選單列"
+msgstr "Թոյլատրում է ցուցադրել ընտրացանկը վահանակի նոր պատուհաններում։"
 
 #: ../terminal/terminal-preferences.glade.h:105
 msgid "Display _toolbar in new windows"
-msgstr "在新視窗中顯示工具列(_T)"
+msgstr "Ցուցադրել _գործեշերտը նոր պատուհաններում"
 
 #: ../terminal/terminal-preferences.glade.h:106
 msgid ""
 "Enable this option to show the toolbar in newly created terminal windows."
-msgstr "啟用此項使新建的終端機視窗顯示工具列。"
+msgstr "Թոյլատրում է ցուցադրել գործեշերտը, վահանակի նոր պատուհաններում։"
 
 #: ../terminal/terminal-preferences.glade.h:107
 msgid "Display _borders around new windows"
-msgstr "在新視窗中顯示邊框(_B)"
+msgstr "Ցուցադրել _նոր բացուած պատուհանների եզրագծերը"
 
 #: ../terminal/terminal-preferences.glade.h:108
 msgid ""
 "Enable this option to show window decorations around newly created terminal "
 "windows."
-msgstr "啟用此項使新開啟的視窗顯示邊框"
+msgstr "Թոյլատրում է ցուցադրել պատուհանի եզրագծերը, վահանակի նոր պատուհաններում։"
 
 #: ../terminal/terminal-preferences.glade.h:109
 msgid "Default geometry:"
-msgstr "預設幾何："
+msgstr "Լռելեայն չափեր․"
 
 #: ../terminal/terminal-preferences.glade.h:110
 msgid "c_olumns"
-msgstr "欄(_O)"
+msgstr "ս_իւնակ"
 
 #: ../terminal/terminal-preferences.glade.h:111
 msgid "row_s"
-msgstr "列(_S)"
+msgstr "տո_ղեր"
 
 #: ../terminal/terminal-preferences.glade.h:112
 msgid "Opening New Windows"
-msgstr "正在開啟新視窗"
+msgstr "Նոր պատուհանների բացում"
 
 #: ../terminal/terminal-preferences.glade.h:113
 msgid "Reset tab activity _indicator after"
-msgstr "在多久後重設分頁活動指示器(_I)"
+msgstr "Վերատեղադրել ներդիրի գործածման ցուցիչն ամէն"
 
 #: ../terminal/terminal-preferences.glade.h:114
 msgid "seconds"
-msgstr "秒"
+msgstr "վայրկեանը մեկ"
 
 #: ../terminal/terminal-preferences.glade.h:115
 msgid "Use custom styling to make tabs _slim (restart required)"
-msgstr "使用自訂樣式讓分頁更輕薄（需要重新啟動）(_S)"
+msgstr "Գործածել ընտրովի ձեւաւորումը, ներդիրները _բարակեցնելու համար (անհրաժեշտ է վերագործարկում)"
 
 #: ../terminal/terminal-preferences.glade.h:116
 msgid "Tabs"
-msgstr "分頁"
+msgstr "Ներդիրներ"
 
 #: ../terminal/terminal-preferences.glade.h:117
 msgid "_Appearance"
-msgstr "外觀(_A)"
+msgstr "_Տեսք"
 
 #: ../terminal/terminal-preferences.glade.h:118
 msgid "_Text color:"
-msgstr "文字色彩(_T)："
+msgstr "_Գրոյթի գոյնը․"
 
 #: ../terminal/terminal-preferences.glade.h:119
 msgid "Choose text color"
-msgstr "選擇文字色彩"
+msgstr "Ընտրել գրոյթի գոյնը"
 
 #: ../terminal/terminal-preferences.glade.h:120
 msgid "Color Selector"
-msgstr "顏色選擇器"
+msgstr "Գոյնի որոշիչ"
 
 #: ../terminal/terminal-preferences.glade.h:121
 msgid "Open a dialog to specify the color"
-msgstr "開啟對話窗來指定顏色"
+msgstr "Բացել երկխաւսութիւնը, գոյնի սահմանման համար"
 
 #: ../terminal/terminal-preferences.glade.h:122
 msgid "_Background color:"
-msgstr "背景色彩(_B)："
+msgstr "_Յետնաշերտի գոյնը․"
 
 #: ../terminal/terminal-preferences.glade.h:123
 msgid "Choose background color"
-msgstr "選擇背景色彩"
+msgstr "Ընտրել յետնապատկերի գոյնը"
 
 #: ../terminal/terminal-preferences.glade.h:124
 msgid "Note: Ctrl+click for color editor."
-msgstr "注意：Ctrl + 點選來顯示顏色編輯器。"
+msgstr "Յուշում․ Ctrl+սեղմում՝ գոյների խմբագրիչի բացման համար։"
 
 #: ../terminal/terminal-preferences.glade.h:125
 msgid "Tab activit_y color:"
-msgstr "分頁回動色彩(_Y)："
+msgstr "Ներդիրի նշման _գոյնը․"
 
 #: ../terminal/terminal-preferences.glade.h:126
 msgid "Choose tab activity color"
-msgstr "選擇分頁活動色彩"
+msgstr "Ընտրել գործուն ներդիրի գոյնը"
 
 #: ../terminal/terminal-preferences.glade.h:127
 msgid "_Use system theme colors for text and background"
-msgstr "為文字與背景使用系統主題色彩(_U)"
+msgstr "_Աւգտագործել համակարգի թեմայի գոյները գրոյթի եւ յետնաշերտի համար։"
 
 #: ../terminal/terminal-preferences.glade.h:128
 msgid "_Vary the background color for each tab"
-msgstr "各分頁背景色彩不同(_V)"
+msgstr "_Փոխել յետնաշերտի գոյնը, բոլոր ներդիրների համար"
 
 #: ../terminal/terminal-preferences.glade.h:129
 msgid ""
 "The random color is based on the selected background color, keeping the same"
 " brightness. "
-msgstr "根據所選的背景色彩，在維持相同亮度下的隨機色彩。"
+msgstr "Պատահական գոյնը հիմնուած է յետնապատկերի գոյնի վրայ եւ պահում է նոյն պայծառութիւնը։"
 
 #: ../terminal/terminal-preferences.glade.h:130
 msgid "General"
-msgstr "一般"
+msgstr "Ընդհանուր"
 
 #: ../terminal/terminal-preferences.glade.h:131
 msgid "B_old text color:"
-msgstr "粗體文字色彩(_O)："
+msgstr "Թա_ւ գրոյթի գոյնը․"
 
 #: ../terminal/terminal-preferences.glade.h:132
 msgid ""
 "Enable this option to set a custom bold color. If disabled the text color "
 "will be used."
-msgstr "啟用此選項可設定自訂粗體色彩。如果停用，則會使用文字色彩。"
+msgstr "Թոյլատրում է սահմանել թաւ գրոյթի գոյնը։ Եթե անջատուած է՝ կաւգտագործուի սովորական գրոյթի գոյնը։"
 
 #: ../terminal/terminal-preferences.glade.h:133
 msgid "Choose bold font color"
-msgstr "選擇粗體字型色彩"
+msgstr "Ընտրել թաւ տառատեսակի գոյնը"
 
 #: ../terminal/terminal-preferences.glade.h:134
 msgid "Text _selection color:"
-msgstr "文字選取色彩(_S)："
+msgstr "Գրոյթի _նշման գոյնը․"
 
 #: ../terminal/terminal-preferences.glade.h:135
 msgid ""
 "Enable this option to set custom text and background colors for the "
 "selection. If disabled the background and text colors will be reversed."
-msgstr "啟用此選項來為選取範圍設定自訂文字與背景色彩。如果停用，則背景與文字色彩會回復。"
+msgstr "Թոյլատրում է սահմանել գրոյթի եւ յետնապատկերի նշման գոյները։ Եթե անջատուած է՝ կվերականգնուեն յետնապատկերի եւ գրոյթի նախկին գոյները։"
 
 #: ../terminal/terminal-preferences.glade.h:136
 msgid "Choose text selection foreground color"
-msgstr "選擇文字選取前景色彩"
+msgstr "Ընտրել գրոյթի նշման յետնագոյնը"
 
 #: ../terminal/terminal-preferences.glade.h:137
 msgid "Choose text selection background color"
-msgstr "選擇文字選取背景色彩"
+msgstr "Ընտրել գրոյթի նշման յետնաշերտի գոյնը"
 
 #: ../terminal/terminal-preferences.glade.h:138
 msgid "Cu_rsor color:"
-msgstr "游標色彩(_R)："
+msgstr "Նշորդի _գոյնը․"
 
 #: ../terminal/terminal-preferences.glade.h:139
 msgid ""
 "Enable this option to set custom text and background colors for the cursor. "
 "If disabled the background and text colors will be reversed."
-msgstr "啟用此選項來為游標設定自訂文字與背景色彩。如果停用，則背景與文字色彩會回復。"
+msgstr "Թոյլատրում է սահմանել նշորդի գրոյթի եւ յետնաշերտի գոյները։ Եթէ անջատուած է՝ կը վերականգնուեն յետնաշերտի եւ գրոյթի նախկին գոյները։"
 
 #: ../terminal/terminal-preferences.glade.h:140
 msgid "Choose cursor background color"
-msgstr "選擇游標的背景顏色"
+msgstr "Ընտրել սլաքի յետնաշերտի գոյնը"
 
 #: ../terminal/terminal-preferences.glade.h:141
 msgid "Choose cursor foreground color"
-msgstr "選擇游標的前景顏色"
+msgstr "Ընտրել սլաքի յետնագոյնը"
 
 #: ../terminal/terminal-preferences.glade.h:142
 msgid "Custom Colors"
-msgstr "自訂色彩"
+msgstr "Ընտրովի գոյներ"
 
 #: ../terminal/terminal-preferences.glade.h:143
 msgid "Black"
-msgstr "黑"
+msgstr "Սեւ"
 
 #: ../terminal/terminal-preferences.glade.h:144
 msgid "Dark Gray"
-msgstr "暗灰"
+msgstr "Մուգ-մոխրագոյն"
 
 #: ../terminal/terminal-preferences.glade.h:145
 msgid "Red"
-msgstr "紅"
+msgstr "Կարմիր"
 
 #: ../terminal/terminal-preferences.glade.h:146
 msgid "Light Red"
-msgstr "亮紅"
+msgstr "Բաց-կարմիր"
 
 #: ../terminal/terminal-preferences.glade.h:147
 msgid "Green"
-msgstr "綠"
+msgstr "Կանաչ"
 
 #: ../terminal/terminal-preferences.glade.h:148
 msgid "Light Green"
-msgstr "亮綠"
+msgstr "Բաց-կանաչ"
 
 #: ../terminal/terminal-preferences.glade.h:149
 msgid "Brown / Yellow"
-msgstr "棕/黃"
+msgstr "Շականակագոյն / դեղին"
 
 #: ../terminal/terminal-preferences.glade.h:150
 msgid "Yellow"
-msgstr "黃"
+msgstr "Դեղին"
 
 #: ../terminal/terminal-preferences.glade.h:151
 msgid "Blue"
-msgstr "藍"
+msgstr "Կապոյտ"
 
 #: ../terminal/terminal-preferences.glade.h:152
 msgid "Light Blue"
-msgstr "亮藍"
+msgstr "Բաց-կապոյտ"
 
 #: ../terminal/terminal-preferences.glade.h:153
 msgid "Magenta"
-msgstr "洋紅"
+msgstr "Մանուշակագոյն"
 
 #: ../terminal/terminal-preferences.glade.h:154
 msgid "Light Magenta"
-msgstr "亮洋紅"
+msgstr "Բաց-մանուշակագոյն"
 
 #: ../terminal/terminal-preferences.glade.h:155
 msgid "Cyan"
-msgstr "青"
+msgstr "Փիրուզագոյն"
 
 #: ../terminal/terminal-preferences.glade.h:156
 msgid "Light Cyan"
-msgstr "亮青"
+msgstr "Բաց-փիրուզագոյն"
 
 #: ../terminal/terminal-preferences.glade.h:157
 msgid "Light Gray"
-msgstr "亮灰"
+msgstr "Բաց-մոխրագոյն"
 
 #: ../terminal/terminal-preferences.glade.h:158
 msgid "White"
-msgstr "白"
+msgstr "Սպիտակ"
 
 #: ../terminal/terminal-preferences.glade.h:159
 msgid "Show bold text in b_right colors"
-msgstr "在亮色中顯示粗體字"
+msgstr "Ցուցադրել թաւ գրոյթը _պայծառ գոյներով"
 
 #: ../terminal/terminal-preferences.glade.h:160
 msgid ""
 "Enable this option to allow escape sequences such as '\\e[1;35m' to switch "
 "text to bright colors in addition to bold. If disabled, text color will "
 "remain intact."
-msgstr "啟用此選項以允許轉義序列，如 '\\e[1;35m' 將文字在切換至亮色時外加粗體。若停用，文字色彩將保持不變。"
+msgstr "Թոյլատրում է \"\\e[1;35m\" յաջորդականութեանը դարձնել թաւ գրոյթը՝ պայծառ։ Եթե անջատուած է, գրոյթի գոյնը կը մնայ նոյնը։"
 
 #: ../terminal/terminal-preferences.glade.h:161
 msgid "Palette"
-msgstr "調色盤"
+msgstr "Ներկապնակ"
 
 #: ../terminal/terminal-preferences.glade.h:162
 msgid "Presets"
-msgstr "預置設定"
+msgstr "Նախատրուածներ"
 
 #: ../terminal/terminal-preferences.glade.h:163
 msgid "_Colors"
-msgstr "色彩(_C)"
+msgstr "_Գոյներ"
 
 #: ../terminal/terminal-preferences.glade.h:164
 msgid ""
@@ -1653,129 +1654,129 @@ msgid ""
 "incorrectly. They are only here to allow you to work around\n"
 "certain applications and operating systems that expect\n"
 "different terminal behavior."
-msgstr "這些選項可能導致某些應用程式表現不正常。\n它們只是讓您處理某些特定的應用程式和\n作業系統中對終端機的行為有不同預期這\n件事。"
+msgstr "Այս ընտրանքները, կարող են հանգեցնել որոշ ծրագրերի\nոչ ճիշտ վարքագծին։ Դրանք միայն նախատեսուած են թոյլատրելու համար աշխատանքը,\nվահանակի այլ վարքագիծ պահանջող ծրագրերում\nեւ ԱւՀ֊ներում։"
 
 #: ../terminal/terminal-preferences.glade.h:168
 msgid "_Backspace key generates:"
-msgstr "Backspace 鍵產生(_B)："
+msgstr "_«Յետշարժ» ստեղնը գործարկուում է․"
 
 #: ../terminal/terminal-preferences.glade.h:169
 msgid "_Delete key generates:"
-msgstr "Delete 鍵產生(_D)："
+msgstr "_«Ջնջել» ստեղնը գործարկում է․"
 
 #: ../terminal/terminal-preferences.glade.h:170
 msgid "_Reset compatibility options to defaults"
-msgstr "將相容性選項重設回預設值(_R)"
+msgstr "_Վերատեղադրել համատեղելիութեան սկզբնադիր կարգաւորումները"
 
 #: ../terminal/terminal-preferences.glade.h:171
 msgid "_Ambiguous-width characters:"
-msgstr "非固定寬度字元(_A)："
+msgstr "_Լայնութեան անորոշ նշաններ․"
 
 #: ../terminal/terminal-preferences.glade.h:172
 msgid "Compatibility"
-msgstr "相容性"
+msgstr "Համատեղելիութիւն"
 
 #: ../terminal/terminal-preferences.glade.h:173
 msgid "Co_mpatibility"
-msgstr "相容性(_M)"
+msgstr "Համ_ատեղելիութիւն"
 
 #: ../terminal/terminal-preferences.glade.h:174
 msgid ""
 "Consider the following\n"
 "characters part of a _word\n"
 "when double clicking:"
-msgstr "當點兩下時\n考慮下述的\n字母為單字的一部份：(_W)"
+msgstr "Երկսեղմման ժամանակ՝\nդիտարկել գրանշանները, որպէս\nբառի մաս․"
 
 #: ../terminal/terminal-preferences.glade.h:177
 msgid "Reset double click options to defaults"
-msgstr "將點兩下的選項重設為預設值"
+msgstr "Վերատեղադրել երկսեղմման սկզբնադիր ընտրանքները"
 
 #: ../terminal/terminal-preferences.glade.h:178
 msgid "Double Click"
-msgstr "雙擊"
+msgstr "Երկսեղմում"
 
 #: ../terminal/terminal-preferences.glade.h:179
 msgid "Default character e_ncoding:"
-msgstr "預設字元編碼(_N)："
+msgstr "_Գրանշանների լռելեայն այլագրում․"
 
 #: ../terminal/terminal-preferences.glade.h:180
 msgid "Encoding"
-msgstr "編碼"
+msgstr "Այլագրում"
 
 #: ../terminal/terminal-preferences.glade.h:181
 msgid "Disable all me_nu access keys (such as Alt+f)"
-msgstr "停用所有選單列存取按鍵(像是 Alt+f)(_N)"
+msgstr "Անջատել _ցանկի  հասանելիութեան բոլոր ստեղները (աւրինակ՝ Alt+f֊ը)"
 
 #: ../terminal/terminal-preferences.glade.h:182
 msgid "Disable m_enu shortcut key (F10 by default)"
-msgstr "停用選單快捷鍵（預設為 F10）(_E)"
+msgstr "Անջատել ցա_նկի դիւրանցման կոճակները (լռելեայն` F10)"
 
 #: ../terminal/terminal-preferences.glade.h:183
 msgid "Disable _help window shortcut key (F1 by default)"
-msgstr "停用說明視窗快捷鍵（預設為 F1）(_H)"
+msgstr "Անջատել _աջակցութեան պատուհանի դիւրանցման ստեղնը (լռելեայն F1)"
 
 #: ../terminal/terminal-preferences.glade.h:184
 msgid "Shortcuts"
-msgstr "快捷鍵"
+msgstr "Դիւրանցումներ"
 
 #: ../terminal/terminal-preferences.glade.h:185
 msgid "Use _middle mouse click to close tabs"
-msgstr "使用滑鼠中鍵點選以關閉分頁(_M)"
+msgstr "Գործածել _անիւը, ներդիրներ փակելու համար"
 
 #: ../terminal/terminal-preferences.glade.h:186
 msgid "Use middle mouse click to open _URLs"
-msgstr "使用滑鼠中鍵點選以開啟 URL (_U)"
+msgstr "Գործածել անիւը, _գերյղումներ բացելու համար"
 
 #: ../terminal/terminal-preferences.glade.h:187
 msgid "If disabled, URLs can be opened by Ctrl + left mouse click."
-msgstr "若停用，URL 可以透過 Ctrl + 左鍵點選來開啟。"
+msgstr "Եթէ անջատուած է, գերյղումները կարելի կը լինի Ctrl + մկնիկի ձախ սեղմակ։"
 
 #: ../terminal/terminal-preferences.glade.h:188
 msgid "Auto-hi_de mouse pointer"
-msgstr "自動隱藏滑鼠游標(_D)"
+msgstr "Ինքնաթա_քցնել մկնիկի ցուցիչը"
 
 #: ../terminal/terminal-preferences.glade.h:189
 msgid "Re_wrap terminal contents on resize"
-msgstr "在調整大小時重新換行終端機內容(_W)"
+msgstr "_Վահանակը չափափոխելիս՝  չափափոխել նաեւ բովանդակութիւնը"
 
 #: ../terminal/terminal-preferences.glade.h:190
 msgid "Open new tab to the _right of the active tab"
-msgstr "在作用中分頁的右邊開啟新分頁(_R)"
+msgstr "Բացել նոր ներդիրը _գործուն ներդիրից աջ"
 
 #: ../terminal/terminal-preferences.glade.h:191
 msgid "If disabled, new tab will be opened in the rightmost position."
-msgstr "若停用，新分頁將會在最右邊的位置開啟。"
+msgstr "Եթէ անջատուած է, ապա նոր ներդիրը կը բացուի ճշգրիտ կողմում։"
 
 #: ../terminal/terminal-preferences.glade.h:192
 msgid "_Audible bell"
-msgstr "響鈴(_A)"
+msgstr "_Ձայնային ծանուցում"
 
 #: ../terminal/terminal-preferences.glade.h:193
 msgid "Allows the terminal to play sound to indicate some events."
-msgstr "允許終端機播放音像來指示一些活動。"
+msgstr "Թոյլ է տալիս վահանակին ուղարկել ձայնային ծանուցումներ։"
 
 #: ../terminal/terminal-preferences.glade.h:194
 msgid "_Visual bell"
-msgstr "視覺響鈴(_V)"
+msgstr "_Տեսական ծանուցում"
 
 #: ../terminal/terminal-preferences.glade.h:195
 msgid ""
 "Allows the terminal to use WM's capability of urgent hint to indicate some "
 "events."
-msgstr "允許終端機使用視窗管理員的緊急通知功能來指出一些活動。"
+msgstr "Հնարաւորութիւն է տալիս վահանակին, գործածել WM համատեղելիութիւնը։"
 
 #: ../terminal/terminal-preferences.glade.h:196
 msgid "Misc"
-msgstr "雜項"
+msgstr "Այլ"
 
 #: ../terminal/terminal-preferences.glade.h:197
 msgid "Ad_vanced"
-msgstr "進階(_V)"
+msgstr "Յ_առաջացած"
 
 #: ../xfce4-terminal.desktop.in.h:2
 msgid "Terminal Emulator"
-msgstr "終端機程式"
+msgstr "Վերիրային վահանակ"
 
 #: ../xfce4-terminal-settings.desktop.in.h:2
 msgid "Configure Xfce Terminal"
-msgstr "設定 Xfce 終端機"
+msgstr "Կազմաձեւել Xfce Վահանակը"

@@ -65,6 +65,10 @@
 /* taken from gnome-terminal (terminal-screen.c) */
 #define SPAWN_TIMEOUT (30 * 1000 /* 30 s*/)
 
+/* minimum terminal dimensions */
+#define MIN_COLUMNS 4
+#define MIN_ROWS    1
+
 
 
 enum
@@ -161,7 +165,8 @@ static void       terminal_screen_set_tab_label_color           (TerminalScreen 
 static GtkWidget* terminal_screen_unsafe_paste_dialog_new       (TerminalScreen        *screen,
                                                                  const gchar           *text);
 static void       terminal_screen_paste_unsafe_text             (TerminalScreen        *screen,
-                                                                 const gchar           *text);
+                                                                 const gchar           *text,
+                                                                 GdkAtom                original_clipboard);
 
 
 
@@ -1795,10 +1800,14 @@ terminal_screen_unsafe_paste_dialog_new (TerminalScreen *screen,
 
 static void
 terminal_screen_paste_unsafe_text (TerminalScreen *screen,
-                                   const gchar    *text)
+                                   const gchar    *text,
+                                   GdkAtom         original_clipboard)
 {
-  GtkWidget *dialog = terminal_screen_unsafe_paste_dialog_new (screen, text);
+  GtkWidget *dialog;
 
+  terminal_return_if_fail (original_clipboard != GDK_SELECTION_CLIPBOARD && original_clipboard != GDK_SELECTION_PRIMARY);
+
+  dialog = terminal_screen_unsafe_paste_dialog_new (screen, text);
   gtk_widget_show_all (dialog);
   /* set focus to the Paste button */
   gtk_widget_grab_focus (gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES));
@@ -1817,14 +1826,21 @@ terminal_screen_paste_unsafe_text (TerminalScreen *screen,
 
       if (res_text != NULL)
         {
-          /* convert LF to CR before feeding: see https://gitlab.gnome.org/GNOME/vte/issues/106 */
-          size_t i;
-          for (i = 0; i < strlen (res_text); ++i)
-            if (res_text[i] == '\x0A')
-              res_text[i] = '\x0D';
-
-          vte_terminal_feed_child (VTE_TERMINAL (screen->terminal), res_text, strlen (res_text));
+          /* Modify the content of the clipboard as required, and then paste it.
+           * Using the builtin pasting function enables bracketed paste mode when applicable.
+           */
+          GtkClipboard *clipboard = gtk_clipboard_get (original_clipboard);
+          gtk_clipboard_set_text (clipboard, res_text, strlen (res_text));
           g_free (res_text);
+
+          if (original_clipboard == GDK_SELECTION_CLIPBOARD) {
+            vte_terminal_paste_clipboard (VTE_TERMINAL (screen->terminal));
+          } else {
+            vte_terminal_paste_primary (VTE_TERMINAL (screen->terminal));
+          }
+
+          /* restore original clipboard contents */
+          gtk_clipboard_set_text (clipboard, text, strlen (text));
         }
     }
 
@@ -2153,8 +2169,8 @@ terminal_screen_set_window_geometry_hints (TerminalScreen *screen,
 
   hints.width_inc = char_width;
   hints.height_inc = char_height;
-  hints.min_width = hints.base_width + hints.width_inc * 4;
-  hints.min_height = hints.base_height + hints.height_inc * 2;
+  hints.min_width = hints.base_width + hints.width_inc * MIN_COLUMNS;
+  hints.min_height = hints.base_height + hints.height_inc * MIN_ROWS;
 
   gtk_window_set_geometry_hints (window,
 #if GTK_CHECK_VERSION (3, 19, 5)
@@ -2464,7 +2480,7 @@ terminal_screen_paste_clipboard (TerminalScreen *screen)
   g_object_get (G_OBJECT (screen->preferences), "misc-show-unsafe-paste-dialog", &show_dialog, NULL);
 
   if (show_dialog && terminal_screen_is_text_unsafe (text))
-    terminal_screen_paste_unsafe_text (screen, text);
+    terminal_screen_paste_unsafe_text (screen, text, GDK_SELECTION_CLIPBOARD);
   else
     vte_terminal_paste_clipboard (VTE_TERMINAL (screen->terminal));
 
@@ -2493,7 +2509,7 @@ terminal_screen_paste_primary (TerminalScreen *screen)
   g_object_get (G_OBJECT (screen->preferences), "misc-show-unsafe-paste-dialog", &show_dialog, NULL);
 
   if (show_dialog && terminal_screen_is_text_unsafe (text))
-    terminal_screen_paste_unsafe_text (screen, text);
+    terminal_screen_paste_unsafe_text (screen, text, GDK_SELECTION_PRIMARY);
   else
     vte_terminal_paste_primary (VTE_TERMINAL (screen->terminal));
 
