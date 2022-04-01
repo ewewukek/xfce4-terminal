@@ -57,10 +57,8 @@ static void     terminal_preferences_dialog_palette_changed   (GtkWidget        
                                                                TerminalPreferencesDialog *dialog);
 static void     terminal_preferences_dialog_palette_notify    (TerminalPreferencesDialog *dialog);
 static void     terminal_preferences_dialog_presets_load      (TerminalPreferencesDialog *dialog);
-#if VTE_CHECK_VERSION (0, 51, 3)
 static void     terminal_preferences_dialog_reset_cell_scale  (GtkWidget                 *button,
                                                                TerminalPreferencesDialog *dialog);
-#endif
 static void     terminal_preferences_dialog_reset_compat      (GtkWidget                 *button,
                                                                TerminalPreferencesDialog *dialog);
 static void     terminal_preferences_dialog_reset_word_chars  (GtkWidget                 *button,
@@ -168,7 +166,7 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
   const gchar      *props_active[] = { "title-mode", "command-login-shell",
                                        "command-update-records", "run-custom-command",
                                        "use-default-working-dir", "scrolling-on-output",
-                                       "scrolling-on-keystroke", "scrolling-bar",
+                                       "scrolling-on-keystroke", "scrolling-bar", "overlay-scrolling",
                                        "scrolling-unlimited", "misc-cursor-shape",
                                        "misc-cursor-blinks", "font-allow-bold",
                                        "font-use-system", "text-blink-mode",
@@ -187,7 +185,7 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
                                        "dropdown-keep-open-default", "dropdown-keep-above",
                                        "dropdown-toggle-focus", "dropdown-status-icon",
                                        "dropdown-move-to-active", "dropdown-always-show-tabs",
-                                       "dropdown-show-borders"
+                                       "dropdown-show-borders", "misc-right-click-action"
                                      };
   const gchar      *props_color[] =  { "color-foreground", "color-background",
                                        "tab-activity-color", "color-cursor-foreground",
@@ -272,7 +270,6 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
   gtk_widget_hide (GTK_WIDGET (object));
 #endif
 
-#if VTE_CHECK_VERSION (0, 51, 3)
   /* bind cell width scale */
   object = gtk_builder_get_object (GTK_BUILDER (dialog), "spin-cell-width-scale");
   object2 = G_OBJECT (gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (object)));
@@ -296,22 +293,6 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
   terminal_return_if_fail (G_IS_OBJECT (object));
   g_signal_connect (object, "clicked",
                     G_CALLBACK (terminal_preferences_dialog_reset_cell_scale), dialog);
-#else
-  /* hide "Text blinks" if vte doesn't support it */
-  object = gtk_builder_get_object (GTK_BUILDER (dialog), "box-text-blink");
-  terminal_return_if_fail (G_IS_OBJECT (object));
-  gtk_widget_hide (GTK_WIDGET (object));
-
-  /* hide "Cell spacing" if vte doesn't support it */
-  object = gtk_builder_get_object (GTK_BUILDER (dialog), "cell-sp-box");
-  terminal_return_if_fail (G_IS_OBJECT (object));
-  gtk_widget_hide (GTK_WIDGET (object));
-
-  /* hide "Bold is bright" if vte doesn't support it */
-  object = gtk_builder_get_object (GTK_BUILDER (dialog), "color-bold-is-bright");
-  terminal_return_if_fail (G_IS_OBJECT (object));
-  gtk_widget_hide (GTK_WIDGET (object));
-#endif
 
 #if VTE_CHECK_VERSION (0, 58, 0)
   /* hide "Rewrap on resize" if vte's support for it has been dropped */
@@ -970,7 +951,6 @@ terminal_preferences_dialog_presets_load (TerminalPreferencesDialog *dialog)
 
 
 
-#if VTE_CHECK_VERSION (0, 51, 3)
 static void
 terminal_preferences_dialog_reset_cell_scale (GtkWidget                 *button,
                                               TerminalPreferencesDialog *dialog)
@@ -978,7 +958,6 @@ terminal_preferences_dialog_reset_cell_scale (GtkWidget                 *button,
   const gchar *properties[] = { "cell-width-scale", "cell-height-scale" };
   RESET_PROPERTIES (properties);
 }
-#endif
 
 
 

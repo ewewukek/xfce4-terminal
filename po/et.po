@@ -4,13 +4,13 @@
 # 
 # Translators:
 # Kristjan Siimson <epost@ksiimson.se>, 2008
-# Priit Jõerüüt <transifex@joeruut.com>, 2020
+# Priit Jõerüüt <transifex@joeruut.com>, 2020-2022
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Apps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-20 12:48+0200\n"
-"PO-Revision-Date: 2020-10-29 22:43+0000\n"
+"POT-Creation-Date: 2022-01-12 12:52+0100\n"
+"PO-Revision-Date: 2022-01-13 22:00+0000\n"
 "Last-Translator: Priit Jõerüüt <transifex@joeruut.com>\n"
 "Language-Team: Estonian (http://www.transifex.com/xfce/xfce-apps/language/et/)\n"
 "MIME-Version: 1.0\n"
@@ -157,29 +157,33 @@ msgid "Written by Benedikt Meurer <benny@xfce.org>,"
 msgstr "Kirjutatud Benedikt Meurer <benny@xfce.org>,"
 
 #: ../terminal/main.c:214
-msgid "Nick Schermer <nick@xfce.org>"
-msgstr "Nick Schermer <nick@xfce.org>"
+msgid "Nick Schermer <nick@xfce.org>,"
+msgstr "Nick Schermer <nick@xfce.org>,"
 
 #: ../terminal/main.c:215
-msgid "and Igor Zakharov <f2404@yandex.ru>."
-msgstr "ja Igor Zakharov <f2404@yandex.ru> poolt."
+msgid "Igor Zakharov <f2404@yandex.ru>,"
+msgstr "Igor Zakharov <f2404@yandex.ru>,"
 
 #: ../terminal/main.c:216
+msgid "Sergios - Anestis Kefalidis <sergioskefalidis@gmail.com>."
+msgstr "Sergios - Anestis Kefalidis <sergioskefalidis@gmail.com>."
+
+#: ../terminal/main.c:217
 #, c-format
 msgid "Please report bugs to <%s>."
 msgstr "Palun teata vigadest <%s>."
 
-#: ../terminal/main.c:334
+#: ../terminal/main.c:330
 #, c-format
 msgid "Unable to register terminal service: %s\n"
 msgstr "Terminaliteenust ei saanud registreerida: %s\n"
 
-#: ../terminal/terminal-app.c:928
+#: ../terminal/terminal-app.c:927
 #, c-format
 msgid "Invalid geometry string \"%s\"\n"
 msgstr "Vigane geomeetria sõne „%s”\n"
 
-#: ../terminal/terminal-app.c:1008
+#: ../terminal/terminal-app.c:1007
 #, c-format
 msgid "Failed to connect to session manager: %s\n"
 msgstr "Ühendus sessioonihalduriga ebaõnnestus: %s\n"
@@ -274,7 +278,7 @@ msgstr "Muud"
 
 #. action to reset to the default
 #: ../terminal/terminal-encoding-action.c:273
-#: ../terminal/terminal-encoding-action.c:402
+#: ../terminal/terminal-encoding-action.c:401
 #, c-format
 msgid "Default (%s)"
 msgstr "Vaikimisi (%s)"
@@ -287,204 +291,235 @@ msgstr "Kasutajatunnus ei kattu"
 msgid "Display mismatch"
 msgstr "Sellist ekraani pole"
 
-#: ../terminal/terminal-options.c:203
+#: ../terminal/terminal-options.c:250
 #, c-format
 msgid ""
 "Option \"--default-display\" requires specifying the default X display as "
 "its parameter"
 msgstr "Valik „--default-display” vajab parameetrina määratletud vaikimisi X-i ekraani"
 
-#: ../terminal/terminal-options.c:219
+#: ../terminal/terminal-options.c:266
 #, c-format
 msgid ""
 "Option \"--default-working-directory\" requires specifying the default "
 "working directory as its parameter"
 msgstr "Valik „--default-working-directory” vajab parameetrina määratletud vaikimisi töökataloogi"
 
-#: ../terminal/terminal-options.c:236
+#: ../terminal/terminal-options.c:283
 #, c-format
 msgid ""
 "Option \"--execute/-x\" requires specifying the command to run on the rest "
-"of the command line"
-msgstr "Valik „--execute/-x” vajab ülejäänud käsureal käivitamiseks määratletud käsku"
+"of the command line separated from \"--execute/-x\""
+msgstr "Valik „--execute/-x“ eeldab käsureal käivitatava käsu kirjeldamist väljaspool „--execute/-x“ konteksti"
 
-#: ../terminal/terminal-options.c:253
+#: ../terminal/terminal-options.c:301
 #, c-format
 msgid ""
 "Option \"--command/-e\" requires specifying the command to run as its "
 "parameter"
 msgstr "Valik  „--command/-e” vajab parameetrina käivitatavat käsku"
 
-#: ../terminal/terminal-options.c:270
+#: ../terminal/terminal-options.c:318
 #, c-format
 msgid ""
 "Option \"--working-directory\" requires specifying the working directory as "
 "its parameter"
 msgstr "Valik „--working-directory” vajab parameetrina määratletud töökataloogi"
 
-#: ../terminal/terminal-options.c:285
+#: ../terminal/terminal-options.c:333
 #, c-format
 msgid "Option \"--title/-T\" requires specifying the title as its parameter"
 msgstr "Valik Option „--title/-T” vajab parameetrina määratletud pealkirja"
 
-#: ../terminal/terminal-options.c:300
+#: ../terminal/terminal-options.c:348
 #, c-format
 msgid ""
 "Option \"--dynamic-title-mode\" requires specifying the dynamic title mode "
 "as its parameter"
 msgstr "Valik \"--dynamic-title-mode\" eeldab, et parameetriks on märgitud akna dünaamilise pealkirja režiim"
 
-#: ../terminal/terminal-options.c:315
+#: ../terminal/terminal-options.c:363
 #, c-format
 msgid "Invalid argument for option \"--dynamic-title-mode\": %s"
 msgstr "Vigane argument käsureavõtmele \"--dynamic-title-mode\": %s"
 
-#: ../terminal/terminal-options.c:325
+#: ../terminal/terminal-options.c:373
 #, c-format
 msgid ""
 "Option \"--initial-title\" requires specifying the initial title as its "
 "parameter"
 msgstr "Valik \"--initial-title\" eeldab, et parameetriks on märgitud akna algse pealkirja nimi"
 
-#: ../terminal/terminal-options.c:349 ../terminal/terminal-options.c:368
+#: ../terminal/terminal-options.c:397 ../terminal/terminal-options.c:416
 #, c-format
 msgid "Option \"%s\" requires specifying the color as its parameter"
 msgstr "Valik \"%s\" eeldab, et parameetriks on märgitud värv"
 
-#: ../terminal/terminal-options.c:356 ../terminal/terminal-options.c:375
+#: ../terminal/terminal-options.c:404 ../terminal/terminal-options.c:423
 #, c-format
 msgid "Unable to parse color: %s"
 msgstr "Värvi parsimine ebaõnnestus: %s"
 
-#: ../terminal/terminal-options.c:386
+#: ../terminal/terminal-options.c:434
 #, c-format
 msgid "Option \"--display\" requires specifying the X display as its parameter"
 msgstr "Valik \"--display\" eeldab, et parameetriks on märgitud X ekraan"
 
-#: ../terminal/terminal-options.c:401
+#: ../terminal/terminal-options.c:449
 #, c-format
 msgid ""
 "Option \"--geometry\" requires specifying the window geometry as its "
 "parameter"
 msgstr "Valik „--geometry” vajab parameetrina määratletud aknageomeetriat"
 
-#: ../terminal/terminal-options.c:416
+#: ../terminal/terminal-options.c:464
 #, c-format
 msgid "Option \"--role\" requires specifying the window role as its parameter"
 msgstr "Valik „--role” vajab parameetrina määratletud aknarolli"
 
-#: ../terminal/terminal-options.c:431
+#: ../terminal/terminal-options.c:479
 #, c-format
 msgid ""
 "Option \"--sm-client-id\" requires specifying the unique session id as its "
 "parameter"
 msgstr "Valik \"--sm-client-id\" eeldab, et parameetriks on märgitud unikaalne sessiooni id"
 
-#: ../terminal/terminal-options.c:446
+#: ../terminal/terminal-options.c:494
 #, c-format
 msgid ""
 "Option \"--startup-id\" requires specifying the startup id as its parameter"
 msgstr "Valik „--startup-id” vajab parameetrina määratud käivitustunnust"
 
-#: ../terminal/terminal-options.c:462
+#: ../terminal/terminal-options.c:510
 #, c-format
 msgid ""
 "Option \"--icon/-I\" requires specifying an icon name or filename as its "
 "parameter"
 msgstr "Valik \"--icon/-I\" eeldab, et parameetriks on märgitud ikooni nimi või ikoonifaili nimi"
 
-#: ../terminal/terminal-options.c:533
+#: ../terminal/terminal-options.c:582
 #, c-format
 msgid "Option \"--font\" requires specifying the font name as its parameter"
 msgstr "Valik \"--font\" eeldab, et parameetriks on märgitud fondi nimi"
 
-#: ../terminal/terminal-options.c:551
+#: ../terminal/terminal-options.c:600
 #, c-format
 msgid "Option \"--zoom\" requires specifying the zoom (%d .. %d) as its parameter"
 msgstr "Valik \"--zoom\" eeldab, et parameetriks on märgitud suumitase (%d .. %d)"
 
-#: ../terminal/terminal-options.c:573
+#: ../terminal/terminal-options.c:623
+#, c-format
+msgid "Unknown option \"-%c\""
+msgstr "Tundmatu valik „-%c“"
+
+#: ../terminal/terminal-options.c:626
 #, c-format
 msgid "Unknown option \"%s\""
 msgstr "Tundmatu valik „%s”"
 
-#: ../terminal/terminal-preferences-dialog.c:473
+#: ../terminal/terminal-preferences-dialog.c:471
 msgid "All Files"
 msgstr "Kõik failid"
 
-#: ../terminal/terminal-preferences-dialog.c:479
+#: ../terminal/terminal-preferences-dialog.c:477
 msgid "Image Files"
 msgstr "Pildifailid"
 
-#: ../terminal/terminal-preferences-dialog.c:944
+#: ../terminal/terminal-preferences-dialog.c:940
 msgid "Load Presets..."
-msgstr "Lae valmissätted..."
+msgstr "Laadi valmissätted..."
 
-#: ../terminal/terminal-preferences.c:1175
+#: ../terminal/terminal-preferences.c:1199
 msgid "Terminal"
 msgstr "Terminal"
 
-#: ../terminal/terminal-screen.c:455 ../terminal/terminal-screen.c:836
-#: ../terminal/terminal-screen.c:2280
+#: ../terminal/terminal-screen.c:243
+msgid "Do not disable dialog"
+msgstr "Ära lülita sisendiakent välja"
+
+#: ../terminal/terminal-screen.c:244
+msgid "Disable for 5 minutes"
+msgstr "Lülita välja 5-ks minutiks"
+
+#: ../terminal/terminal-screen.c:245
+msgid "Disable for 15 minutes"
+msgstr "Lülita välja 15-ks minutiks"
+
+#: ../terminal/terminal-screen.c:246
+msgid "Disable until program restart"
+msgstr "Lülita välja kuni rakenduse uuesti käivitamiseni"
+
+#: ../terminal/terminal-screen.c:247
+msgid "Disable dialog (can be re-enabled in the Preferences)"
+msgstr "Lülita välja jäädavalt (saad seda hiljem seadistustest muuta)"
+
+#: ../terminal/terminal-screen.c:490 ../terminal/terminal-screen.c:871
+#: ../terminal/terminal-screen.c:2383
 msgid "Untitled"
 msgstr "Pealkirjastamata"
 
-#: ../terminal/terminal-screen.c:737
+#: ../terminal/terminal-screen.c:772
 #, c-format
 msgid "Unable to determine your login shell."
 msgstr "Sinu logimiskesta ei õnnestunud tuvastada."
 
-#: ../terminal/terminal-screen.c:1435
+#: ../terminal/terminal-screen.c:1466
 msgid "_Relaunch"
 msgstr "Taaskäivita"
 
-#: ../terminal/terminal-screen.c:1441
+#: ../terminal/terminal-screen.c:1472
 #, c-format
 msgid "The child process exited normally with status %d."
-msgstr "Alamprotsessi töö lõppes korrektselt staatusega %d."
+msgstr "Alamprotsessi töö lõppes korrektselt olekuga %d."
 
-#: ../terminal/terminal-screen.c:1443
+#: ../terminal/terminal-screen.c:1474
 #, c-format
 msgid "The child process was aborted by signal %d."
 msgstr "Alamprotsessi töö katkestati signaaliga %d."
 
-#: ../terminal/terminal-screen.c:1445
+#: ../terminal/terminal-screen.c:1476
 msgid "The child process was aborted."
 msgstr "Alamprotsessi töö katkestati."
 
-#: ../terminal/terminal-screen.c:1451 ../terminal/terminal-window.c:977
+#: ../terminal/terminal-screen.c:1482 ../terminal/terminal-window.c:901
 msgid "Do _not ask me again"
 msgstr "Ära küsi mi_nult seda uuesti"
 
-#: ../terminal/terminal-screen.c:1761
-msgid "Warning: Unsafe Paste"
-msgstr "Hoiatus: ebaturvaline kopeerimine"
+#: ../terminal/terminal-screen.c:1796
+msgid "Warning: Potentially Unsafe Paste"
+msgstr "Hoiatus: võimalik ebaturvaline kopeerimine"
 
-#: ../terminal/terminal-screen.c:1763
+#: ../terminal/terminal-screen.c:1799
 msgid ""
-"Pasting this text to the terminal may be dangerous as it looks like\n"
-"some commands may be executed, potentially involving root access ('sudo')."
-msgstr "Selle teksti asetamine terminaliaknasse võib olla ohtlik, sest\nmõnda osa võidakse tõlgendada käskudena,\nneist osa juurkasutaja õigustes ('sudo')."
+"Pasting this text to the terminal may be dangerous as it looks like some "
+"commands may be executed, potentially involving root access ('sudo')."
+msgstr "Selle teksti asetamine terminaliaknasse võib olla ohtlik, sest mõnda osa võidakse tõlgendada käskudena, neist osa juurkasutaja õigustes ('sudo')."
 
-#: ../terminal/terminal-screen.c:1766 ../terminal/terminal-window.c:900
-#: ../terminal/terminal-window.c:2502
+#: ../terminal/terminal-screen.c:1802
+msgid ""
+"Pasting this text to the terminal may be dangerous as it looks like some "
+"commands may be executed."
+msgstr "Selle teksti asetamine terminaliaknasse võib olla ohtlik, sest tundub, et mõnda osa võidakse tõlgendada käskudena."
+
+#: ../terminal/terminal-screen.c:1814 ../terminal/terminal-window.c:824
+#: ../terminal/terminal-window.c:2279
 msgid "_Cancel"
 msgstr "_Tühista"
 
-#: ../terminal/terminal-screen.c:1768 ../terminal/terminal-window.c:362
+#: ../terminal/terminal-screen.c:1821 ../terminal/terminal-window.c:336
 msgid "_Paste"
 msgstr "_Aseta"
 
-#: ../terminal/terminal-screen.c:1859 ../terminal/terminal-screen.c:1943
-#: ../terminal/terminal-screen.c:1981
+#: ../terminal/terminal-screen.c:1977 ../terminal/terminal-screen.c:2061
+#: ../terminal/terminal-screen.c:2099
 msgid "Failed to execute child"
 msgstr "Alamprotsessi käivitamine ebaõnnestus"
 
-#: ../terminal/terminal-screen.c:2647
+#: ../terminal/terminal-screen.c:2746
 msgid "Close this tab"
 msgstr "Sulge see kaart"
 
-#: ../terminal/terminal-screen.c:2700
+#: ../terminal/terminal-screen.c:2799
 #, c-format
 msgid "Failed to set encoding %s\n"
 msgstr "Kodeeringu %s määramine ebaõnnestus\n"
@@ -522,438 +557,505 @@ msgid "_Wrap around"
 msgstr "_Mähi ümber"
 
 #: ../terminal/terminal-search-dialog.c:166
-#: ../terminal/terminal-preferences.glade.h:73
+#: ../terminal/terminal-preferences.glade.h:79
 msgid "_Opacity:"
 msgstr "_Läbipaistmatus:"
 
-#: ../terminal/terminal-search-dialog.c:357
+#: ../terminal/terminal-search-dialog.c:343
 msgid "Find"
 msgstr "Otsi"
 
-#: ../terminal/terminal-util.c:80 ../xfce4-terminal-default-apps.xml.in.in.h:1
+#: ../terminal/terminal-util.c:81 ../xfce4-terminal-default-apps.xml.in.in.h:1
 msgid "Xfce Terminal Emulator"
 msgstr "Xfce terminaliemulaator"
 
-#: ../terminal/terminal-util.c:88
+#: ../terminal/terminal-util.c:90
 msgid "translator-credits"
 msgstr "Kristjan Siimson <epost@ksiimson.se> &amp; tolge.pingviin.org\nPriit Jõerüüt 2020"
 
-#: ../terminal/terminal-util.c:91
+#: ../terminal/terminal-util.c:93
 msgid "Visit Xfce Terminal website"
 msgstr "Vaata Xfce Terminali veebisaiti"
 
-#: ../terminal/terminal-widget.c:329
+#: ../terminal/terminal-widget.c:345
 msgid "Copy Email Address"
 msgstr "Kopeeri e-posti aadress"
 
-#: ../terminal/terminal-widget.c:330
+#: ../terminal/terminal-widget.c:346
 msgid "Compose Email"
 msgstr "Koosta e-kiri"
 
-#: ../terminal/terminal-widget.c:334
+#: ../terminal/terminal-widget.c:350
 msgid "Copy Link Address"
 msgstr "Kopeeri viida aadress"
 
-#: ../terminal/terminal-widget.c:335
+#: ../terminal/terminal-widget.c:351
 msgid "Open Link"
 msgstr "Ava viit"
 
-#: ../terminal/terminal-widget.c:503
+#: ../terminal/terminal-widget.c:523
 #, c-format
 msgid ""
 "Unable to drop selection of type text/plain to terminal: Wrong format (%d) "
 "or length (%d)\n"
 msgstr "text/plain liiki märgistuse asetamine terminali ebaõnnestus: Vale vorming (%d) või pikkus (%d)\n"
 
-#: ../terminal/terminal-widget.c:519
+#: ../terminal/terminal-widget.c:539
 #, c-format
 msgid ""
 "Unable to drop Mozilla URL on terminal: Wrong format (%d) or length (%d)\n"
 msgstr "Mozilla URL-i asetamine terminali ebaõnnestus: Vale vorming (%d) või pikkus (%d)\n"
 
-#: ../terminal/terminal-widget.c:546
+#: ../terminal/terminal-widget.c:566
 #, c-format
 msgid "Unable to drop URI list on terminal: Wrong format (%d) or length (%d)\n"
 msgstr "URI-de loendi asetamine terminali ebaõnnestus: Vale vorming (%d) või pikkus (%d)\n"
 
-#: ../terminal/terminal-widget.c:583
+#: ../terminal/terminal-widget.c:603
 #, c-format
 msgid "Received invalid color data: Wrong format (%d) or length (%d)\n"
 msgstr "Saadi valed värviandmed: Vale vorming (%d) või pikkus (%d)\n"
 
 #. tell the user that we were unable to open the responsible application
-#: ../terminal/terminal-widget.c:718
+#: ../terminal/terminal-widget.c:754
 #, c-format
 msgid "Failed to open the URL '%s'"
 msgstr "URL-i '%s' avamine ebaõnnestus"
 
-#: ../terminal/terminal-window-dropdown.c:283
+#: ../terminal/terminal-window-dropdown.c:284
 msgid "Keep window open when it loses focus"
 msgstr "Jäta aken avatuks ka siis kui ta kaotab fookuse"
 
-#: ../terminal/terminal-window-dropdown.c:409
+#: ../terminal/terminal-window-dropdown.c:402
 msgid "Drop-down Terminal"
 msgstr "Rippterminal"
 
-#: ../terminal/terminal-window-dropdown.c:410
+#: ../terminal/terminal-window-dropdown.c:403
 msgid "Toggle Drop-down Terminal"
 msgstr "Lülita rippterminal sisse või välja"
 
-#: ../terminal/terminal-window.c:349
+#. Use old accelerator paths for backwards compatibility
+#: ../terminal/terminal-window.c:323
 msgid "_File"
 msgstr "_Fail"
 
-#: ../terminal/terminal-window.c:350
+#: ../terminal/terminal-window.c:324
 msgid "Open _Tab"
 msgstr "Ava kaar_t"
 
-#: ../terminal/terminal-window.c:350
+#: ../terminal/terminal-window.c:324
 msgid "Open a new terminal tab"
 msgstr "Ava uus terminali kaart"
 
-#: ../terminal/terminal-window.c:351
+#: ../terminal/terminal-window.c:325
 msgid "Open T_erminal"
 msgstr "Ava t_erminal"
 
-#: ../terminal/terminal-window.c:351
+#: ../terminal/terminal-window.c:325
 msgid "Open a new terminal window"
 msgstr "Ava uus terminali aken"
 
-#: ../terminal/terminal-window.c:352
+#: ../terminal/terminal-window.c:326
 msgid "_Undo Close Tab"
 msgstr "Võta tagasi kaardi s_ulgemine"
 
-#: ../terminal/terminal-window.c:353
+#: ../terminal/terminal-window.c:327
 msgid "_Detach Tab"
 msgstr "Lahuta kaart"
 
-#: ../terminal/terminal-window.c:354 ../terminal/terminal-window.c:941
+#: ../terminal/terminal-window.c:328 ../terminal/terminal-window.c:865
 msgid "Close T_ab"
 msgstr "Sulge k_aart"
 
-#: ../terminal/terminal-window.c:355
+#: ../terminal/terminal-window.c:329
 msgid "Close Other Ta_bs"
 msgstr "Sulge muud k_aardid"
 
-#: ../terminal/terminal-window.c:356 ../terminal/terminal-window.c:948
+#: ../terminal/terminal-window.c:330 ../terminal/terminal-window.c:872
 msgid "Close _Window"
 msgstr "Sulge a_ken"
 
-#: ../terminal/terminal-window.c:357
+#: ../terminal/terminal-window.c:331
 msgid "_Edit"
 msgstr "Toim_eta"
 
-#: ../terminal/terminal-window.c:358
+#: ../terminal/terminal-window.c:332
 msgid "_Copy"
 msgstr "_Kopeeri"
 
-#: ../terminal/terminal-window.c:358
+#: ../terminal/terminal-window.c:332
 msgid "Copy to clipboard"
 msgstr "Kopeeri lõikepuhvrisse"
 
-#: ../terminal/terminal-window.c:360
+#: ../terminal/terminal-window.c:334
 msgid "Copy as _HTML"
 msgstr "Kopeeri HTML-ina"
 
-#: ../terminal/terminal-window.c:360
+#: ../terminal/terminal-window.c:334
 msgid "Copy to clipboard as HTML"
 msgstr "Kopeeri lõikepuhvrisse HTML-ina"
 
-#: ../terminal/terminal-window.c:362
+#: ../terminal/terminal-window.c:336
 msgid "Paste from clipboard"
 msgstr "Aseta lõikepuhvrist"
 
-#: ../terminal/terminal-window.c:363
+#: ../terminal/terminal-window.c:337
+msgid "_Paste Alt"
+msgstr ""
+
+#: ../terminal/terminal-window.c:338
 msgid "Paste _Selection"
 msgstr "A_seta märgistus"
 
-#: ../terminal/terminal-window.c:364
+#: ../terminal/terminal-window.c:339
+msgid "Paste _Selection Alt"
+msgstr ""
+
+#: ../terminal/terminal-window.c:340
 msgid "Select _All"
 msgstr "Vali kõik"
 
-#: ../terminal/terminal-window.c:365
+#: ../terminal/terminal-window.c:341
 msgid "Copy _Input To All Tabs..."
 msgstr "Kopeeri s_isend kõikidele kaartidele"
 
-#: ../terminal/terminal-window.c:366
+#: ../terminal/terminal-window.c:342
 msgid "Pr_eferences..."
 msgstr "_Eelistused..."
 
-#: ../terminal/terminal-window.c:366
+#: ../terminal/terminal-window.c:342
 msgid "Open the preferences dialog"
 msgstr "Ava eelistuste dialoog"
 
-#: ../terminal/terminal-window.c:367
+#: ../terminal/terminal-window.c:344
+msgid "Short_cuts..."
+msgstr "Kiir_klahvid..."
+
+#: ../terminal/terminal-window.c:344
+msgid "Open the shortcuts dialog"
+msgstr "Ava kiirklahvide vaade"
+
+#: ../terminal/terminal-window.c:346
 msgid "_View"
 msgstr "_Vaade"
 
-#: ../terminal/terminal-window.c:368
+#: ../terminal/terminal-window.c:347
 msgid "Zoom _In"
 msgstr "Suurenda fonti"
 
-#: ../terminal/terminal-window.c:368
+#: ../terminal/terminal-window.c:347
 msgid "Zoom in with larger font"
 msgstr "Suurenda vaadet fondi suurendamise abil"
 
-#: ../terminal/terminal-window.c:369
+#: ../terminal/terminal-window.c:348
+msgid "Zoom In Alt"
+msgstr ""
+
+#: ../terminal/terminal-window.c:349
 msgid "Zoom _Out"
 msgstr "Vähenda fonti"
 
-#: ../terminal/terminal-window.c:369
+#: ../terminal/terminal-window.c:349
 msgid "Zoom out with smaller font"
 msgstr "Vähenda vaadet fondi vähendamise abil"
 
-#: ../terminal/terminal-window.c:370
+#: ../terminal/terminal-window.c:350
+msgid "Zoom Out Alt"
+msgstr ""
+
+#: ../terminal/terminal-window.c:351
 msgid "_Normal Size"
 msgstr "Fondi tavasuurus"
 
-#: ../terminal/terminal-window.c:370
+#: ../terminal/terminal-window.c:351
 msgid "Zoom to default size"
 msgstr "Muuda vaate suurus tavasuuruseks"
 
-#: ../terminal/terminal-window.c:371
+#: ../terminal/terminal-window.c:352
+msgid "_Normal Size Alt"
+msgstr ""
+
+#: ../terminal/terminal-window.c:353
 msgid "_Terminal"
 msgstr "_Terminal"
 
-#: ../terminal/terminal-window.c:372
+#: ../terminal/terminal-window.c:354
 msgid "_Set Title..."
 msgstr "_Määra pealkiri..."
 
-#: ../terminal/terminal-window.c:373
+#: ../terminal/terminal-window.c:355
 msgid "Set Title Co_lor..."
 msgstr "Määra pealkirja vär_v"
 
-#: ../terminal/terminal-window.c:374
+#: ../terminal/terminal-window.c:356
 msgid "_Find..."
 msgstr "_Otsi..."
 
-#: ../terminal/terminal-window.c:374
+#: ../terminal/terminal-window.c:356
 msgid "Search terminal contents"
 msgstr "Otsi terminali sisust"
 
-#: ../terminal/terminal-window.c:375
+#: ../terminal/terminal-window.c:357
 msgid "Find Ne_xt"
 msgstr "Otsi _järgmine"
 
-#: ../terminal/terminal-window.c:376
+#: ../terminal/terminal-window.c:358
 msgid "Find Pre_vious"
 msgstr "Otsi _eelmine"
 
-#: ../terminal/terminal-window.c:377
+#: ../terminal/terminal-window.c:359
 msgid "Sa_ve Contents..."
 msgstr "Sal_vesta sisu"
 
-#: ../terminal/terminal-window.c:378 ../terminal/terminal-window.c:2362
+#: ../terminal/terminal-window.c:360 ../terminal/terminal-window.c:2146
 msgid "_Reset"
 msgstr "_Lähtesta"
 
-#: ../terminal/terminal-window.c:379
+#: ../terminal/terminal-window.c:361
 msgid "_Clear Scrollback and Reset"
 msgstr "Tühjen_da ja keri tagasi"
 
-#: ../terminal/terminal-window.c:380
+#: ../terminal/terminal-window.c:362
 msgid "T_abs"
 msgstr "K_aardid"
 
-#: ../terminal/terminal-window.c:381
+#: ../terminal/terminal-window.c:363
 msgid "_Previous Tab"
 msgstr "_Eelmine kaart"
 
-#: ../terminal/terminal-window.c:381
+#: ../terminal/terminal-window.c:363
 msgid "Switch to previous tab"
 msgstr "Lülitu eelmisele kaardile"
 
-#: ../terminal/terminal-window.c:382
+#: ../terminal/terminal-window.c:364
 msgid "_Next Tab"
 msgstr "Järgmi_ne kaart"
 
-#: ../terminal/terminal-window.c:382
+#: ../terminal/terminal-window.c:364
 msgid "Switch to next tab"
 msgstr "Lülitu järgmisele kaardile"
 
-#: ../terminal/terminal-window.c:383
+#: ../terminal/terminal-window.c:365
 msgid "Last _Active Tab"
 msgstr "Viimane _aktiivne kaart"
 
-#: ../terminal/terminal-window.c:383
+#: ../terminal/terminal-window.c:365
 msgid "Switch to last active tab"
 msgstr "Lülita viimati vaadatud aktiivsele kaardile"
 
-#: ../terminal/terminal-window.c:384
+#: ../terminal/terminal-window.c:366
 msgid "Move Tab _Left"
 msgstr "Liiguta kaart vasaku_le"
 
-#: ../terminal/terminal-window.c:385
+#: ../terminal/terminal-window.c:367
 msgid "Move Tab _Right"
 msgstr "Liiguta kaart pa_remale"
 
-#: ../terminal/terminal-window.c:386
+#: ../terminal/terminal-window.c:368
 msgid "_Help"
 msgstr "_Abi"
 
-#: ../terminal/terminal-window.c:387
+#: ../terminal/terminal-window.c:369
 msgid "_Contents"
 msgstr "_Sisukord"
 
-#: ../terminal/terminal-window.c:387
+#: ../terminal/terminal-window.c:369
 msgid "Display help contents"
 msgstr "Näita abi sisukorda"
 
-#: ../terminal/terminal-window.c:388
+#: ../terminal/terminal-window.c:370
 msgid "_About"
 msgstr "Te_ave"
 
-#: ../terminal/terminal-window.c:389
+#: ../terminal/terminal-window.c:371
 msgid "_Zoom"
 msgstr "_Suumimine"
 
-#: ../terminal/terminal-window.c:394
+#: ../terminal/terminal-window.c:372
 msgid "Show _Menubar"
 msgstr "Näita _menüüriba"
 
-#: ../terminal/terminal-window.c:394
+#: ../terminal/terminal-window.c:372
 msgid "Show/hide the menubar"
 msgstr "Näita/peida menüüriba"
 
-#: ../terminal/terminal-window.c:395
+#: ../terminal/terminal-window.c:373
 msgid "Show _Toolbar"
 msgstr "Näita _tööriistariba"
 
-#: ../terminal/terminal-window.c:395
+#: ../terminal/terminal-window.c:373
 msgid "Show/hide the toolbar"
 msgstr "Näita või peida tööriistariba"
 
-#: ../terminal/terminal-window.c:396
+#: ../terminal/terminal-window.c:374
 msgid "Show Window _Borders"
 msgstr "_Näita akende raame"
 
-#: ../terminal/terminal-window.c:396
+#: ../terminal/terminal-window.c:374
 msgid "Show/hide the window decorations"
 msgstr "Näita/peida aknadekoratsioone"
 
-#: ../terminal/terminal-window.c:397
+#: ../terminal/terminal-window.c:375
 msgid "_Fullscreen"
 msgstr "_Täisekraanirežiim"
 
-#: ../terminal/terminal-window.c:397
+#: ../terminal/terminal-window.c:375
 msgid "Toggle fullscreen mode"
 msgstr "Lülita täisekraanirežiim sisse-välja"
 
-#: ../terminal/terminal-window.c:398
+#: ../terminal/terminal-window.c:376
 msgid "_Read-Only"
 msgstr "Ki_rjutuskaitstud"
 
-#: ../terminal/terminal-window.c:398
+#: ../terminal/terminal-window.c:376
 msgid "Toggle read-only mode"
 msgstr "Lülita kirjutuskaitstud režiim sisse-välja"
 
-#: ../terminal/terminal-window.c:399
+#: ../terminal/terminal-window.c:377
 msgid "Scroll on _Output"
 msgstr "Keri k_oos väljundiga"
 
-#: ../terminal/terminal-window.c:399
+#: ../terminal/terminal-window.c:377
 msgid "Toggle scroll on output"
 msgstr "Lülita koos väljundiga kerimine sisse või välja"
 
+#. used for changing the accelerator keys via the ShortcutsEditor, the logic
+#. is still handle by GtkActionEntries
+#: ../terminal/terminal-window.c:379
+msgid "Go to Tab 1"
+msgstr "Ava 1. kaart"
+
+#: ../terminal/terminal-window.c:380
+msgid "Go to Tab 2"
+msgstr "Ava 2. kaart"
+
+#: ../terminal/terminal-window.c:381
+msgid "Go to Tab 3"
+msgstr "Ava 3. kaart"
+
+#: ../terminal/terminal-window.c:382
+msgid "Go to Tab 4"
+msgstr "Ava 4. kaart"
+
+#: ../terminal/terminal-window.c:383
+msgid "Go to Tab 5"
+msgstr "Ava 5. kaart"
+
+#: ../terminal/terminal-window.c:384
+msgid "Go to Tab 6"
+msgstr "Ava 6. kaart"
+
+#: ../terminal/terminal-window.c:385
+msgid "Go to Tab 7"
+msgstr "Ava 7. kaart"
+
+#: ../terminal/terminal-window.c:386
+msgid "Go to Tab 8"
+msgstr "Ava 8. kaart"
+
+#: ../terminal/terminal-window.c:387
+msgid "Go to Tab 9"
+msgstr "Ava 9. kaart"
+
 #. create encoding action
-#: ../terminal/terminal-window.c:570
+#: ../terminal/terminal-window.c:555
 msgid "Set _Encoding"
 msgstr "Määra kod_eering"
 
-#: ../terminal/terminal-window.c:898
+#: ../terminal/terminal-window.c:822
 msgid "Warning"
 msgstr "Hoiatus"
 
 #. and process running
-#: ../terminal/terminal-window.c:909
+#: ../terminal/terminal-window.c:833
 msgid ""
 "There are still processes running in some tabs.\n"
 "Closing this window will kill all of them."
 msgstr "Mõnedes kaartides veel protsessid töötavad.\nAkna sulgemine sulgeb kõik sellised protsessid."
 
 #. and no process running
-#: ../terminal/terminal-window.c:915
+#: ../terminal/terminal-window.c:839
 #, c-format
 msgid ""
 "This window has %d tabs open. Closing this window\n"
 "will also close all its tabs."
 msgstr "Selles aknas on avatud %d kaart(i).\nAkna sulgemine sulgeb ka kõik selle kaardid."
 
-#: ../terminal/terminal-window.c:919
+#: ../terminal/terminal-window.c:843
 msgid "Close all tabs?"
 msgstr "Kas sulgen kõik kaardid?"
 
 #. closing a tab, and process running
-#: ../terminal/terminal-window.c:926
+#: ../terminal/terminal-window.c:850
 msgid ""
 "There is still a process running.\n"
 "Closing this tab will kill it."
 msgstr "Taustal töötab veel üks protsess.\nKaardi sulgemine hävitab selle."
 
-#: ../terminal/terminal-window.c:928
+#: ../terminal/terminal-window.c:852
 msgid "Close tab?"
 msgstr "Kas sulgen kaardi?"
 
 #. closing a single tab window, and process running
-#: ../terminal/terminal-window.c:933
+#: ../terminal/terminal-window.c:857
 msgid ""
 "There is still a process running.\n"
 "Closing this window will kill it."
 msgstr "Taustal töötab veel üks protsess.\nAnka sulgemine hävitab selle."
 
-#: ../terminal/terminal-window.c:935
+#: ../terminal/terminal-window.c:859
 msgid "Close window?"
 msgstr "Kas sulgen akna?"
 
-#: ../terminal/terminal-window.c:1949
+#: ../terminal/terminal-window.c:1767
 msgid "Copy _Input:"
 msgstr "Kopeeri s_isend"
 
-#: ../terminal/terminal-window.c:1953
+#: ../terminal/terminal-window.c:1771
 msgid "Enter the text to be copied to all tabs"
 msgstr "Sisesta tekst mida kopeeritakse kõikidesse kaartidesse"
 
-#: ../terminal/terminal-window.c:1961
+#: ../terminal/terminal-window.c:1779
 msgid "Copy input"
 msgstr "Kopeeri sisend"
 
-#: ../terminal/terminal-window.c:2314
+#: ../terminal/terminal-window.c:2097
 msgid "_Title:"
 msgstr "_Pealkiri:"
 
-#: ../terminal/terminal-window.c:2318
+#: ../terminal/terminal-window.c:2101
 msgid "Enter the title for the current terminal tab"
 msgstr "Sisesta käesoleva terminalikaardi pealkiri"
 
-#: ../terminal/terminal-window.c:2323
+#: ../terminal/terminal-window.c:2106
 msgid "Reset"
 msgstr "Lähtesta"
 
-#: ../terminal/terminal-window.c:2333
+#: ../terminal/terminal-window.c:2116
 msgid "Help"
 msgstr "Abi"
 
-#: ../terminal/terminal-window.c:2339
+#: ../terminal/terminal-window.c:2122
 msgid "Close"
 msgstr "Sulge"
 
-#: ../terminal/terminal-window.c:2361
+#: ../terminal/terminal-window.c:2145
 msgid "Choose title color"
 msgstr "Vali pealkirja värv"
 
-#: ../terminal/terminal-window.c:2458
+#: ../terminal/terminal-window.c:2236
 msgid "Failed to create the regular expression"
 msgstr "Regulaaravaldise loomine ebaõnnestus"
 
-#: ../terminal/terminal-window.c:2499
+#: ../terminal/terminal-window.c:2276
 msgid "Save contents..."
 msgstr "Salvesta sisu..."
 
-#: ../terminal/terminal-window.c:2503
+#: ../terminal/terminal-window.c:2280
 msgid "_Save"
 msgstr "_Salvesta"
 
-#: ../terminal/terminal-window.c:2540
+#: ../terminal/terminal-window.c:2317
 msgid "Failed to save terminal contents"
 msgstr "Terminaliakna sisu salvestamine ebaõnnestus"
 
@@ -974,123 +1076,139 @@ msgid "Isn't displayed"
 msgstr "Ei kuvata"
 
 #: ../terminal/terminal-preferences.glade.h:5
+msgid "Context Menu"
+msgstr "Kontekstimenüü"
+
+#: ../terminal/terminal-preferences.glade.h:6
+msgid "Paste Clipboard"
+msgstr "Aseta lõikelaualt"
+
+#: ../terminal/terminal-preferences.glade.h:7
+msgid "Paste Selection"
+msgstr "Aseta valik"
+
+#: ../terminal/terminal-preferences.glade.h:8
 msgid "Disabled"
 msgstr "Keelatud"
 
-#: ../terminal/terminal-preferences.glade.h:6
+#: ../terminal/terminal-preferences.glade.h:9
 msgid "On the left side"
 msgstr "Vasakul pool"
 
-#: ../terminal/terminal-preferences.glade.h:7
+#: ../terminal/terminal-preferences.glade.h:10
 msgid "On the right side"
 msgstr "Paremal pool"
 
-#: ../terminal/terminal-preferences.glade.h:8
+#: ../terminal/terminal-preferences.glade.h:11
 msgid "None (use solid color)"
 msgstr "Puudub (kasuta ühtlast värvi)"
 
-#: ../terminal/terminal-preferences.glade.h:9
+#: ../terminal/terminal-preferences.glade.h:12
 msgid "Background image"
 msgstr "Taustapilt"
 
-#: ../terminal/terminal-preferences.glade.h:10
+#: ../terminal/terminal-preferences.glade.h:13
 msgid "Transparent background"
 msgstr "Läbipaistev taust"
 
-#: ../terminal/terminal-preferences.glade.h:11
+#: ../terminal/terminal-preferences.glade.h:14
 msgid "Auto-detect"
 msgstr "Automaatne tuvastamine"
 
-#: ../terminal/terminal-preferences.glade.h:12
+#: ../terminal/terminal-preferences.glade.h:15
 msgid "ASCII DEL"
 msgstr "ASCII DEL"
 
-#: ../terminal/terminal-preferences.glade.h:13
+#: ../terminal/terminal-preferences.glade.h:16
 msgid "Escape sequence"
 msgstr "Katkestamise järjend"
 
-#: ../terminal/terminal-preferences.glade.h:14
+#: ../terminal/terminal-preferences.glade.h:17
 msgid "Control-H"
 msgstr "Ctrl-H"
 
-#: ../terminal/terminal-preferences.glade.h:15
+#: ../terminal/terminal-preferences.glade.h:18
 msgid "Erase TTY"
 msgstr "Kustuta TTY"
 
-#: ../terminal/terminal-preferences.glade.h:16
+#: ../terminal/terminal-preferences.glade.h:19
 msgid "Tiled"
 msgstr "Paanidena"
 
-#: ../terminal/terminal-preferences.glade.h:17
+#: ../terminal/terminal-preferences.glade.h:20
 msgid "Centered"
 msgstr "Keskendatud"
 
-#: ../terminal/terminal-preferences.glade.h:18
+#: ../terminal/terminal-preferences.glade.h:21
 msgid "Scaled"
 msgstr "Skaleeritud"
 
-#: ../terminal/terminal-preferences.glade.h:19
+#: ../terminal/terminal-preferences.glade.h:22
 msgid "Stretched"
 msgstr "Venitatud"
 
-#: ../terminal/terminal-preferences.glade.h:20
+#: ../terminal/terminal-preferences.glade.h:23
+msgid "Filled"
+msgstr "Täidetud"
+
+#: ../terminal/terminal-preferences.glade.h:24
 msgid "Block"
 msgstr "Blokk"
 
-#: ../terminal/terminal-preferences.glade.h:21
+#: ../terminal/terminal-preferences.glade.h:25
 msgid "I-Beam"
 msgstr "Püstkriips"
 
-#: ../terminal/terminal-preferences.glade.h:22
+#: ../terminal/terminal-preferences.glade.h:26
 msgid "Underline"
 msgstr "Alajoon"
 
-#: ../terminal/terminal-preferences.glade.h:23
+#: ../terminal/terminal-preferences.glade.h:27
 msgid "Narrow"
 msgstr "Tõlgenda kitsana"
 
-#: ../terminal/terminal-preferences.glade.h:24
+#: ../terminal/terminal-preferences.glade.h:28
 msgid "Wide"
 msgstr "Tõlgenda laiana"
 
-#: ../terminal/terminal-preferences.glade.h:25
+#: ../terminal/terminal-preferences.glade.h:29
 msgid "Never"
 msgstr "Mitte kunagi"
 
-#: ../terminal/terminal-preferences.glade.h:26
+#: ../terminal/terminal-preferences.glade.h:30
 msgid "When focused"
 msgstr "Kui on fookuses"
 
-#: ../terminal/terminal-preferences.glade.h:27
+#: ../terminal/terminal-preferences.glade.h:31
 msgid "When unfocused"
 msgstr "Kui on fookusest väljas"
 
-#: ../terminal/terminal-preferences.glade.h:28
+#: ../terminal/terminal-preferences.glade.h:32
 msgid "Always"
 msgstr "Alati"
 
-#: ../terminal/terminal-preferences.glade.h:29
+#: ../terminal/terminal-preferences.glade.h:33
 #: ../xfce4-terminal.desktop.in.h:3
 msgid "Terminal Preferences"
 msgstr "Terminali eelistused"
 
-#: ../terminal/terminal-preferences.glade.h:30
+#: ../terminal/terminal-preferences.glade.h:34
 msgid "_Initial title:"
 msgstr "Es_ialgne pealkiri:"
 
-#: ../terminal/terminal-preferences.glade.h:31
+#: ../terminal/terminal-preferences.glade.h:35
 msgid "_Dynamically-set title:"
 msgstr "_Dünaamiliselt määratud pealkiri:"
 
-#: ../terminal/terminal-preferences.glade.h:32
+#: ../terminal/terminal-preferences.glade.h:36
 msgid "Title"
 msgstr "Pealkiri"
 
-#: ../terminal/terminal-preferences.glade.h:33
+#: ../terminal/terminal-preferences.glade.h:37
 msgid "_Run command as login shell"
 msgstr "_Käivita käsk logimiskestana"
 
-#: ../terminal/terminal-preferences.glade.h:34
+#: ../terminal/terminal-preferences.glade.h:38
 msgid ""
 "Select this option to force Terminal to run your shell as a login shell when"
 " you open new terminals. See the documentation of your shell for details "
@@ -1098,553 +1216,563 @@ msgid ""
 "login shell."
 msgstr "Märgistage see valik, et uute terminalide käivitamisel sundida Terminali käivitama kesta logimiskestana. Detailsed erinevused interaktiivse- ja logimiskesta vahel leiate kesta dokumentatsioonist"
 
-#: ../terminal/terminal-preferences.glade.h:35
+#: ../terminal/terminal-preferences.glade.h:39
 msgid "_Update utmp/wtmp records when command is launched"
 msgstr "Käs_u käivitamisel uuenda utmp/wtmp kirjeid"
 
-#: ../terminal/terminal-preferences.glade.h:36
+#: ../terminal/terminal-preferences.glade.h:40
 msgid ""
 "Select this option to allow commands that use utmp/wtmp records (such as "
 "`write` or `wall`) to work."
 msgstr "Märgistage see valik, et võimaldada toimida nendel käskudel, mis kasutavad utmp/wtmp kirjeid (näiteks `write` või `wall`)."
 
-#: ../terminal/terminal-preferences.glade.h:37
+#: ../terminal/terminal-preferences.glade.h:41
 msgid "Run a _custom command instead of my shell"
 msgstr "Käivita tavapärase kesta asemel kohandatud käsk."
 
-#: ../terminal/terminal-preferences.glade.h:38
+#: ../terminal/terminal-preferences.glade.h:42
 msgid ""
 "Select this option to force Terminal to run custom command instead of your "
 "shell when you open new terminals."
 msgstr "Märgistage see valik, et uute terminalide avamisel kasutataks sinu tavapärase kesta asemel kohandatud käsku."
 
-#: ../terminal/terminal-preferences.glade.h:39
+#: ../terminal/terminal-preferences.glade.h:43
 msgid "C_ustom command:"
 msgstr "K_ohandatud käsk:"
 
-#: ../terminal/terminal-preferences.glade.h:40
+#: ../terminal/terminal-preferences.glade.h:44
 msgid ""
 "Select this option to make new terminals (tabs or windows) use custom "
 "working directory. Otherwise, current working directory will be used."
 msgstr "See valik võimaldab uusi terminale (nii kaarte kui aknaid) avada kohandatud töökaustas. Kui see valik pole määratud, siis kasutatakse viimast kausta."
 
-#: ../terminal/terminal-preferences.glade.h:41
+#: ../terminal/terminal-preferences.glade.h:45
 msgid "_Working directory:"
 msgstr "Töökaust:"
 
-#: ../terminal/terminal-preferences.glade.h:42
+#: ../terminal/terminal-preferences.glade.h:46
 msgid "Command"
 msgstr "Käsud"
 
-#: ../terminal/terminal-preferences.glade.h:43
+#: ../terminal/terminal-preferences.glade.h:47
 msgid "Scroll_back:"
 msgstr "Kerimisriba:"
 
-#: ../terminal/terminal-preferences.glade.h:44
+#: ../terminal/terminal-preferences.glade.h:48
 msgid ""
 "Specifies the number of lines that you can scroll back using the scrollbar."
 msgstr "Täpsustab mitu rida saab kerimisriba abil tagasi minna."
 
-#: ../terminal/terminal-preferences.glade.h:45
+#: ../terminal/terminal-preferences.glade.h:49
 msgid "Unli_mited scrollback"
 msgstr "Piiramatu tagasikerimine"
 
-#: ../terminal/terminal-preferences.glade.h:46
+#: ../terminal/terminal-preferences.glade.h:50
 msgid ""
 "This option controls whether the terminal will have no limits on scrollback."
 msgstr "Selle valikuma määratakse kas terminalis võib  olla piiramatu arv tagasikeritavaid ridu."
 
-#: ../terminal/terminal-preferences.glade.h:47
+#: ../terminal/terminal-preferences.glade.h:51
 msgid "Scr_ollbar is:"
 msgstr "Kerimisriba on:"
 
-#: ../terminal/terminal-preferences.glade.h:48
+#: ../terminal/terminal-preferences.glade.h:52
 msgid "Scroll on ou_tput"
 msgstr "Keri koos väljundiga"
 
-#: ../terminal/terminal-preferences.glade.h:49
+#: ../terminal/terminal-preferences.glade.h:53
 msgid ""
 "This option controls whether the terminal will scroll down automatically "
 "whenever new output is generated by the commands running inside the "
 "terminal."
 msgstr "Selle valikuga määratakse, kas terminal kerib alati automaatselt alla koos käsuväljundiga."
 
-#: ../terminal/terminal-preferences.glade.h:50
+#: ../terminal/terminal-preferences.glade.h:54
 msgid "Scroll on _keystroke"
 msgstr "_Keri klahvivajutusega"
 
-#: ../terminal/terminal-preferences.glade.h:51
+#: ../terminal/terminal-preferences.glade.h:55
 msgid ""
 "Enables you to press any key on the keyboard to scroll down the terminal "
 "window to the command prompt."
 msgstr "Lubab mistahes klahvivajutusega kerida terminaliakent alla, käsuviipe juurde."
 
-#: ../terminal/terminal-preferences.glade.h:52
+#: ../terminal/terminal-preferences.glade.h:56
+msgid "Enable _overlay scrolling (Requires Restart)"
+msgstr "Kasuta ülekattega _kerimisriba (eeldab rakenduse uuesti käivitamist)"
+
+#: ../terminal/terminal-preferences.glade.h:57
+msgid ""
+"This option controls whether the scrollbar is drawn as an overlay (auto-"
+"hide) or not."
+msgstr "Selle seadistusega määrad, kas kerimisriba kuvatakse ülekattena (automaatselt peitvana) või mitte."
+
+#: ../terminal/terminal-preferences.glade.h:58
 msgid "Scrolling"
 msgstr "Kerimine"
 
-#: ../terminal/terminal-preferences.glade.h:53
+#: ../terminal/terminal-preferences.glade.h:59
 msgid "Cursor shape:"
 msgstr "Kursori kuju:"
 
-#: ../terminal/terminal-preferences.glade.h:54
+#: ../terminal/terminal-preferences.glade.h:60
 msgid "Cursor blinks"
 msgstr "Kursor vilgub"
 
-#: ../terminal/terminal-preferences.glade.h:55
+#: ../terminal/terminal-preferences.glade.h:61
 msgid "This option controls whether the cursor will be blinking or not."
 msgstr "Selle valikuga määratakse, kas kursor vilgub või mitte."
 
-#: ../terminal/terminal-preferences.glade.h:56
+#: ../terminal/terminal-preferences.glade.h:62
 msgid "Cursor"
 msgstr "Kursor"
 
-#: ../terminal/terminal-preferences.glade.h:57
+#: ../terminal/terminal-preferences.glade.h:63
 msgid "Automatically _copy selection to clipboard"
 msgstr "Kopeeri valitud tekst automaatselt lõikepuhvrisse"
 
-#: ../terminal/terminal-preferences.glade.h:58
+#: ../terminal/terminal-preferences.glade.h:64
 msgid "Show unsafe _paste dialog"
 msgstr "Ebaturvalisel ko_peerimisel näita hoiatust"
 
-#: ../terminal/terminal-preferences.glade.h:59
+#: ../terminal/terminal-preferences.glade.h:65
 msgid ""
 "Show a dialog that allows to edit text that is considered unsafe for "
 "pasting."
 msgstr "Näita dialoogiakent, kus eraldi pead lubama ebaturvaliseks peetud teksti asetamist terminaliaknasse."
 
-#: ../terminal/terminal-preferences.glade.h:60
+#: ../terminal/terminal-preferences.glade.h:66
 msgid "Clipboard"
 msgstr "Lõikepuhver"
 
-#: ../terminal/terminal-preferences.glade.h:61
+#: ../terminal/terminal-preferences.glade.h:67
 msgid "_General"
 msgstr "_Üldine"
 
-#: ../terminal/terminal-preferences.glade.h:62
+#: ../terminal/terminal-preferences.glade.h:68
 msgid "_Keep window open when it loses focus"
 msgstr "_Jäta aken avatuks ka siis kui ta kaotab fookuse"
 
-#: ../terminal/terminal-preferences.glade.h:63
+#: ../terminal/terminal-preferences.glade.h:69
 msgid "Always keep window on _top"
 msgstr "Aken on alati _teiste akende peal"
 
-#: ../terminal/terminal-preferences.glade.h:64
+#: ../terminal/terminal-preferences.glade.h:70
 msgid "Use shortcut to _focus visible window"
 msgstr "Kasuta kiirklahvi nähtava akna toomiseks _fookusesse"
 
-#: ../terminal/terminal-preferences.glade.h:65
+#: ../terminal/terminal-preferences.glade.h:71
 msgid ""
 "If enabled, the shortcut to open and retract the window will give focus, "
 "rather than closing it, if it has previously lost focus"
 msgstr "Kui see eelistus on valitud, siis akna avamiseks ja kokkuklappimiseks mõeldud kiirklahv annab ka fookuse, aga mitte ei sulge teda, kui ta varem on fookuse kaotanud"
 
-#: ../terminal/terminal-preferences.glade.h:66
+#: ../terminal/terminal-preferences.glade.h:72
 msgid "Show _status icon in notification area"
 msgstr "Näita teadete ribal oleku_ikooni"
 
-#: ../terminal/terminal-preferences.glade.h:67
+#: ../terminal/terminal-preferences.glade.h:73
 msgid "Behavior"
 msgstr "Käitumine"
 
-#: ../terminal/terminal-preferences.glade.h:68
+#: ../terminal/terminal-preferences.glade.h:74
 msgid "Wi_dth:"
 msgstr "Laius:"
 
-#: ../terminal/terminal-preferences.glade.h:69
+#: ../terminal/terminal-preferences.glade.h:75
 msgid "He_ight:"
 msgstr "Kõrgus"
 
-#: ../terminal/terminal-preferences.glade.h:70
+#: ../terminal/terminal-preferences.glade.h:76
 msgid "_Always show tabs"
 msgstr "_Alati näita kaarte"
 
-#: ../terminal/terminal-preferences.glade.h:71
+#: ../terminal/terminal-preferences.glade.h:77
 msgid "D_uration:"
 msgstr "Kest_us:"
 
-#: ../terminal/terminal-preferences.glade.h:72
+#: ../terminal/terminal-preferences.glade.h:78
 msgid "ms"
 msgstr "ms"
 
-#: ../terminal/terminal-preferences.glade.h:74
+#: ../terminal/terminal-preferences.glade.h:80
 msgid ""
 "Opacity setting is not available since compositing is either disabled\n"
 "or not supported by your Window Manager."
 msgstr "Läbipaistmatust ei saa seadistada, sest kas komposiitor\non välja lülitatud või ei ole ta aknahalduri poolt toetatud."
 
-#: ../terminal/terminal-preferences.glade.h:76
+#: ../terminal/terminal-preferences.glade.h:82
 msgid "Show window _borders"
 msgstr "_Näita akende raame"
 
-#: ../terminal/terminal-preferences.glade.h:77
+#: ../terminal/terminal-preferences.glade.h:83
 msgid "Appearance and Animation"
 msgstr "Välimus ja animatsioonid"
 
-#: ../terminal/terminal-preferences.glade.h:78
+#: ../terminal/terminal-preferences.glade.h:84
 msgid "L_eft"
 msgstr "Vasaku_l"
 
-#: ../terminal/terminal-preferences.glade.h:79
+#: ../terminal/terminal-preferences.glade.h:85
 msgid "Right"
 msgstr "Paremal"
 
-#: ../terminal/terminal-preferences.glade.h:80
+#: ../terminal/terminal-preferences.glade.h:86
 msgid "U_p"
 msgstr "Üle_val"
 
-#: ../terminal/terminal-preferences.glade.h:81
+#: ../terminal/terminal-preferences.glade.h:87
 msgid "Down"
 msgstr "All"
 
-#: ../terminal/terminal-preferences.glade.h:82
+#: ../terminal/terminal-preferences.glade.h:88
 msgid "Move to monitor with poi_nter"
 msgstr "Tõsta ekraa_nile, kus on hiirekursor"
 
-#: ../terminal/terminal-preferences.glade.h:83
+#: ../terminal/terminal-preferences.glade.h:89
 msgid "Position"
 msgstr "Asukoht"
 
-#: ../terminal/terminal-preferences.glade.h:84
+#: ../terminal/terminal-preferences.glade.h:90
 msgid "Drop-do_wn"
 msgstr "_Rippterminal"
 
-#: ../terminal/terminal-preferences.glade.h:85
+#: ../terminal/terminal-preferences.glade.h:91
 msgid "Use system _font"
 msgstr "Kasuta süsteemset fonti"
 
-#: ../terminal/terminal-preferences.glade.h:86
+#: ../terminal/terminal-preferences.glade.h:92
 msgid "Enable this option to use system-wide monospace font."
 msgstr "Lubage see valik et kasutada süsteemset fikseeritud laiusega fonti."
 
-#: ../terminal/terminal-preferences.glade.h:87
+#: ../terminal/terminal-preferences.glade.h:93
 msgid "Choose Terminal Font"
 msgstr "Vali Terminali font"
 
-#: ../terminal/terminal-preferences.glade.h:88
+#: ../terminal/terminal-preferences.glade.h:94
 msgid "Allow bold te_xt"
 msgstr "Luba rasvane kiri"
 
-#: ../terminal/terminal-preferences.glade.h:89
+#: ../terminal/terminal-preferences.glade.h:95
 msgid ""
 "Enable this option to allow applications running inside the terminal windows"
 " to use bold text."
 msgstr "Lubage see valik, et terminalis töötavad rakendused saaksid kasutada rasvast kirja."
 
-#: ../terminal/terminal-preferences.glade.h:90
+#: ../terminal/terminal-preferences.glade.h:96
 msgid ""
 "Controls whether text in the terminal is allowed to blink when '\\e[5m' "
 "escape codes are used."
 msgstr "Kontrollib, kas terminalis kuvatud tekst võib '\\e[5m' paojadade kasutamisel vilkuda."
 
-#: ../terminal/terminal-preferences.glade.h:91
+#: ../terminal/terminal-preferences.glade.h:97
 msgid "Text blinks:"
 msgstr "Tekst vilgub:"
 
-#: ../terminal/terminal-preferences.glade.h:92
+#: ../terminal/terminal-preferences.glade.h:98
 msgid "Cell spacing:"
 msgstr "Märgiruum:"
 
-#: ../terminal/terminal-preferences.glade.h:93
+#: ../terminal/terminal-preferences.glade.h:99
 msgid "x width"
 msgstr "x laius"
 
-#: ../terminal/terminal-preferences.glade.h:94
+#: ../terminal/terminal-preferences.glade.h:100
 msgid "x height"
 msgstr "x kõrgus"
 
-#: ../terminal/terminal-preferences.glade.h:95
+#: ../terminal/terminal-preferences.glade.h:101
 msgid "Rese_t"
 msgstr "Tühis_ta"
 
-#: ../terminal/terminal-preferences.glade.h:96
+#: ../terminal/terminal-preferences.glade.h:102
 msgid "Reset cell spacing values to defaults"
 msgstr "Lähtesta märgiruum asendades need vaikeväärtustega"
 
-#: ../terminal/terminal-preferences.glade.h:97
+#: ../terminal/terminal-preferences.glade.h:103
 msgid "Font"
 msgstr "Font"
 
-#: ../terminal/terminal-preferences.glade.h:98
+#: ../terminal/terminal-preferences.glade.h:104
 msgid "_File:"
 msgstr "_Fail:"
 
-#: ../terminal/terminal-preferences.glade.h:99
+#: ../terminal/terminal-preferences.glade.h:105
 msgid "St_yle:"
 msgstr "St_iil:"
 
-#: ../terminal/terminal-preferences.glade.h:100
+#: ../terminal/terminal-preferences.glade.h:106
 msgid "Select Background Image File"
 msgstr "Vali taustapildi fail"
 
-#: ../terminal/terminal-preferences.glade.h:101
+#: ../terminal/terminal-preferences.glade.h:107
 msgid "_Shading:"
 msgstr "_Varjutamine:"
 
-#: ../terminal/terminal-preferences.glade.h:102
+#: ../terminal/terminal-preferences.glade.h:108
 msgid "Background"
 msgstr "Taust"
 
-#: ../terminal/terminal-preferences.glade.h:103
+#: ../terminal/terminal-preferences.glade.h:109
 msgid "Display _menubar in new windows"
 msgstr "Näita uutes akendes _menüüriba"
 
-#: ../terminal/terminal-preferences.glade.h:104
+#: ../terminal/terminal-preferences.glade.h:110
 msgid ""
 "Enable this option to show the menubar in newly created terminal windows."
 msgstr "Lubage see valik, et äsja loodud terminaliakendes näidataks menüüribasid."
 
-#: ../terminal/terminal-preferences.glade.h:105
+#: ../terminal/terminal-preferences.glade.h:111
 msgid "Display _toolbar in new windows"
 msgstr "Näita uutes akendes _tööriistariba"
 
-#: ../terminal/terminal-preferences.glade.h:106
+#: ../terminal/terminal-preferences.glade.h:112
 msgid ""
 "Enable this option to show the toolbar in newly created terminal windows."
 msgstr "Lubage see valik, et äsja loodud terminaliakendes näidataks tööriistaribasid."
 
-#: ../terminal/terminal-preferences.glade.h:107
+#: ../terminal/terminal-preferences.glade.h:113
 msgid "Display _borders around new windows"
 msgstr "Näita uute akende üm_ber raame"
 
-#: ../terminal/terminal-preferences.glade.h:108
+#: ../terminal/terminal-preferences.glade.h:114
 msgid ""
 "Enable this option to show window decorations around newly created terminal "
 "windows."
 msgstr "Lubage see valik, et äsja loodud terminaliakende ümber näidataks aknadekoratsioone."
 
-#: ../terminal/terminal-preferences.glade.h:109
+#: ../terminal/terminal-preferences.glade.h:115
 msgid "Default geometry:"
 msgstr "Vaikimisi geomeetria:"
 
-#: ../terminal/terminal-preferences.glade.h:110
+#: ../terminal/terminal-preferences.glade.h:116
 msgid "c_olumns"
 msgstr "veergu"
 
-#: ../terminal/terminal-preferences.glade.h:111
+#: ../terminal/terminal-preferences.glade.h:117
 msgid "row_s"
 msgstr "rida"
 
-#: ../terminal/terminal-preferences.glade.h:112
+#: ../terminal/terminal-preferences.glade.h:118
 msgid "Opening New Windows"
 msgstr "Uute akende avamine"
 
-#: ../terminal/terminal-preferences.glade.h:113
+#: ../terminal/terminal-preferences.glade.h:119
 msgid "Reset tab activity _indicator after"
 msgstr "Lähtesta kaartide aktiivsuse näitaja peale"
 
-#: ../terminal/terminal-preferences.glade.h:114
+#: ../terminal/terminal-preferences.glade.h:120
 msgid "seconds"
 msgstr "sekundit"
 
-#: ../terminal/terminal-preferences.glade.h:115
+#: ../terminal/terminal-preferences.glade.h:121
 msgid "Use custom styling to make tabs _slim (restart required)"
 msgstr "Madalate kaartide jaoks kasuta eraldi kujundust (eeldab terminali restarti)"
 
-#: ../terminal/terminal-preferences.glade.h:116
+#: ../terminal/terminal-preferences.glade.h:122
 msgid "Tabs"
 msgstr "Kaardid"
 
-#: ../terminal/terminal-preferences.glade.h:117
+#: ../terminal/terminal-preferences.glade.h:123
 msgid "_Appearance"
 msgstr "_Välimus"
 
-#: ../terminal/terminal-preferences.glade.h:118
+#: ../terminal/terminal-preferences.glade.h:124
 msgid "_Text color:"
 msgstr "_Teksti värv:"
 
-#: ../terminal/terminal-preferences.glade.h:119
+#: ../terminal/terminal-preferences.glade.h:125
 msgid "Choose text color"
 msgstr "Vali teksti värv"
 
-#: ../terminal/terminal-preferences.glade.h:120
+#: ../terminal/terminal-preferences.glade.h:126
 msgid "Color Selector"
 msgstr "Värvi märgistaja"
 
-#: ../terminal/terminal-preferences.glade.h:121
+#: ../terminal/terminal-preferences.glade.h:127
 msgid "Open a dialog to specify the color"
 msgstr "Ava dialoog värvi täpsustamiseks"
 
-#: ../terminal/terminal-preferences.glade.h:122
+#: ../terminal/terminal-preferences.glade.h:128
 msgid "_Background color:"
 msgstr "_Taustavärv:"
 
-#: ../terminal/terminal-preferences.glade.h:123
+#: ../terminal/terminal-preferences.glade.h:129
 msgid "Choose background color"
 msgstr "Vali taustavärv"
 
-#: ../terminal/terminal-preferences.glade.h:124
+#: ../terminal/terminal-preferences.glade.h:130
 msgid "Note: Ctrl+click for color editor."
 msgstr "Märkus: Ctrl+klõps avab värvisegaja."
 
-#: ../terminal/terminal-preferences.glade.h:125
+#: ../terminal/terminal-preferences.glade.h:131
 msgid "Tab activit_y color:"
 msgstr "Värv näitab aktiivsu_st kaardil:"
 
-#: ../terminal/terminal-preferences.glade.h:126
+#: ../terminal/terminal-preferences.glade.h:132
 msgid "Choose tab activity color"
 msgstr "Vali värv mis märgistab kaardi, kus on toimunud muutusi"
 
-#: ../terminal/terminal-preferences.glade.h:127
+#: ../terminal/terminal-preferences.glade.h:133
 msgid "_Use system theme colors for text and background"
 msgstr "_Kasuta süsteemse teema värve teksti ja tausta jaoks"
 
-#: ../terminal/terminal-preferences.glade.h:128
+#: ../terminal/terminal-preferences.glade.h:134
 msgid "_Vary the background color for each tab"
 msgstr "_Varieeri iga kaardi taustavärvi"
 
-#: ../terminal/terminal-preferences.glade.h:129
+#: ../terminal/terminal-preferences.glade.h:135
 msgid ""
 "The random color is based on the selected background color, keeping the same"
 " brightness. "
 msgstr "Juhuslik värv põhineb valitud taustavärvil ning jääb sama erksustaseme juurde."
 
-#: ../terminal/terminal-preferences.glade.h:130
+#: ../terminal/terminal-preferences.glade.h:136
 msgid "General"
 msgstr "Üldine"
 
-#: ../terminal/terminal-preferences.glade.h:131
+#: ../terminal/terminal-preferences.glade.h:137
 msgid "B_old text color:"
 msgstr "Pa_ksu kirja värv:"
 
-#: ../terminal/terminal-preferences.glade.h:132
+#: ../terminal/terminal-preferences.glade.h:138
 msgid ""
 "Enable this option to set a custom bold color. If disabled the text color "
 "will be used."
 msgstr "Kasuta seda valikut, et määrata kohandatud värv paksu kirja jaoks. Määramata valiku puhul kasutatakse tavalist teksti värvi."
 
-#: ../terminal/terminal-preferences.glade.h:133
+#: ../terminal/terminal-preferences.glade.h:139
 msgid "Choose bold font color"
 msgstr "Vali värv paksus kirjas kuvatava fondi jaoks"
 
-#: ../terminal/terminal-preferences.glade.h:134
+#: ../terminal/terminal-preferences.glade.h:140
 msgid "Text _selection color:"
 msgstr "Teksti_valiku värv:"
 
-#: ../terminal/terminal-preferences.glade.h:135
+#: ../terminal/terminal-preferences.glade.h:141
 msgid ""
 "Enable this option to set custom text and background colors for the "
 "selection. If disabled the background and text colors will be reversed."
 msgstr "Kasuta seda valikut, et määrata kohandatud teksti- ja taustavärvid valitud teksti jaoks. Määramata valiku puhul on tausta ja teksti värvid pööratud."
 
-#: ../terminal/terminal-preferences.glade.h:136
+#: ../terminal/terminal-preferences.glade.h:142
 msgid "Choose text selection foreground color"
 msgstr "Vali tekstivaliku esiplaani värv"
 
-#: ../terminal/terminal-preferences.glade.h:137
+#: ../terminal/terminal-preferences.glade.h:143
 msgid "Choose text selection background color"
 msgstr "Vali tekstivaliku tagaplaani värv"
 
-#: ../terminal/terminal-preferences.glade.h:138
+#: ../terminal/terminal-preferences.glade.h:144
 msgid "Cu_rsor color:"
 msgstr "Ku_rsori värv:"
 
-#: ../terminal/terminal-preferences.glade.h:139
+#: ../terminal/terminal-preferences.glade.h:145
 msgid ""
 "Enable this option to set custom text and background colors for the cursor. "
 "If disabled the background and text colors will be reversed."
 msgstr "Kasuta seda valikut, et määrata kohandatud teksti- ja taustavärvid kursori jaoks. Määramata valiku puhul on tausta ja teksti värvid pööratud."
 
-#: ../terminal/terminal-preferences.glade.h:140
+#: ../terminal/terminal-preferences.glade.h:146
 msgid "Choose cursor background color"
 msgstr "Vali kursori tagaplaani värv"
 
-#: ../terminal/terminal-preferences.glade.h:141
+#: ../terminal/terminal-preferences.glade.h:147
 msgid "Choose cursor foreground color"
 msgstr "Vali kursori esiplaani värv"
 
-#: ../terminal/terminal-preferences.glade.h:142
+#: ../terminal/terminal-preferences.glade.h:148
 msgid "Custom Colors"
 msgstr "Kohandatud värvid"
 
-#: ../terminal/terminal-preferences.glade.h:143
+#: ../terminal/terminal-preferences.glade.h:149
 msgid "Black"
 msgstr "Must"
 
-#: ../terminal/terminal-preferences.glade.h:144
+#: ../terminal/terminal-preferences.glade.h:150
 msgid "Dark Gray"
 msgstr "Tumehall"
 
-#: ../terminal/terminal-preferences.glade.h:145
+#: ../terminal/terminal-preferences.glade.h:151
 msgid "Red"
 msgstr "Punane"
 
-#: ../terminal/terminal-preferences.glade.h:146
+#: ../terminal/terminal-preferences.glade.h:152
 msgid "Light Red"
 msgstr "Helepunane"
 
-#: ../terminal/terminal-preferences.glade.h:147
+#: ../terminal/terminal-preferences.glade.h:153
 msgid "Green"
 msgstr "Roheline"
 
-#: ../terminal/terminal-preferences.glade.h:148
+#: ../terminal/terminal-preferences.glade.h:154
 msgid "Light Green"
 msgstr "Heleroheline"
 
-#: ../terminal/terminal-preferences.glade.h:149
+#: ../terminal/terminal-preferences.glade.h:155
 msgid "Brown / Yellow"
 msgstr "Pruun / kollane / pronksjas"
 
-#: ../terminal/terminal-preferences.glade.h:150
+#: ../terminal/terminal-preferences.glade.h:156
 msgid "Yellow"
 msgstr "Kollane"
 
-#: ../terminal/terminal-preferences.glade.h:151
+#: ../terminal/terminal-preferences.glade.h:157
 msgid "Blue"
 msgstr "Sinine"
 
-#: ../terminal/terminal-preferences.glade.h:152
+#: ../terminal/terminal-preferences.glade.h:158
 msgid "Light Blue"
 msgstr "Helesinine"
 
-#: ../terminal/terminal-preferences.glade.h:153
+#: ../terminal/terminal-preferences.glade.h:159
 msgid "Magenta"
 msgstr "Magentapunane"
 
-#: ../terminal/terminal-preferences.glade.h:154
+#: ../terminal/terminal-preferences.glade.h:160
 msgid "Light Magenta"
 msgstr "Hele magentapunane"
 
-#: ../terminal/terminal-preferences.glade.h:155
+#: ../terminal/terminal-preferences.glade.h:161
 msgid "Cyan"
 msgstr "Tsüaansinine"
 
-#: ../terminal/terminal-preferences.glade.h:156
+#: ../terminal/terminal-preferences.glade.h:162
 msgid "Light Cyan"
 msgstr "Hele tsüaansinine"
 
-#: ../terminal/terminal-preferences.glade.h:157
+#: ../terminal/terminal-preferences.glade.h:163
 msgid "Light Gray"
 msgstr "Helehall"
 
-#: ../terminal/terminal-preferences.glade.h:158
+#: ../terminal/terminal-preferences.glade.h:164
 msgid "White"
 msgstr "Valge"
 
-#: ../terminal/terminal-preferences.glade.h:159
+#: ../terminal/terminal-preferences.glade.h:165
 msgid "Show bold text in b_right colors"
 msgstr "Näita paksu kirja erksama värviga"
 
-#: ../terminal/terminal-preferences.glade.h:160
+#: ../terminal/terminal-preferences.glade.h:166
 msgid ""
 "Enable this option to allow escape sequences such as '\\e[1;35m' to switch "
 "text to bright colors in addition to bold. If disabled, text color will "
 "remain intact."
 msgstr "Kasuta seda valikut, et lubada paojadadel nagu näiteks '\\e[1;35m' muuta tekst lisaks paksule kirjale ka erksamaks. Kui valik on välja lülitatud, siis teksti värv jääb muutmata."
 
-#: ../terminal/terminal-preferences.glade.h:161
+#: ../terminal/terminal-preferences.glade.h:167
 msgid "Palette"
 msgstr "Palett"
 
-#: ../terminal/terminal-preferences.glade.h:162
+#: ../terminal/terminal-preferences.glade.h:168
 msgid "Presets"
 msgstr "Valmissätted"
 
-#: ../terminal/terminal-preferences.glade.h:163
+#: ../terminal/terminal-preferences.glade.h:169
 msgid "_Colors"
 msgstr "_Värvid"
 
-#: ../terminal/terminal-preferences.glade.h:164
+#: ../terminal/terminal-preferences.glade.h:170
 msgid ""
 "These options may cause some applications to behave\n"
 "incorrectly. They are only here to allow you to work around\n"
@@ -1652,120 +1780,124 @@ msgid ""
 "different terminal behavior."
 msgstr "Antud valikud võivad mõnedes rakendustes põhjustada vigast käitumist. Need on siin toodus ainult selleks, et võimaldada teatud rakenduste ja operatsioonisüsteemide kasutamist, mis eeldavad teistmoodi toimivat terminali."
 
-#: ../terminal/terminal-preferences.glade.h:168
+#: ../terminal/terminal-preferences.glade.h:174
 msgid "_Backspace key generates:"
 msgstr "Tagasivõtuklahv tekita_b:"
 
-#: ../terminal/terminal-preferences.glade.h:169
+#: ../terminal/terminal-preferences.glade.h:175
 msgid "_Delete key generates:"
 msgstr "_Kustutamisklahv tekitab:"
 
-#: ../terminal/terminal-preferences.glade.h:170
+#: ../terminal/terminal-preferences.glade.h:176
 msgid "_Reset compatibility options to defaults"
 msgstr "Lähtesta ühilduvuse seadistused vaikeväärtustega"
 
-#: ../terminal/terminal-preferences.glade.h:171
+#: ../terminal/terminal-preferences.glade.h:177
 msgid "_Ambiguous-width characters:"
 msgstr "_Ebamäärase laiusega tähemärgid:"
 
-#: ../terminal/terminal-preferences.glade.h:172
+#: ../terminal/terminal-preferences.glade.h:178
 msgid "Compatibility"
 msgstr "Ühilduvus"
 
-#: ../terminal/terminal-preferences.glade.h:173
+#: ../terminal/terminal-preferences.glade.h:179
 msgid "Co_mpatibility"
 msgstr "Ü_hilduvus"
 
-#: ../terminal/terminal-preferences.glade.h:174
+#: ../terminal/terminal-preferences.glade.h:180
 msgid ""
 "Consider the following\n"
 "characters part of a _word\n"
 "when double clicking:"
 msgstr "Topeltklõpsu puhul\nloe järgnevad tähemärgid\n_sõna osaks:"
 
-#: ../terminal/terminal-preferences.glade.h:177
+#: ../terminal/terminal-preferences.glade.h:183
 msgid "Reset double click options to defaults"
 msgstr "Lähtesta topeltklõpsu seadistused vaikeväärtustega"
 
-#: ../terminal/terminal-preferences.glade.h:178
+#: ../terminal/terminal-preferences.glade.h:184
 msgid "Double Click"
 msgstr "Topeltklõps"
 
-#: ../terminal/terminal-preferences.glade.h:179
+#: ../terminal/terminal-preferences.glade.h:185
 msgid "Default character e_ncoding:"
 msgstr "Märkide vaik_ekodeering:"
 
-#: ../terminal/terminal-preferences.glade.h:180
+#: ../terminal/terminal-preferences.glade.h:186
 msgid "Encoding"
 msgstr "Kodeering"
 
-#: ../terminal/terminal-preferences.glade.h:181
+#: ../terminal/terminal-preferences.glade.h:187
 msgid "Disable all me_nu access keys (such as Alt+f)"
 msgstr "Keela kõik me_nüüde juurdepääsuklahvid (nagu Alt+f)"
 
-#: ../terminal/terminal-preferences.glade.h:182
+#: ../terminal/terminal-preferences.glade.h:188
 msgid "Disable m_enu shortcut key (F10 by default)"
 msgstr "Keela m_enüü kiirklahv (vaikimisi F10)"
 
-#: ../terminal/terminal-preferences.glade.h:183
+#: ../terminal/terminal-preferences.glade.h:189
 msgid "Disable _help window shortcut key (F1 by default)"
 msgstr "Keela abiteabe akna kiirklahv (vaikimisi F1)"
 
-#: ../terminal/terminal-preferences.glade.h:184
+#: ../terminal/terminal-preferences.glade.h:190
 msgid "Shortcuts"
 msgstr "Kiirklahvid"
 
-#: ../terminal/terminal-preferences.glade.h:185
+#: ../terminal/terminal-preferences.glade.h:191
 msgid "Use _middle mouse click to close tabs"
 msgstr "Kasuta hiire keskmist klõpsu kaartide sulge_miseks"
 
-#: ../terminal/terminal-preferences.glade.h:186
+#: ../terminal/terminal-preferences.glade.h:192
 msgid "Use middle mouse click to open _URLs"
 msgstr "Kasuta hiire keskmist klõpsu _URL'ide avamiseks"
 
-#: ../terminal/terminal-preferences.glade.h:187
+#: ../terminal/terminal-preferences.glade.h:193
 msgid "If disabled, URLs can be opened by Ctrl + left mouse click."
 msgstr "Kui see seadistus on välja lülitatud, siis saad URL'e avada Ctrl + hiire vasakklahvi klõpsuga."
 
-#: ../terminal/terminal-preferences.glade.h:188
+#: ../terminal/terminal-preferences.glade.h:194
 msgid "Auto-hi_de mouse pointer"
 msgstr "Peida _hiirekursor automaatselt"
 
-#: ../terminal/terminal-preferences.glade.h:189
+#: ../terminal/terminal-preferences.glade.h:195
 msgid "Re_wrap terminal contents on resize"
 msgstr "Akna suuruse muutmisel joonda sisu ümber"
 
-#: ../terminal/terminal-preferences.glade.h:190
+#: ../terminal/terminal-preferences.glade.h:196
 msgid "Open new tab to the _right of the active tab"
 msgstr "Ava uus kaart aktiivsest kaardist pa_remal"
 
-#: ../terminal/terminal-preferences.glade.h:191
+#: ../terminal/terminal-preferences.glade.h:197
 msgid "If disabled, new tab will be opened in the rightmost position."
 msgstr "Välja lülitatuna avatakse uus kaart parempoolses ääres."
 
-#: ../terminal/terminal-preferences.glade.h:192
+#: ../terminal/terminal-preferences.glade.h:198
 msgid "_Audible bell"
 msgstr "_Kuuldav kellahelin"
 
-#: ../terminal/terminal-preferences.glade.h:193
+#: ../terminal/terminal-preferences.glade.h:199
 msgid "Allows the terminal to play sound to indicate some events."
 msgstr "Lubab terminalil helimärguannetega teada anda olulistest sündmustest."
 
-#: ../terminal/terminal-preferences.glade.h:194
+#: ../terminal/terminal-preferences.glade.h:200
 msgid "_Visual bell"
 msgstr "_Nähtav kellahelin"
 
-#: ../terminal/terminal-preferences.glade.h:195
+#: ../terminal/terminal-preferences.glade.h:201
 msgid ""
 "Allows the terminal to use WM's capability of urgent hint to indicate some "
 "events."
 msgstr "Lubab terminalil kasutada aknahalduri võimalusi olulistest sündmustest teada andmiseks."
 
-#: ../terminal/terminal-preferences.glade.h:196
+#: ../terminal/terminal-preferences.glade.h:202
+msgid "Right click action: "
+msgstr "Parema hiireklahvi vajutusel:"
+
+#: ../terminal/terminal-preferences.glade.h:203
 msgid "Misc"
 msgstr "Varia"
 
-#: ../terminal/terminal-preferences.glade.h:197
+#: ../terminal/terminal-preferences.glade.h:204
 msgid "Ad_vanced"
 msgstr "Laiendatud"
 

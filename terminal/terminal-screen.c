@@ -40,6 +40,9 @@
 #ifdef HAVE_LIBUTEMPTER
 #include <utempter.h>
 #endif
+#ifdef HAVE_SIGNAL_H
+#include <signal.h>
+#endif
 
 #include <sys/wait.h>
 
@@ -53,6 +56,7 @@
 #include <terminal/terminal-screen.h>
 #include <terminal/terminal-widget.h>
 #include <terminal/terminal-window.h>
+#include <terminal/terminal-window-dropdown.h>
 
 #if defined(GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
@@ -93,6 +97,17 @@ enum
   HSV_VALUE,
   N_HSV
 };
+
+typedef enum
+{
+  DISABLE_PASTE_DIALOG_NOT,
+  DISABLE_PASTE_DIALOG_5,
+  DISABLE_PASTE_DIALOG_15,
+  DISABLE_PASTE_DIALOG_RESTART,
+  DISABLE_PASTE_DIALOG_PERMANENT,
+
+  DISABLE_PASTE_DIALOG_N
+} DisablePasteDialog;
 
 
 
@@ -180,7 +195,7 @@ struct _TerminalScreen
   GtkOverlay           parent_instance;
   TerminalPreferences *preferences;
   TerminalImageLoader *loader;
-  GtkWidget           *hbox;
+  GtkWidget           *swin;
   GtkWidget           *terminal;
   GtkWidget           *scrollbar;
   GtkWidget           *tab_label;
@@ -203,18 +218,31 @@ struct _TerminalScreen
   TerminalTitle        dynamic_title_mode;
   guint                hold : 1;
   guint                has_random_bg_color : 1;
-#if !VTE_CHECK_VERSION (0, 51, 1)
-  guint                scroll_on_output : 1;
-#endif
 
   guint                activity_timeout_id;
   time_t               activity_resize_time;
 };
 
+typedef struct
+{
+  DisablePasteDialog  id;
+  gchar              *string;
+} DisablePasteDialogEntry;
 
 
-static guint screen_signals[LAST_SIGNAL];
-static guint screen_last_session_id = 0;
+
+static guint                   screen_signals[LAST_SIGNAL];
+static guint                   screen_last_session_id             = 0;
+static gboolean                disable_paste_dialog_temporarily   = FALSE;
+static gboolean                disable_paste_dialog_until_restart = FALSE;
+static DisablePasteDialogEntry disable_unsafe_past_dialog_texts[] =
+{
+  { DISABLE_PASTE_DIALOG_NOT,       N_ ("Do not disable dialog")                                 },
+  { DISABLE_PASTE_DIALOG_5,         N_ ("Disable for 5 minutes")                                 },
+  { DISABLE_PASTE_DIALOG_15,        N_ ("Disable for 15 minutes")                                },
+  { DISABLE_PASTE_DIALOG_RESTART,   N_ ("Disable until program restart")                         },
+  { DISABLE_PASTE_DIALOG_PERMANENT, N_ ("Disable dialog (can be re-enabled in the Preferences)") }
+};
 
 
 
@@ -299,14 +327,13 @@ terminal_screen_class_init (TerminalScreenClass *klass)
 static void
 terminal_screen_init (TerminalScreen *screen)
 {
+  gboolean scrollbar;
+
   screen->loader = NULL;
   screen->working_directory = g_get_current_dir ();
   screen->dynamic_title_mode = TERMINAL_TITLE_DEFAULT;
   screen->session_id = ++screen_last_session_id;
   screen->pid = -1;
-
-  screen->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_container_add (GTK_CONTAINER (screen), screen->hbox);
 
   screen->terminal = g_object_new (TERMINAL_TYPE_WIDGET, NULL);
   g_signal_connect (G_OBJECT (screen->terminal), "child-exited",
@@ -325,20 +352,30 @@ terminal_screen_init (TerminalScreen *screen)
       G_CALLBACK (terminal_screen_draw), screen);
   g_signal_connect_swapped (G_OBJECT (screen->terminal), "paste-selection-request",
       G_CALLBACK (terminal_screen_paste_primary), screen);
-  gtk_box_pack_start (GTK_BOX (screen->hbox), screen->terminal, TRUE, TRUE, 0);
+  g_signal_connect_swapped (G_OBJECT (screen->terminal), "paste-clipboard-request",
+      G_CALLBACK (terminal_screen_paste_clipboard), screen);
 
-  screen->scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL,
-                                         gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (screen->terminal)));
-  gtk_box_pack_start (GTK_BOX (screen->hbox), screen->scrollbar, FALSE, FALSE, 0);
+  screen->preferences = terminal_preferences_get ();
+
+  g_object_get (G_OBJECT (screen->preferences), "scrolling-bar", &scrollbar, NULL);
+
+  screen->swin = gtk_scrolled_window_new (gtk_scrollable_get_hadjustment (GTK_SCROLLABLE (screen->terminal)), gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (screen->terminal)));
+  gtk_scrolled_window_set_propagate_natural_width (GTK_SCROLLED_WINDOW (screen->swin), TRUE);
+  gtk_scrolled_window_set_propagate_natural_height (GTK_SCROLLED_WINDOW (screen->swin), TRUE);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (screen->swin), GTK_POLICY_NEVER, scrollbar != TERMINAL_SCROLLBAR_NONE ? GTK_POLICY_ALWAYS : GTK_POLICY_NEVER);
+  gtk_container_add (GTK_CONTAINER (screen->swin), screen->terminal);
+
+  gtk_container_add (GTK_CONTAINER (screen), screen->swin);
+
+  screen->scrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (screen->swin));
   g_signal_connect_after (G_OBJECT (screen->scrollbar), "button-press-event", G_CALLBACK (gtk_true), NULL);
 
   /* watch preferences changes */
-  screen->preferences = terminal_preferences_get ();
   g_signal_connect (G_OBJECT (screen->preferences), "notify",
       G_CALLBACK (terminal_screen_preferences_changed), screen);
 
   /* show the terminal */
-  gtk_widget_show_all (screen->hbox);
+  gtk_widget_show_all (screen->swin);
 
   /* apply current settings */
   terminal_screen_update_binding_backspace (screen);
@@ -626,10 +663,8 @@ terminal_screen_preferences_changed (TerminalPreferences *preferences,
     terminal_screen_update_binding_delete (screen);
   else if (strcmp ("binding-ambiguous-width", name) == 0)
     terminal_screen_update_binding_ambiguous_width (screen);
-#if VTE_CHECK_VERSION (0, 51, 3)
   else if (strcmp ("cell-width-scale", name) == 0 || strcmp ("cell-height-scale", name) == 0)
     terminal_screen_update_font (screen);
-#endif
   else if (strncmp ("color-", name, strlen ("color-")) == 0)
     terminal_screen_update_colors (screen);
   else if (strncmp ("font-", name, strlen ("font-")) == 0)
@@ -644,7 +679,7 @@ terminal_screen_preferences_changed (TerminalPreferences *preferences,
     terminal_screen_update_misc_mouse_autohide (screen);
   else if (strcmp ("misc-rewrap-on-resize", name) == 0)
     terminal_screen_update_misc_rewrap_on_resize (screen);
-  else if (strcmp ("scrolling-bar", name) == 0)
+  else if (strcmp ("scrolling-bar", name) == 0 || strcmp ("overlay-scrolling", name) == 0)
     terminal_screen_update_scrolling_bar (screen);
   else if (strcmp ("scrolling-lines", name) == 0 || strcmp ("scrolling-unlimited", name) == 0)
     terminal_screen_update_scrolling_lines (screen);
@@ -1213,10 +1248,8 @@ terminal_screen_update_colors (TerminalScreen *screen)
     vte_terminal_set_color_bold (VTE_TERMINAL (screen->terminal), bold_use_default ? &fg : &bold);
 #endif
 
-#if VTE_CHECK_VERSION (0, 51, 3)
   /* "bold-is-bright" supported since vte 0.51.3 */
   vte_terminal_set_bold_is_bright (VTE_TERMINAL (screen->terminal), bold_is_bright);
-#endif
 }
 
 
@@ -1332,7 +1365,6 @@ terminal_screen_update_scrolling_on_keystroke (TerminalScreen *screen)
 static void
 terminal_screen_update_text_blink_mode (TerminalScreen *screen)
 {
-#if VTE_CHECK_VERSION (0, 51, 3)
   TerminalTextBlinkMode val;
   VteTextBlinkMode      mode = VTE_TEXT_BLINK_ALWAYS;
 
@@ -1360,7 +1392,6 @@ terminal_screen_update_text_blink_mode (TerminalScreen *screen)
     }
 
   vte_terminal_set_text_blink_mode (VTE_TERMINAL (screen->terminal), mode);
-#endif
 }
 
 
@@ -1746,7 +1777,7 @@ terminal_screen_set_tab_label_color (TerminalScreen *screen,
 static gboolean
 terminal_screen_is_text_unsafe (const gchar *text)
 {
-  return text != NULL && strchr (text, '\n') != NULL;
+  return text != NULL && (strchr (text, '\n') != NULL || strchr (text, '\r') != NULL);
 }
 
 
@@ -1760,19 +1791,37 @@ terminal_screen_unsafe_paste_dialog_new (TerminalScreen *screen,
   GtkWidget     *tv = gtk_text_view_new_with_buffer (buffer);
   GtkWidget     *sw = gtk_scrolled_window_new (NULL, NULL);
   GtkWidget     *dialog = xfce_titled_dialog_new ();
-  GtkWidget     *button;
+  GtkWidget     *infobar = gtk_info_bar_new ();
+  GtkWidget     *box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
+  GtkWidget     *button, *label;
+  GtkWidget     *combo;
+  gint           parent_w, parent_h;
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), parent);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
-  gtk_window_set_title (GTK_WINDOW (dialog), _("Warning: Unsafe Paste"));
-  xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (dialog),
-                                   _("Pasting this text to the terminal may be dangerous as it looks like\n"
-                                     "some commands may be executed, potentially involving root access ('sudo')."));
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Warning: Potentially Unsafe Paste"));
+
+  if (strstr (text, "sudo") != NULL)
+    label = gtk_label_new (_("Pasting this text to the terminal may be dangerous as it looks like "
+                             "some commands may be executed, potentially involving root access ('sudo')."));
+  else
+    label = gtk_label_new (_("Pasting this text to the terminal may be dangerous as it looks like "
+                             "some commands may be executed."));
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_container_add (GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (infobar))), label);
+  gtk_container_add (GTK_CONTAINER (box), infobar);
+  gtk_container_set_border_width (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), 0);
+  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), box);
+
+  xfce_titled_dialog_create_action_area (XFCE_TITLED_DIALOG (dialog));
 
   button = xfce_gtk_button_new_mixed ("gtk-cancel", _("_Cancel"));
-  gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, GTK_RESPONSE_CANCEL);
+  xfce_titled_dialog_add_action_widget (XFCE_TITLED_DIALOG (dialog), button, GTK_RESPONSE_CANCEL);
+
   button = xfce_gtk_button_new_mixed ("gtk-ok", _("_Paste"));
-  gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, GTK_RESPONSE_YES);
+  xfce_titled_dialog_add_action_widget (XFCE_TITLED_DIALOG (dialog), button, GTK_RESPONSE_YES);
+
+  gtk_widget_grab_focus (button);
 
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (tv), TRUE);
   gtk_text_view_set_monospace (GTK_TEXT_VIEW (tv), TRUE);
@@ -1781,15 +1830,35 @@ terminal_screen_unsafe_paste_dialog_new (TerminalScreen *screen,
   gtk_text_view_set_right_margin (GTK_TEXT_VIEW (tv), 6);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (tv), 6);
 
-  gtk_scrolled_window_set_min_content_width (GTK_SCROLLED_WINDOW (sw), 400);
-  gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (sw), 150);
+  gtk_window_get_size (GTK_WINDOW (parent), &parent_w, &parent_h);
+  gtk_window_set_default_size (GTK_WINDOW (dialog),
+                               CLAMP (parent_w * 0.75, 300, 1050),
+                               CLAMP (parent_h * 0.75, 200, 700));
+  gtk_scrolled_window_set_min_content_width (GTK_SCROLLED_WINDOW (sw), 300);
+  gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (sw), 200);
+  gtk_widget_set_vexpand (sw, TRUE);
 
   gtk_container_add (GTK_CONTAINER (sw), tv);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), sw);
+  gtk_container_add (GTK_CONTAINER (box), sw);
+
+  combo = gtk_combo_box_text_new ();
+  for (gint i = 0; i < DISABLE_PASTE_DIALOG_N; i++)
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), disable_unsafe_past_dialog_texts[i].string);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
+  gtk_container_add (GTK_CONTAINER (box), combo);
 
   gtk_text_buffer_set_text (buffer, text, -1);
 
   return dialog;
+}
+
+
+
+static gboolean
+enable_unsafe_paste_dialog (gpointer ptr)
+{
+  disable_paste_dialog_temporarily = FALSE;
+  return FALSE;
 }
 
 
@@ -1805,17 +1874,23 @@ terminal_screen_paste_unsafe_text (TerminalScreen *screen,
 
   dialog = terminal_screen_unsafe_paste_dialog_new (screen, text);
   gtk_widget_show_all (dialog);
-  /* set focus to the Paste button */
-  gtk_widget_grab_focus (gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES));
+
+  /* don't hide the drop-down terminal */
+  if (TERMINAL_IS_WINDOW_DROPDOWN (gtk_widget_get_toplevel (GTK_WIDGET (screen))))
+    terminal_window_dropdown_ignore_next_focus_out_event (TERMINAL_WINDOW_DROPDOWN (gtk_widget_get_toplevel (GTK_WIDGET (screen))));
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
     {
       GtkWidget     *content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-      GtkWidget     *sw = g_list_first (gtk_container_get_children (GTK_CONTAINER (content_area)))->data;
+      GtkWidget     *box = ((gtk_container_get_children (GTK_CONTAINER (content_area))))->data;
+      GtkWidget     *sw = gtk_container_get_children (GTK_CONTAINER (box))->next->data;
       GtkTextView   *tv = GTK_TEXT_VIEW (gtk_bin_get_child (GTK_BIN (sw)));
       GtkTextBuffer *buffer = gtk_text_view_get_buffer (tv);
+      GtkWidget     *combo = gtk_container_get_children (GTK_CONTAINER (box))->next->next->data;
       GtkTextIter    start, end;
-      char          *res_text;
+      gchar         *res_text;
+      gchar         *combo_text;
+      gint           i;
 
       gtk_text_buffer_get_bounds (buffer, &start, &end);
       res_text = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
@@ -1838,6 +1913,39 @@ terminal_screen_paste_unsafe_text (TerminalScreen *screen,
           /* restore original clipboard contents */
           gtk_clipboard_set_text (clipboard, text, strlen (text));
         }
+
+      /* disable the dialog */
+      combo_text = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (combo));
+      for (i = DISABLE_PASTE_DIALOG_NOT; i < DISABLE_PASTE_DIALOG_N; i++)
+        {
+          if (g_strcmp0 (combo_text, disable_unsafe_past_dialog_texts[i].string) == 0)
+            break;
+        }
+
+      switch (i)
+        {
+          case DISABLE_PASTE_DIALOG_NOT:
+            break;
+          case DISABLE_PASTE_DIALOG_5:
+            disable_paste_dialog_temporarily = TRUE;
+            g_timeout_add_seconds (300, enable_unsafe_paste_dialog, NULL);
+            break;
+          case DISABLE_PASTE_DIALOG_15:
+            disable_paste_dialog_temporarily = TRUE;
+            g_timeout_add_seconds (900, enable_unsafe_paste_dialog, NULL);
+            break;
+          case DISABLE_PASTE_DIALOG_RESTART:
+            disable_paste_dialog_until_restart = TRUE;
+            break;
+          case DISABLE_PASTE_DIALOG_PERMANENT:
+            g_object_set (G_OBJECT (screen->preferences),
+                          "misc-show-unsafe-paste-dialog", FALSE,
+                          NULL);
+            break;
+
+          default:
+            break;
+        }
     }
 
   gtk_widget_destroy (dialog);
@@ -1845,7 +1953,6 @@ terminal_screen_paste_unsafe_text (TerminalScreen *screen,
 
 
 
-#if VTE_CHECK_VERSION (0, 48, 0)
 static void
 terminal_screen_spawn_async_cb (VteTerminal *terminal,
                                 GPid         pid,
@@ -1874,7 +1981,6 @@ terminal_screen_spawn_async_cb (VteTerminal *terminal,
     }
 #endif // HAVE_LIBUTEMPTER
 }
-#endif
 
 
 
@@ -1965,7 +2071,6 @@ terminal_screen_launch_child (TerminalScreen *screen)
           spawn_flags |= G_SPAWN_FILE_AND_ARGV_ZERO;
         }
 
-#if VTE_CHECK_VERSION (0, 48, 0)
       vte_terminal_spawn_async (VTE_TERMINAL (screen->terminal),
                                 pty_flags,
                                 screen->working_directory, argv2, env,
@@ -1975,28 +2080,6 @@ terminal_screen_launch_child (TerminalScreen *screen)
                                 NULL,
                                 terminal_screen_spawn_async_cb,
                                 screen);
-#else
-      if (!vte_terminal_spawn_sync (VTE_TERMINAL (screen->terminal),
-                                    pty_flags,
-                                    screen->working_directory, argv2, env,
-                                    spawn_flags,
-                                    NULL, NULL,
-                                    &screen->pid, NULL, &error))
-        {
-          xfce_dialog_show_error (GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (screen))),
-                                  error, _("Failed to execute child"));
-          g_error_free (error);
-        }
-#ifdef HAVE_LIBUTEMPTER
-      else
-        {
-          gboolean update_records;
-          g_object_get (G_OBJECT (screen->preferences), "command-update-records", &update_records, NULL);
-          if (update_records)
-            utempter_add_record (vte_pty_get_fd (vte_terminal_get_pty (VTE_TERMINAL (screen->terminal))), NULL);
-        }
-#endif // HAVE_LIBUTEMPTER
-#endif
 
       g_free (argv2);
 
@@ -2415,11 +2498,7 @@ void
 terminal_screen_copy_clipboard (TerminalScreen *screen)
 {
   terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-#if VTE_CHECK_VERSION (0, 49, 2)
   vte_terminal_copy_clipboard_format (VTE_TERMINAL (screen->terminal), VTE_FORMAT_TEXT);
-#else
-  vte_terminal_copy_clipboard (VTE_TERMINAL (screen->terminal));
-#endif
 }
 
 
@@ -2431,14 +2510,12 @@ terminal_screen_copy_clipboard (TerminalScreen *screen)
  * Places the selected text in the terminal in the #GDK_SELECTION_CLIPBOARD selection
  * as HTML (preserving colors, bold font, etc).
  **/
-#if VTE_CHECK_VERSION (0, 49, 2)
 void
 terminal_screen_copy_clipboard_html (TerminalScreen *screen)
 {
   terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_copy_clipboard_format (VTE_TERMINAL (screen->terminal), VTE_FORMAT_HTML);
 }
-#endif
 
 
 
@@ -2460,7 +2537,7 @@ terminal_screen_paste_clipboard (TerminalScreen *screen)
 
   g_object_get (G_OBJECT (screen->preferences), "misc-show-unsafe-paste-dialog", &show_dialog, NULL);
 
-  if (show_dialog && terminal_screen_is_text_unsafe (text))
+  if (show_dialog && terminal_screen_is_text_unsafe (text) && disable_paste_dialog_temporarily == FALSE && disable_paste_dialog_until_restart == FALSE)
     terminal_screen_paste_unsafe_text (screen, text, GDK_SELECTION_CLIPBOARD);
   else
     vte_terminal_paste_clipboard (VTE_TERMINAL (screen->terminal));
@@ -2489,7 +2566,7 @@ terminal_screen_paste_primary (TerminalScreen *screen)
 
   g_object_get (G_OBJECT (screen->preferences), "misc-show-unsafe-paste-dialog", &show_dialog, NULL);
 
-  if (show_dialog && terminal_screen_is_text_unsafe (text))
+  if (show_dialog && terminal_screen_is_text_unsafe (text) && disable_paste_dialog_temporarily == FALSE && disable_paste_dialog_until_restart == FALSE)
     terminal_screen_paste_unsafe_text (screen, text, GDK_SELECTION_PRIMARY);
   else
     vte_terminal_paste_primary (VTE_TERMINAL (screen->terminal));
@@ -2732,11 +2809,13 @@ void
 terminal_screen_update_scrolling_bar (TerminalScreen *screen)
 {
   TerminalScrollbar  scrollbar;
+  gboolean           overlay_scrolling;
   TerminalVisibility visibility = TERMINAL_VISIBILITY_DEFAULT;
   glong              grid_w = 0, grid_h = 0;
   GtkWidget         *toplevel;
 
   g_object_get (G_OBJECT (screen->preferences), "scrolling-bar", &scrollbar, NULL);
+  g_object_get (G_OBJECT (screen->preferences), "overlay-scrolling", &overlay_scrolling, NULL);
 
   if (gtk_widget_get_realized (GTK_WIDGET (screen)))
     terminal_screen_get_size (screen, &grid_w, &grid_h);
@@ -2754,12 +2833,12 @@ terminal_screen_update_scrolling_bar (TerminalScreen *screen)
           break;
 
         case TERMINAL_SCROLLBAR_LEFT:
-          gtk_box_reorder_child (GTK_BOX (screen->hbox), screen->scrollbar, 0);
+          gtk_scrolled_window_set_placement (GTK_SCROLLED_WINDOW (screen->swin), GTK_CORNER_TOP_RIGHT);
           gtk_widget_show (screen->scrollbar);
           break;
 
         default: /* TERMINAL_SCROLLBAR_RIGHT */
-          gtk_box_reorder_child (GTK_BOX (screen->hbox), screen->scrollbar, 1);
+          gtk_scrolled_window_set_placement (GTK_SCROLLED_WINDOW (screen->swin), GTK_CORNER_TOP_LEFT);
           gtk_widget_show (screen->scrollbar);
           break;
         }
@@ -2770,10 +2849,12 @@ terminal_screen_update_scrolling_bar (TerminalScreen *screen)
     }
   else /* show */
     {
-      gtk_box_reorder_child (GTK_BOX (screen), screen->scrollbar,
-                             scrollbar == TERMINAL_SCROLLBAR_LEFT ? 0 : 1);
+      gtk_scrolled_window_set_placement (GTK_SCROLLED_WINDOW (screen->swin), scrollbar == TERMINAL_SCROLLBAR_LEFT ? GTK_CORNER_TOP_RIGHT : GTK_CORNER_TOP_LEFT);
       gtk_widget_show (screen->scrollbar);
     }
+
+  /* set overlay scrolling */
+  gtk_scrolled_window_set_overlay_scrolling (GTK_SCROLLED_WINDOW (screen->swin), overlay_scrolling);
 
   /* update window geometry it required */
   if (grid_w > 0 && grid_h > 0)
@@ -2793,9 +2874,7 @@ terminal_screen_update_font (TerminalScreen *screen)
   GSettings            *settings;
   XfconfChannel        *channel;
   gdouble               font_scale = PANGO_SCALE_MEDIUM;
-#if VTE_CHECK_VERSION (0, 51, 3)
-  gdouble cell_width_scale, cell_height_scale;
-#endif
+  gdouble               cell_width_scale, cell_height_scale;
 
   terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
   terminal_return_if_fail (TERMINAL_IS_PREFERENCES (screen->preferences));
@@ -2868,7 +2947,6 @@ terminal_screen_update_font (TerminalScreen *screen)
       g_free (font_name);
     }
 
-#if VTE_CHECK_VERSION (0, 51, 3)
   g_object_get (G_OBJECT (screen->preferences),
                 "cell-width-scale", &cell_width_scale,
                 "cell-height-scale", &cell_height_scale,
@@ -2876,7 +2954,6 @@ terminal_screen_update_font (TerminalScreen *screen)
 
   vte_terminal_set_cell_width_scale (VTE_TERMINAL (screen->terminal), cell_width_scale);
   vte_terminal_set_cell_height_scale (VTE_TERMINAL (screen->terminal), cell_height_scale);
-#endif
 
   /* update window geometry it required (not needed for drop-down) */
   if (TERMINAL_IS_WINDOW (toplevel) && !terminal_window_is_drop_down (TERMINAL_WINDOW (toplevel)) && grid_w > 0 && grid_h > 0)
@@ -2908,11 +2985,7 @@ gboolean
 terminal_screen_get_scroll_on_output (TerminalScreen *screen)
 {
   terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
-#if !VTE_CHECK_VERSION (0, 51, 1)
-  return screen->scroll_on_output;
-#else
   return vte_terminal_get_scroll_on_output (VTE_TERMINAL (screen->terminal));
-#endif
 }
 
 
@@ -2922,9 +2995,6 @@ terminal_screen_set_scroll_on_output (TerminalScreen *screen,
                                       gboolean        enabled)
 {
   terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-#if !VTE_CHECK_VERSION (0, 51, 1)
-  screen->scroll_on_output = enabled;
-#endif
   vte_terminal_set_scroll_on_output (VTE_TERMINAL (screen->terminal), enabled);
 }
 
@@ -2988,7 +3058,7 @@ terminal_screen_feed_text (TerminalScreen *screen,
 const gchar *
 terminal_screen_get_custom_fg_color (TerminalScreen *screen)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
   return screen->custom_fg_color;
 }
 
@@ -2997,7 +3067,7 @@ terminal_screen_get_custom_fg_color (TerminalScreen *screen)
 const gchar *
 terminal_screen_get_custom_bg_color (TerminalScreen *screen)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
   return screen->custom_bg_color;
 }
 
@@ -3006,7 +3076,7 @@ terminal_screen_get_custom_bg_color (TerminalScreen *screen)
 const gchar *
 terminal_screen_get_custom_title_color (TerminalScreen *screen)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
   return screen->custom_title_color;
 }
 
@@ -3030,4 +3100,21 @@ terminal_screen_set_custom_title_color (TerminalScreen *screen,
       screen->custom_title_color = g_strdup (color);
       terminal_screen_set_tab_label_color (screen, &label_color);
     }
+}
+
+
+
+void
+terminal_screen_send_signal (TerminalScreen *screen,
+                             int             signum)
+{
+  int fgpid;
+
+  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  terminal_return_if_fail (screen->pid > 0);
+  terminal_return_if_fail (signum >= 1 && signum <= 31);
+
+  fgpid = tcgetpgrp (vte_pty_get_fd (vte_terminal_get_pty (VTE_TERMINAL (screen->terminal))));
+  if (fgpid != -1 && fgpid != screen->pid)
+    kill (fgpid, signum);
 }

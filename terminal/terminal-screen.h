@@ -78,9 +78,7 @@ void            terminal_screen_set_working_directory     (TerminalScreen *scree
 gboolean        terminal_screen_has_selection             (TerminalScreen *screen);
 
 void            terminal_screen_copy_clipboard            (TerminalScreen *screen);
-#if VTE_CHECK_VERSION (0, 49, 2)
 void            terminal_screen_copy_clipboard_html       (TerminalScreen *screen);
-#endif
 void            terminal_screen_paste_clipboard           (TerminalScreen *screen);
 void            terminal_screen_paste_primary             (TerminalScreen *screen);
 
@@ -137,6 +135,8 @@ const gchar    *terminal_screen_get_custom_bg_color       (TerminalScreen *scree
 const gchar    *terminal_screen_get_custom_title_color    (TerminalScreen *screen);
 void            terminal_screen_set_custom_title_color    (TerminalScreen *screen,
                                                            const gchar    *color);
+void            terminal_screen_send_signal               (TerminalScreen *screen,
+                                                           int             signum);
 
 G_END_DECLS
 

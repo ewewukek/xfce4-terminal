@@ -56,7 +56,8 @@
 
 static void     terminal_app_finalize                 (GObject            *object);
 static void     terminal_app_update_accels            (TerminalApp        *app);
-static void     terminal_app_update_tab_key_accels    (gpointer            data,
+static void     terminal_app_update_tab_key_accels    (TerminalApp        *app);
+static void     terminal_app_store_tab_key_accel      (gpointer            data,
                                                        const gchar        *accel_path,
                                                        guint               accel_key,
                                                        GdkModifierType     accel_mods,
@@ -227,7 +228,23 @@ terminal_app_update_accels (TerminalApp *app)
 
 
 static void
-terminal_app_update_tab_key_accels (gpointer         data,
+terminal_app_update_tab_key_accels (TerminalApp *app)
+{
+  if (app->tab_key_accels != NULL)
+    {
+      GSList *lp;
+      for (lp = app->tab_key_accels; lp != NULL; lp = lp->next)
+        g_free (((TerminalAccel*) lp->data)->path);
+      g_slist_free_full (app->tab_key_accels, g_free);
+      app->tab_key_accels = NULL;
+    }
+  gtk_accel_map_foreach (app, terminal_app_store_tab_key_accel);
+}
+
+
+
+static void
+terminal_app_store_tab_key_accel   (gpointer         data,
                                     const gchar     *accel_path,
                                     guint            accel_key,
                                     GdkModifierType  accel_mods,
@@ -255,8 +272,10 @@ terminal_app_update_windows_accels (gpointer user_data)
 
   for (lp = app->windows; lp != NULL; lp = lp->next)
     {
-      terminal_window_rebuild_tabs_menu (TERMINAL_WINDOW (lp->data));
       terminal_window_update_tab_key_accels (TERMINAL_WINDOW (lp->data), app->tab_key_accels);
+
+      /* the accel_map is loaded after the first windows are created, so they can't create the go-to actions on page-insert */
+      terminal_window_update_goto_accels (TERMINAL_WINDOW (lp->data));
     }
 
   app->accel_map_load_id = 0;
@@ -298,6 +317,12 @@ terminal_app_accel_map_changed (TerminalApp *app)
 
   /* schedule new save */
   app->accel_map_save_id = gdk_threads_add_timeout_seconds (10, terminal_app_accel_map_save, app);
+
+  /* identify accelerators containing the Tab key */
+  terminal_app_update_tab_key_accels (app);
+
+  /* update the tab-key accel list in each window */
+  terminal_app_update_windows_accels (app);
 }
 
 
@@ -307,8 +332,6 @@ terminal_app_accel_map_load (gpointer user_data)
 {
   TerminalApp *app = TERMINAL_APP (user_data);
   gchar       *path;
-  gchar        name[50];
-  guint        i;
 
   path = xfce_resource_lookup (XFCE_RESOURCE_CONFIG, ACCEL_MAP_PATH);
   if (G_LIKELY (path != NULL))
@@ -323,24 +346,8 @@ terminal_app_accel_map_load (gpointer user_data)
   g_signal_connect_swapped (G_OBJECT (app->accel_map), "changed",
       G_CALLBACK (terminal_app_accel_map_changed), app);
 
-  /* check and create default Alt+N accelerators */
-  for (i = 1; i < 10; i++)
-    {
-      g_snprintf (name, sizeof (name), "<Actions>/terminal-window/goto-tab-%d", i);
-      if (!gtk_accel_map_lookup_entry (name, NULL))
-        gtk_accel_map_change_entry (name, GDK_KEY_0 + i, GDK_MOD1_MASK, FALSE);
-    }
-
   /* identify accelerators containing the Tab key */
-  if (app->tab_key_accels != NULL)
-    {
-      GSList *lp;
-      for (lp = app->tab_key_accels; lp != NULL; lp = lp->next)
-        g_free (((TerminalAccel*) lp->data)->path);
-      g_slist_free_full (app->tab_key_accels, g_free);
-      app->tab_key_accels = NULL;
-    }
-  gtk_accel_map_foreach (app, terminal_app_update_tab_key_accels);
+  terminal_app_update_tab_key_accels (app);
 
   return FALSE;
 }

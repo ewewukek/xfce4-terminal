@@ -51,6 +51,8 @@ enum
 {
   GET_CONTEXT_MENU,
   PASTE_SELECTION_REQUEST,
+  PASTE_CLIPBOARD_REQUEST,
+
   LAST_SIGNAL,
 };
 
@@ -91,6 +93,8 @@ static void     terminal_widget_drag_data_received    (GtkWidget        *widget,
                                                        guint             time);
 static gboolean terminal_widget_key_press_event       (GtkWidget        *widget,
                                                        GdkEventKey      *event);
+static gboolean terminal_widget_scroll_event          (GtkWidget        *widget,
+                                                       GdkEventScroll   *event);
 static void     terminal_widget_open_uri              (TerminalWidget   *widget,
                                                        const gchar      *wlink,
                                                        gint              tag);
@@ -150,6 +154,7 @@ terminal_widget_class_init (TerminalWidgetClass *klass)
   gtkwidget_class->button_press_event = terminal_widget_button_press_event;
   gtkwidget_class->drag_data_received = terminal_widget_drag_data_received;
   gtkwidget_class->key_press_event    = terminal_widget_key_press_event;
+  gtkwidget_class->scroll_event       = terminal_widget_scroll_event;
 
   /**
    * TerminalWidget::get-context-menu:
@@ -167,6 +172,17 @@ terminal_widget_class_init (TerminalWidgetClass *klass)
    **/
   widget_signals[PASTE_SELECTION_REQUEST] =
     g_signal_new (I_("paste-selection-request"),
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  /**
+   * TerminalWidget::paste-clipboard-request:
+   **/
+  widget_signals[PASTE_CLIPBOARD_REQUEST] =
+    g_signal_new (I_("paste-clipboard-request"),
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   0, NULL, NULL,
@@ -447,9 +463,18 @@ terminal_widget_button_press_event (GtkWidget       *widget,
        */
       if (!committed || (event->state & modifiers) == GDK_SHIFT_MASK)
         {
-          terminal_widget_context_menu (TERMINAL_WIDGET (widget),
-                                        event->button, event->time,
-                                        (GdkEvent *) event);
+          TerminalRightClickAction action;
+
+          g_object_get (G_OBJECT (TERMINAL_WIDGET (widget)->preferences), "misc-right-click-action", &action, NULL);
+
+          if (action == TERMINAL_RIGHT_CLICK_ACTION_CONTEXT_MENU)
+            terminal_widget_context_menu (TERMINAL_WIDGET (widget),
+                                          event->button, event->time,
+                                          (GdkEvent *) event);
+          else if (action == TERMINAL_RIGHT_CLICK_ACTION_PASTE_CLIPBOARD)
+            g_signal_emit (G_OBJECT (widget), widget_signals[PASTE_CLIPBOARD_REQUEST], 0, NULL);
+          else if (action == TERMINAL_RIGHT_CLICK_ACTION_PASTE_SELECTION)
+            g_signal_emit (G_OBJECT (widget), widget_signals[PASTE_SELECTION_REQUEST], 0, NULL);
         }
     }
 
@@ -467,7 +492,7 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
                                     guint             info,
                                     guint             time)
 {
-  const guint16 *ucs;
+  const guchar  *ucs;
   GdkRGBA        color;
   GString       *str;
   GValue         value = { 0, };
@@ -517,9 +542,9 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
       else
         {
           str = g_string_new (NULL);
-          ucs = (const guint16 *) gtk_selection_data_get_data (selection_data);
+          ucs = gtk_selection_data_get_data (selection_data);
           for (n = 0; n < gtk_selection_data_get_length (selection_data) / 2 && ucs[n] != '\n'; ++n)
-            g_string_append_unichar (str, (gunichar) ucs[n]);
+            g_string_append_unichar (str, ucs[n]);
           filename = g_filename_from_uri (str->str, NULL, NULL);
           if (filename != NULL)
             {
@@ -660,6 +685,27 @@ terminal_widget_key_press_event (GtkWidget    *widget,
     }
 
   return (*GTK_WIDGET_CLASS (terminal_widget_parent_class)->key_press_event) (widget, event);
+}
+
+
+
+static gboolean
+terminal_widget_scroll_event (GtkWidget        *widget,
+                              GdkEventScroll   *event)
+{
+  TerminalWidget *terminal   = TERMINAL_WIDGET (widget);
+  gboolean        scroll;
+  GtkAdjustment  *adjustment = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (widget));
+
+  g_object_get (G_OBJECT (terminal->preferences), "scrolling-on-output", &scroll, NULL);
+
+  /* do not scroll if the user has scrolled upwards */
+  if (scroll == TRUE && gtk_adjustment_get_value (adjustment) + 1 < gtk_adjustment_get_upper (adjustment))
+    vte_terminal_set_scroll_on_output (VTE_TERMINAL (terminal), FALSE);
+  else if (scroll == TRUE)
+    vte_terminal_set_scroll_on_output (VTE_TERMINAL (terminal), TRUE);
+
+  return (*GTK_WIDGET_CLASS (terminal_widget_parent_class)->scroll_event) (widget, event);
 }
 
 
