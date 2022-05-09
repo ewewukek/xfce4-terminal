@@ -720,6 +720,7 @@ terminal_app_open_window (TerminalApp        *app,
                           TerminalWindowAttr *attr)
 {
   GtkWidget       *window;
+  GtkNotebook     *notebook;
   TerminalScreen  *terminal;
   GdkScreen       *screen;
   gchar           *geometry;
@@ -727,7 +728,7 @@ terminal_app_open_window (TerminalApp        *app,
   gboolean         reuse_window = FALSE;
   GdkDisplay      *attr_display;
   gint             attr_screen_num;
-  gint             active_tab = -1, i;
+  gint             active_tab = -1, i, existing_tabs = 0;
 #ifdef GDK_WINDOWING_X11
   GdkGravity       gravity = GDK_GRAVITY_NORTH_WEST;
   gint             mask = NoValue, x, y, new_x, new_y;
@@ -756,7 +757,11 @@ terminal_app_open_window (TerminalApp        *app,
 
       if (lp != NULL)
         {
-          if (G_UNLIKELY (attr->reuse_last_window))
+          gboolean parameters_once;
+
+          g_object_get (G_OBJECT (app->preferences), "dropdown-parameters-once", &parameters_once, NULL);
+
+          if (G_UNLIKELY (attr->reuse_last_window) && parameters_once == FALSE)
             {
               /* use the drop-down window to insert the tab */
               window = lp->data;
@@ -875,6 +880,10 @@ terminal_app_open_window (TerminalApp        *app,
 #endif
     }
 
+  /* special handling for --active-tab in case we are adding tabs to an existing window */
+  notebook = GTK_NOTEBOOK (terminal_window_get_notebook (TERMINAL_WINDOW (window)));
+  existing_tabs = gtk_notebook_get_n_pages (notebook);
+
   /* add the tabs */
   for (lp = attr->tabs, i = 0; lp != NULL; lp = lp->next, ++i)
     {
@@ -890,10 +899,7 @@ terminal_app_open_window (TerminalApp        *app,
 
   /* set active tab */
   if (active_tab > -1)
-    {
-      GtkNotebook *notebook = GTK_NOTEBOOK (terminal_window_get_notebook (TERMINAL_WINDOW (window)));
-      gtk_notebook_set_current_page (notebook, active_tab);
-    }
+    gtk_notebook_set_current_page (notebook, existing_tabs + active_tab);
 
   if (!attr->drop_down)
     {

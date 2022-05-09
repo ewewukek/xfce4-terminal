@@ -82,6 +82,7 @@ enum
   PROP_DROPDOWN_MOVE_TO_ACTIVE,
   PROP_DROPDOWN_ALWAYS_SHOW_TABS,
   PROP_DROPDOWN_SHOW_BORDERS,
+  PROP_DROPDOWN_PARAMETERS_ONCE,
   PROP_ENCODING,
   PROP_FONT_ALLOW_BOLD,
   PROP_FONT_NAME,
@@ -772,6 +773,18 @@ terminal_preferences_class_init (TerminalPreferencesClass *klass)
                             G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   /**
+   * TerminalPreferences:dropdown-parameters-once:
+   *
+   * If set to TRUE the drop-down window accepts command line parameters only the first time, i.e. when it is created.
+   **/
+  preferences_props[PROP_DROPDOWN_PARAMETERS_ONCE] =
+      g_param_spec_boolean ("dropdown-parameters-once",
+                            NULL,
+                            "DropdownParametersOnce",
+                            FALSE,
+                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  /**
    * TerminalPreferences:encoding:
    **/
   preferences_props[PROP_ENCODING] =
@@ -1142,7 +1155,7 @@ terminal_preferences_class_init (TerminalPreferencesClass *klass)
       g_param_spec_boolean ("scrolling-on-output",
                             NULL,
                             "ScrollingOnOutput",
-                            TRUE,
+                            FALSE,
                             G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   /**
