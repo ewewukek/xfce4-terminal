@@ -581,6 +581,11 @@ terminal_screen_draw (GtkWidget *widget,
   cairo_surface_t    *surface;
   cairo_t            *ctx;
 
+  GtkWindow          *window;
+  gint                window_x, window_y;
+  GdkScreen          *viewport_screen;
+  gint                viewport_width, viewport_height;
+
   terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
   terminal_return_val_if_fail (VTE_IS_TERMINAL (screen->terminal), FALSE);
 
@@ -592,9 +597,16 @@ terminal_screen_draw (GtkWidget *widget,
   width = gtk_widget_get_allocated_width (screen->terminal);
   height = gtk_widget_get_allocated_height (screen->terminal);
 
+  window = gtk_widget_get_window (widget);
+  gdk_window_get_origin (window, &window_x, &window_y);
+
+  viewport_screen = gdk_window_get_screen(GDK_WINDOW (window));
+  viewport_width = gdk_screen_get_width (viewport_screen);
+  viewport_height = gdk_screen_get_height (viewport_screen);
+
   if (screen->loader == NULL)
     screen->loader = terminal_image_loader_get ();
-  image = terminal_image_loader_load (screen->loader, width, height);
+  image = terminal_image_loader_load (screen->loader, viewport_width, viewport_height);
 
   if (G_UNLIKELY (image == NULL))
     return FALSE;
@@ -605,7 +617,7 @@ terminal_screen_draw (GtkWidget *widget,
   cairo_save (cr);
 
   /* draw background image; cairo_set_operator() allows PNG transparency */
-  gdk_cairo_set_source_pixbuf (cr, image, 0, 0);
+  gdk_cairo_set_source_pixbuf (cr, image, -window_x, -window_y);
   cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
   cairo_paint (cr);
   g_object_unref (G_OBJECT (image));
