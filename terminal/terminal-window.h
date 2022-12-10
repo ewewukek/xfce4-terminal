@@ -56,9 +56,6 @@ typedef enum
     TERMINAL_WINDOW_ACTION_SELECT_ALL,
     TERMINAL_WINDOW_ACTION_COPY_INPUT,
     TERMINAL_WINDOW_ACTION_PREFERENCES,
-#if LIBXFCE4UI_CHECK_VERSION (4, 17, 2)
-    TERMINAL_WINDOW_ACTION_SHORTCUTS,
-#endif
     TERMINAL_WINDOW_ACTION_VIEW_MENU,
     TERMINAL_WINDOW_ACTION_ZOOM_IN,
     TERMINAL_WINDOW_ACTION_ZOOM_IN_ALT,
@@ -191,13 +188,12 @@ gint               terminal_window_get_toolbar_height       (TerminalWindow     
 
 void               terminal_window_action_show_menubar      (TerminalWindow     *window);
 
-void               terminal_window_update_tab_key_accels    (TerminalWindow     *window,
-                                                             GSList             *tab_key_accels);
-
 void               terminal_window_update_goto_accels       (TerminalWindow     *window);
 
 XfceGtkActionEntry *terminal_window_get_action_entry         (TerminalWindow      *window,
                                                               TerminalWindowAction action);
+
+XfceGtkActionEntry *terminal_window_get_action_entries      (void);
 
 G_END_DECLS
 

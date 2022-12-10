@@ -397,6 +397,10 @@ terminal_screen_init (TerminalScreen *screen)
   terminal_screen_update_background (screen);
   terminal_screen_update_colors (screen);
 
+#if VTE_CHECK_VERSION (0, 50, 0)
+  vte_terminal_set_allow_hyperlink(VTE_TERMINAL (screen->terminal), TRUE);
+#endif
+
   /* last, connect contents-changed to avoid a race with updates above */
   g_signal_connect_swapped (G_OBJECT (screen->terminal), "contents-changed",
       G_CALLBACK (terminal_screen_vte_window_contents_changed), screen);
@@ -3120,4 +3124,16 @@ terminal_screen_send_signal (TerminalScreen *screen,
   fgpid = tcgetpgrp (vte_pty_get_fd (vte_terminal_get_pty (VTE_TERMINAL (screen->terminal))));
   if (fgpid != -1 && fgpid != screen->pid)
     kill (fgpid, signum);
+}
+
+
+
+void
+terminal_screen_widget_append_accels (TerminalScreen *screen,
+                                      GtkAccelGroup  *accel_group)
+{
+  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+
+  if (G_LIKELY (G_IS_OBJECT (screen->terminal)))
+    g_object_set (G_OBJECT (screen->terminal), "accel-group", accel_group, NULL);
 }

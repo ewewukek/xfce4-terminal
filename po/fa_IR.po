@@ -3,308 +3,308 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Davidmp <medipas@gmail.com>, 2015,2019
-# Robert Antoni Buj i Gelonch <rbuj@fedoraproject.org>, 2016-2021
-# Robert Antoni Buj i Gelonch <rbuj@fedoraproject.org>, 2016
+# Goudarz Jafari <goudarz.jafari@gmail.com>, 2020
+# K2latmanesh <sudo.k2latmanesh@tutamail.com>, 2022
+# MohammadSaleh Kamyab <mskf1383@protonmail.com>, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Apps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-28 15:06+0100\n"
 "PO-Revision-Date: 2013-07-03 18:42+0000\n"
-"Last-Translator: Robert Antoni Buj i Gelonch <rbuj@fedoraproject.org>, 2016-2021\n"
-"Language-Team: Catalan (http://www.transifex.com/xfce/xfce-apps/language/ca/)\n"
+"Last-Translator: K2latmanesh <sudo.k2latmanesh@tutamail.com>, 2022\n"
+"Language-Team: Persian (Iran) (http://www.transifex.com/xfce/xfce-apps/language/fa_IR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ca\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fa_IR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../colorschemes/black-on-white.theme.in.h:1
 msgid "Black on White"
-msgstr "Negre sobre blanc"
+msgstr "سیاه روی سفید"
 
 #: ../colorschemes/dark-pastels.theme.in.h:1
 msgid "Dark Pastels"
-msgstr "Colors foscos"
+msgstr "مداد شمعی تیره"
 
 #: ../colorschemes/green-on-black.theme.in.h:1
 msgid "Green on Black"
-msgstr "Verd sobre negre"
+msgstr "سبز روی سیاه"
 
 #: ../colorschemes/solarized-dark.theme.in.h:1
 msgid "Solarized (dark)"
-msgstr "Solarització (fosca)"
+msgstr "آفتاب‌زده (تیره)"
 
 #: ../colorschemes/solarized-light.theme.in.h:1
 msgid "Solarized (light)"
-msgstr "Solarització (clara)"
+msgstr "آفتاب‌زده (روشن)"
 
 #: ../colorschemes/tango.theme.in.h:1
 msgid "Tango"
-msgstr "Tango"
+msgstr "تانگو"
 
 #: ../colorschemes/white-on-black.theme.in.h:1
 msgid "White on Black"
-msgstr "Blanc sobre negre"
+msgstr "سفید روی سیاه"
 
 #: ../colorschemes/xterm.theme.in.h:1
 msgid "XTerm"
-msgstr "XTerminal"
+msgstr "ایکس‌تِرم"
 
 #: ../terminal/main.c:105
 msgid "Usage:"
-msgstr "Ús:"
+msgstr "نحوهٔ استفاده:"
 
 #: ../terminal/main.c:105
 msgid "OPTION"
-msgstr "OPCIÓ"
+msgstr "گزینه"
 
 #: ../terminal/main.c:110
 msgid "General Options"
-msgstr "Opcions generals"
+msgstr "گزینه‌های عمومی"
 
 #. parameter of --default-display
 #. parameter of --display
 #: ../terminal/main.c:112 ../terminal/main.c:149
 msgid "display"
-msgstr "pantalla"
+msgstr "نمایشگر"
 
 #. parameter of --default-working-directory
 #. parameter of --working-directory
 #: ../terminal/main.c:114 ../terminal/main.c:135
 msgid "directory"
-msgstr "directori"
+msgstr "شاخه"
 
 #: ../terminal/main.c:118
 msgid "Window or Tab Separators"
-msgstr "Separadors de finestres o pestanyes"
+msgstr ""
 
 #: ../terminal/main.c:125
 msgid "Tab Options"
-msgstr "Opcions de la pestanya"
+msgstr "گزینه‌های زبانه"
 
 #. parameter of --command
 #: ../terminal/main.c:127
 msgid "command"
-msgstr "ordre"
+msgstr "دستور"
 
 #. parameter of --title
 #. parameter of --initial-title
 #: ../terminal/main.c:129 ../terminal/main.c:133
 msgid "title"
-msgstr "títol"
+msgstr "عنوان"
 
 #. parameter of --dynamic-title-mode
 #: ../terminal/main.c:131
 msgid "mode"
-msgstr "mode"
+msgstr "حالت"
 
 #. parameter of --color-text
 #. parameter of --color-bg
 #: ../terminal/main.c:137 ../terminal/main.c:139
 msgid "color"
-msgstr "color"
+msgstr "رنگ"
 
 #: ../terminal/main.c:147
 msgid "Window Options"
-msgstr "Opcions de la finestra"
+msgstr "گزینه‌های پنجره"
 
 #. parameter of --geometry
 #: ../terminal/main.c:151
 msgid "geometry"
-msgstr "geometria"
+msgstr "اندازه"
 
 #. parameter of --role
 #: ../terminal/main.c:153
 msgid "role"
-msgstr "rol"
+msgstr "نقش"
 
 #. parameter of --startup-id
 #: ../terminal/main.c:155
 msgid "string"
-msgstr "cadena"
+msgstr "رشته"
 
 #. parameter of --icon
 #: ../terminal/main.c:157
 msgid "icon"
-msgstr "icona"
+msgstr "نقشک"
 
 #. parameter of --font
 #: ../terminal/main.c:159
 msgid "font"
-msgstr "lletra"
+msgstr "قلم"
 
 #. parameter of --zoom
 #: ../terminal/main.c:161
 msgid "zoom"
-msgstr "zoom"
+msgstr "بزرگ‌نمایی"
 
 #: ../terminal/main.c:163
 #, c-format
 msgid "See the %s man page for full explanation of the options above."
-msgstr "Consulteu la pàgina de man de %s per a una explicació detallada de les opcions anteriors."
+msgstr "برای مشاهدهٔ توضیحات کاملی دربارهٔ گزینه‌های بالا، سری به صفحهٔ راهنمای %s بزنید."
 
 #: ../terminal/main.c:197 ../xfce4-terminal.desktop.in.h:1
 msgid "Xfce Terminal"
-msgstr "Terminal de Xfce"
+msgstr "پایانهٔ Xfce"
 
 #: ../terminal/main.c:223
 msgid "The Xfce development team. All rights reserved."
-msgstr "L'equip de desenvolupament de Xfce. Tots els drets reservats."
+msgstr "تیم توسعهٔ Xfce. همهٔ حقوق محفوظ است."
 
 #: ../terminal/main.c:224
 msgid "Written by Benedikt Meurer <benny@xfce.org>,"
-msgstr "Escrit per Benedikt Meurer <benny@xfce.org>,"
+msgstr "نوشته شده به دست بِنِدیکت مایرِر <benny@xfce.org>،"
 
 #: ../terminal/main.c:225
 msgid "Nick Schermer <nick@xfce.org>,"
-msgstr ""
+msgstr "نیک شرمیِر <nick@xfce.org>،"
 
 #: ../terminal/main.c:226
 msgid "Igor Zakharov <f2404@yandex.ru>,"
-msgstr ""
+msgstr "ایگور زاخاروف <f2404@yandex.ru>،"
 
 #: ../terminal/main.c:227
 msgid "Sergios - Anestis Kefalidis <sergioskefalidis@gmail.com>."
-msgstr ""
+msgstr "سرخیوس - آنِستیس کِفالیدیس <sergioskefalidis@gmail.com>."
 
 #: ../terminal/main.c:228
 #, c-format
 msgid "Please report bugs to <%s>."
-msgstr "Notifiqueu els errors a <%s>."
+msgstr "لطفاً اشکلات را به <%s> گزارش کنید."
 
 #: ../terminal/main.c:341
 #, c-format
 msgid "Unable to register terminal service: %s\n"
-msgstr "No es pot registrar el servei de terminal: %s\n"
+msgstr ""
 
 #: ../terminal/terminal-app.c:865
 #, c-format
 msgid "Invalid geometry string \"%s\"\n"
-msgstr "Cadena de geometria invàlida «%s»\n"
+msgstr "رشتهٔ اندازه نامعتبر است «%s»\n"
 
 #: ../terminal/terminal-app.c:945
 #, c-format
 msgid "Failed to connect to session manager: %s\n"
-msgstr "Ha fallat la connexió al gestor sessions: %s\n"
+msgstr "خطا در اتصال به مدیر نشست: %s\n"
 
 #: ../terminal/terminal-encoding-action.c:68
 msgid "Western European"
-msgstr "Europa occidental"
+msgstr "اروپای غربی"
 
 #: ../terminal/terminal-encoding-action.c:69
 msgid "Central European"
-msgstr "Europa central"
+msgstr "اروپای مرکزی"
 
 #: ../terminal/terminal-encoding-action.c:70
 msgid "Baltic"
-msgstr "Bàltic"
+msgstr "بالتیک"
 
 #: ../terminal/terminal-encoding-action.c:71
 msgid "South-Eastern Europe"
-msgstr "Europa sud-oriental"
+msgstr "اروپای جنوب شرقی"
 
 #: ../terminal/terminal-encoding-action.c:72
 msgid "Turkish"
-msgstr "Turc"
+msgstr "ترکی"
 
 #: ../terminal/terminal-encoding-action.c:73
 msgid "Cyrillic"
-msgstr "Ciríl·lic"
+msgstr "سیریلیک"
 
 #: ../terminal/terminal-encoding-action.c:74
 msgid "Chinese Traditional"
-msgstr "Xinès tradicional"
+msgstr "چینی سنتی"
 
 #: ../terminal/terminal-encoding-action.c:75
 msgid "Chinese Simplified"
-msgstr "Xinès simplificat"
+msgstr "چینی ساده‌شده"
 
 #: ../terminal/terminal-encoding-action.c:76
 msgid "Korean"
-msgstr "Coreà"
+msgstr "کره‌ای"
 
 #: ../terminal/terminal-encoding-action.c:77
 msgid "Japanese"
-msgstr "Japonès"
+msgstr "ژاپنی"
 
 #: ../terminal/terminal-encoding-action.c:78
 msgid "Greek"
-msgstr "Grec"
+msgstr "یونانی"
 
 #: ../terminal/terminal-encoding-action.c:79
 msgid "Arabic"
-msgstr "Àrab"
+msgstr "عربی"
 
 #: ../terminal/terminal-encoding-action.c:80
 msgid "Hebrew"
-msgstr "Hebreu"
+msgstr "عبری"
 
 #: ../terminal/terminal-encoding-action.c:81
 msgid "Thai"
-msgstr "Tai"
+msgstr "تایلندی"
 
 #: ../terminal/terminal-encoding-action.c:82
 msgid "Vietnamese"
-msgstr "Vietnamita"
+msgstr "ویتنامی"
 
 #: ../terminal/terminal-encoding-action.c:83
 msgid "Nordic"
-msgstr "Nòrdic"
+msgstr "نوردیک"
 
 #: ../terminal/terminal-encoding-action.c:84
 msgid "Celtic"
-msgstr "Cèltic"
+msgstr "سلتیک"
 
 #: ../terminal/terminal-encoding-action.c:85
 msgid "Romanian"
-msgstr "Romanès"
+msgstr "رومانیایی"
 
 #: ../terminal/terminal-encoding-action.c:86
 msgid "Armenian"
-msgstr "Armeni"
+msgstr "ارمنی"
 
 #: ../terminal/terminal-encoding-action.c:87
 msgid "Georgian"
-msgstr "Georgià"
+msgstr "گرجی"
 
 #: ../terminal/terminal-encoding-action.c:88
 msgid "Unicode"
-msgstr "Unicode"
+msgstr "یونیکد"
 
 #: ../terminal/terminal-encoding-action.c:89
 msgid "Other"
-msgstr "Altres"
+msgstr "دیگر"
 
 #. action to reset to the default
 #: ../terminal/terminal-encoding-action.c:273
 #: ../terminal/terminal-encoding-action.c:401
 #, c-format
 msgid "Default (%s)"
-msgstr "Per defecte (%s)"
+msgstr "پیش‌گزیده (%s)"
 
 #: ../terminal/terminal-gdbus.c:104
 msgid "User id mismatch"
-msgstr "L'identificador d'usuari no coincideix"
+msgstr "عدم تطابق شناسهٔ کاربری"
 
 #: ../terminal/terminal-gdbus.c:110
 msgid "Display mismatch"
-msgstr "La pantalla no coincideix"
+msgstr "عدم تطابق نمایشگر"
 
 #: ../terminal/terminal-options.c:251
 #, c-format
 msgid ""
 "Option \"--default-display\" requires specifying the default X display as "
 "its parameter"
-msgstr "A l'opció «--default-display» li cal que especifiqueu com paràmetre la pantalla predeterminada de les X"
+msgstr ""
 
 #: ../terminal/terminal-options.c:267
 #, c-format
 msgid ""
 "Option \"--default-working-directory\" requires specifying the default "
 "working directory as its parameter"
-msgstr "A l'opció «--default-working-directory» li cal que especifiqueu com paràmetre el directori de treball per defecte"
+msgstr ""
 
 #: ../terminal/terminal-options.c:284
 #, c-format
@@ -318,131 +318,131 @@ msgstr ""
 msgid ""
 "Option \"--command/-e\" requires specifying the command to run as its "
 "parameter"
-msgstr "A l'opció «--command/-e» li cal que especifiqueu com a paràmetre l'ordre a executar"
+msgstr ""
 
 #: ../terminal/terminal-options.c:319
 #, c-format
 msgid ""
 "Option \"--working-directory\" requires specifying the working directory as "
 "its parameter"
-msgstr "A l'opció «--working-directory» li cal que especifiqueu com a paràmetre el directori de treball"
+msgstr ""
 
 #: ../terminal/terminal-options.c:334
 #, c-format
 msgid "Option \"--title/-T\" requires specifying the title as its parameter"
-msgstr "A l'opció «--title/-T» li cal que especifiqueu com a paràmetre el títol."
+msgstr "«عنوان پنجره»، باید به عنوان مؤلفهٔ گزینهٔ «title/-T--» تعریف شود"
 
 #: ../terminal/terminal-options.c:349
 #, c-format
 msgid ""
 "Option \"--dynamic-title-mode\" requires specifying the dynamic title mode "
 "as its parameter"
-msgstr "A l'opció «--dynamic-title-mode» li cal que especifiqueu com a paràmetre el mode del títol dinàmic."
+msgstr ""
 
 #: ../terminal/terminal-options.c:364
 #, c-format
 msgid "Invalid argument for option \"--dynamic-title-mode\": %s"
-msgstr "Argument no vàlid per a l'opció «--dynamic-title-mode»: %s"
+msgstr ""
 
 #: ../terminal/terminal-options.c:374
 #, c-format
 msgid ""
 "Option \"--initial-title\" requires specifying the initial title as its "
 "parameter"
-msgstr "A l'opció «--initial-title» li cal que especifiqueu com a paràmetre el títol inicial."
+msgstr "«عنوان اصلی»، باید به عنوان مؤلفهٔ گزینهٔ «initial-title--» تعریف شود"
 
 #: ../terminal/terminal-options.c:398 ../terminal/terminal-options.c:417
 #, c-format
 msgid "Option \"%s\" requires specifying the color as its parameter"
-msgstr "A l'opció «%s» li cal que especifiqueu com a paràmetre el color"
+msgstr "«رنگ دلخواه»، باید به عنوان مؤلفهٔ گزینهٔ «%s» تعریف شود"
 
 #: ../terminal/terminal-options.c:405 ../terminal/terminal-options.c:424
 #, c-format
 msgid "Unable to parse color: %s"
-msgstr "No es pot analitzar el color: %s"
+msgstr "خطا در تجزیه رنگ: %s"
 
 #: ../terminal/terminal-options.c:435
 #, c-format
 msgid "Option \"--display\" requires specifying the X display as its parameter"
-msgstr "A l'opció «--display» li cal que especifiqueu com a paràmetre la pantalla de les X"
+msgstr ""
 
 #: ../terminal/terminal-options.c:450
 #, c-format
 msgid ""
 "Option \"--geometry\" requires specifying the window geometry as its "
 "parameter"
-msgstr "A l'opció «--geometry» li cal que especifiqueu com a paràmetre la geometria de la finestra"
+msgstr "«اندازهٔ پنجره»، باید به عنوان مؤلفهٔ گزینهٔ «geometry--» تعریف شود"
 
 #: ../terminal/terminal-options.c:465
 #, c-format
 msgid "Option \"--role\" requires specifying the window role as its parameter"
-msgstr "A l'opció «--role» li cal que especifiqueu com a paràmetre el rol de la finestra"
+msgstr "«نقش پنجره»، باید به عنوان مؤلفهٔ گزینهٔ «role--» تعریف شود"
 
 #: ../terminal/terminal-options.c:480
 #, c-format
 msgid ""
 "Option \"--sm-client-id\" requires specifying the unique session id as its "
 "parameter"
-msgstr "A l'opció «--sm-client-id» li cal que especifiqueu com a paràmetre l'identificador únic de sessió"
+msgstr "«شناسه منحصر به فرد نشست»، باید به عنوان مؤلفهٔ گزینهٔ «sm-client-id--» تعریف شود"
 
 #: ../terminal/terminal-options.c:495
 #, c-format
 msgid ""
 "Option \"--startup-id\" requires specifying the startup id as its parameter"
-msgstr "A l'opció «--startup-id» li cal que especifiqueu com paràmetre l'identificador d'engegada"
+msgstr ""
 
 #: ../terminal/terminal-options.c:511
 #, c-format
 msgid ""
 "Option \"--icon/-I\" requires specifying an icon name or filename as its "
 "parameter"
-msgstr "A l'opció «--icon/-I» li cal que especifiqueu un nom d'icona o nom de fitxer com a paràmetre"
+msgstr "«نام نقشک یا نام پرونده»، باید به عنوان مؤلفهٔ گزینهٔ «icon/-I--» تعریف شود"
 
 #: ../terminal/terminal-options.c:593
 #, c-format
 msgid "Option \"--font\" requires specifying the font name as its parameter"
-msgstr "A l'opció «--font» li cal que especifiqueu com a paràmetre el nom de la lletra"
+msgstr "«نام قلم»، باید به عنوان مؤلفهٔ گزینهٔ «font--» تعریف شود"
 
 #: ../terminal/terminal-options.c:611
 #, c-format
 msgid "Option \"--zoom\" requires specifying the zoom (%d .. %d) as its parameter"
-msgstr "A l'opció «--zoom» li cal que especifiqueu com a paràmetre el zoom (%d .. %d)"
+msgstr "«میزان بزرگنمایی (%d .. %d)»، باید به عنوان مؤلفهٔ گزینهٔ «zoom--» تعریف شود"
 
 #: ../terminal/terminal-options.c:634
 #, c-format
 msgid "Unknown option \"-%c\""
-msgstr ""
+msgstr "گزینهٔ ناشناخته \"%c-\""
 
 #: ../terminal/terminal-options.c:637
 #, c-format
 msgid "Unknown option \"%s\""
-msgstr "L'opció «%s» és desconeguda"
+msgstr "گزینهٔ ناشناخته \"%s\""
 
 #: ../terminal/terminal-preferences-dialog.c:211
 #: ../xfce4-terminal.desktop.in.h:3
 msgid "Terminal Preferences"
-msgstr "Preferències del terminal"
+msgstr "ترجیحات پایانهٔ"
 
 #. add the "Close" button
 #: ../terminal/terminal-preferences-dialog.c:216
 #: ../terminal/terminal-search-dialog.c:107
 msgid "_Close"
-msgstr "Tan_ca"
+msgstr "_بستن"
 
 #. add the "Help" button
 #: ../terminal/terminal-preferences-dialog.c:224
 #: ../terminal/terminal-window.c:355
 msgid "_Help"
-msgstr "A_juda"
+msgstr "_راهنما"
 
 #. * General
 #: ../terminal/terminal-preferences-dialog.c:241
 msgid "General"
-msgstr "General"
+msgstr "عمومی"
 
 #: ../terminal/terminal-preferences-dialog.c:251
 msgid "_Initial title:"
-msgstr "Títol _inicial:"
+msgstr "عنوان _اصلی:"
 
 #: ../terminal/terminal-preferences-dialog.c:267
 msgid "Dynamically-set title:"
@@ -450,23 +450,23 @@ msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:273
 msgid "Replaces initial title"
-msgstr "Substitueix el títol inicial"
+msgstr "جایگزین عنوان اصلی شود"
 
 #: ../terminal/terminal-preferences-dialog.c:274
 msgid "Goes before initial title"
-msgstr "Va abans del títol inicial"
+msgstr "پیش از عنوان اصلی نمایش داده شود"
 
 #: ../terminal/terminal-preferences-dialog.c:275
 msgid "Goes after initial title"
-msgstr "Va després del títol inicial"
+msgstr "پس از عنوان اصلی نمایش داده شود"
 
 #: ../terminal/terminal-preferences-dialog.c:276
 msgid "Isn't displayed"
-msgstr "Ocult"
+msgstr "نمایش داده نشود"
 
 #: ../terminal/terminal-preferences-dialog.c:290
 msgid "_Run command as login shell"
-msgstr "Executa l'o_rdre com a shell d'inici de sessió"
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:294
 msgid ""
@@ -474,11 +474,11 @@ msgid ""
 " you open new terminals. See the documentation of your shell for details "
 "about differences between running it as interactive shell and running it as "
 "login shell."
-msgstr "Seleccioneu aquesta opció per forçar que el terminal executi el vostre shell com a shell d'inici de sessió quan obriu terminals nous. Consulteu la documentació del vostre shell per veure els detalls quant a les diferències que hi ha entre l'execució com a un shell interactiu o com a shell d'inici de sessió."
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:305
 msgid "_Run a custom command instead of my shell"
-msgstr ""
+msgstr "به جای پوستهٔ من یک دستور _سفارشی را اجرا کن"
 
 #: ../terminal/terminal-preferences-dialog.c:309
 msgid ""
@@ -488,28 +488,28 @@ msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:317
 msgid "Custom command:"
-msgstr ""
+msgstr "دستور سفارشی:"
 
 #: ../terminal/terminal-preferences-dialog.c:342
 msgid "_Working directory:"
-msgstr "_Directori de treball:"
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:346
 msgid ""
 "Select this option to make new terminals (tabs or windows) use custom "
 "working directory. Otherwise, current working directory will be used."
-msgstr "Seleccioneu aquesta opció per fer que els terminals nous (pestanyes o finestres) utilitzin un directori de treball personalitzat. Altrament, s'utilitzarà el directori de treball actual."
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:369
 msgid "_Scroll on output"
-msgstr ""
+msgstr "پیمایش با _خروجی"
 
 #: ../terminal/terminal-preferences-dialog.c:373
 msgid ""
 "This option controls whether the terminal will scroll down automatically "
 "whenever new output is generated by the commands running inside the "
 "terminal."
-msgstr "Aquesta opció controla si el terminal es desplaçarà cap avall de forma automàtica quan es generi una sortida nova per a les ordres executades al terminal."
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:379
 msgid "_Enable overlay scrolling (Requires restart)"
@@ -522,91 +522,91 @@ msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:388
 msgid "_Scroll on keystroke"
-msgstr ""
+msgstr "پیمایش با فشردن _کلید"
 
 #: ../terminal/terminal-preferences-dialog.c:392
 msgid ""
 "Enables you to press any key on the keyboard to scroll down the terminal to "
 "the command prompt."
-msgstr ""
+msgstr "به شما اجازه می‌دهد تا با فشردن هر کلیدی از صفحه‌کلید، به محل ورودی دستور در پایین پنجرهٔ پایانه بروید."
 
 #: ../terminal/terminal-preferences-dialog.c:401
 msgid "Scrollbar is:"
-msgstr ""
+msgstr "نوار پیمایش:"
 
 #: ../terminal/terminal-preferences-dialog.c:407
 msgid "Disabled"
-msgstr "Inhabilitada"
+msgstr "غیرفعّال باشد"
 
 #: ../terminal/terminal-preferences-dialog.c:408
 msgid "On the left side"
-msgstr "Al costat esquerre"
+msgstr "سمت چپ باشد"
 
 #: ../terminal/terminal-preferences-dialog.c:409
 msgid "On the right side"
-msgstr "Al costat dret"
+msgstr "سمت راست باشد"
 
 #: ../terminal/terminal-preferences-dialog.c:422
 msgid "Scrollback:"
-msgstr ""
+msgstr "پیمایش به عقب:"
 
 #: ../terminal/terminal-preferences-dialog.c:438
 msgid "_Unlimited Scrollback"
-msgstr ""
+msgstr "پیمایش به عقبِ نام_حدود"
 
 #: ../terminal/terminal-preferences-dialog.c:442
 msgid "This controls whether the terminal will have no limits on scrollback."
-msgstr ""
+msgstr "این گزینه تعیین می‌کند که آیا پایانه، محدودیتی در پیمایش به عقب داشته باشد یا خیر."
 
 #: ../terminal/terminal-preferences-dialog.c:450
 msgid "Cursor shape:"
-msgstr "Forma del cursor:"
+msgstr "شکل نشانگر:"
 
 #: ../terminal/terminal-preferences-dialog.c:456
 msgid "Block"
-msgstr "Bloc"
+msgstr "آجر"
 
 #: ../terminal/terminal-preferences-dialog.c:457
 msgid "I-Beam"
-msgstr "Perfil en I"
+msgstr "میله"
 
 #: ../terminal/terminal-preferences-dialog.c:458
 msgid "Underline"
-msgstr "Subratllat"
+msgstr "خط تیره"
 
 #: ../terminal/terminal-preferences-dialog.c:468
 msgid "Cursor blinks"
-msgstr "El cursor parpelleja"
+msgstr "نشانگر چشمک‌زن"
 
 #: ../terminal/terminal-preferences-dialog.c:472
 msgid "This option controls whether the cursor will be blinking or not."
-msgstr "Aquesta opció controla si el cursor parpellejarà o no."
+msgstr "این گزینه چشمک زدن یا نزدن نشانگر را تعیین می‌کند."
 
 #: ../terminal/terminal-preferences-dialog.c:481
 msgid "Automatically copy selection to clipboard"
-msgstr "Copia automàticament la selecció al porta-retalls"
+msgstr "رونویسی متن انتخاب شده، در تخته‌گیره به طور خودکار"
 
 #: ../terminal/terminal-preferences-dialog.c:488
 msgid "Show unsafe paste dialog"
-msgstr ""
+msgstr "نمایش پنجرهٔ چسباندن ناامن"
 
 #: ../terminal/terminal-preferences-dialog.c:492
 msgid ""
 "Show a dialog that allows to edit text that is considered unsafe for pasting"
-msgstr ""
+msgstr "پنجره‌ای نشان می‌دهد که به شما اجازه می‌دهد متنی که برای چسباندن ناامن تلقی‌شده را ویرایش کنید"
 
 #. * Drop-down
 #: ../terminal/terminal-preferences-dialog.c:501
 msgid "Drop-down"
-msgstr ""
+msgstr "کرکره"
 
 #: ../terminal/terminal-preferences-dialog.c:512
 msgid "_Keep window open when it loses focus"
-msgstr "_Manté la finestra oberta quan perdi el focus"
+msgstr "وقتی _تمرکز از روی پنجره برداشته می‌شود آن را باز نگه دار"
 
 #: ../terminal/terminal-preferences-dialog.c:522
 msgid "_Always keep window on top"
-msgstr ""
+msgstr "_همیشه پنجره را بالا نگه دار"
 
 #: ../terminal/terminal-preferences-dialog.c:532
 msgid "_Use shortcut to focus visible window"
@@ -620,48 +620,48 @@ msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:544
 msgid "_Show status icon in notification area"
-msgstr ""
+msgstr "نمایش نقشک _وضعیت در ناحیه اعلانات"
 
 #: ../terminal/terminal-preferences-dialog.c:555
 msgid "Width:"
-msgstr ""
+msgstr "پهنا:"
 
 #: ../terminal/terminal-preferences-dialog.c:577
 msgid "Height:"
-msgstr ""
+msgstr "بلندا:"
 
 #: ../terminal/terminal-preferences-dialog.c:599
 #: ../terminal/terminal-preferences-dialog.c:874
 msgid "Opacity:"
-msgstr ""
+msgstr "میزان کدری:"
 
 #: ../terminal/terminal-preferences-dialog.c:621
 msgid "Duration:"
-msgstr ""
+msgstr "مدت زمان:"
 
 #: ../terminal/terminal-preferences-dialog.c:643
 msgid "_Always show tabs"
-msgstr "Mostra sempre les pest_anyes"
+msgstr "همیشه _زبانه‌ها را نمایش بده"
 
 #: ../terminal/terminal-preferences-dialog.c:653
 msgid "_Show window borders"
-msgstr ""
+msgstr "نمایش _حاشیه پنجره‌ها"
 
 #: ../terminal/terminal-preferences-dialog.c:664
 msgid "Left"
-msgstr "Esquerra"
+msgstr "چپ"
 
 #: ../terminal/terminal-preferences-dialog.c:686
 msgid "Right"
-msgstr "Dreta"
+msgstr "راست"
 
 #: ../terminal/terminal-preferences-dialog.c:694
 msgid "Up"
-msgstr "Cap amunt"
+msgstr "بالا"
 
 #: ../terminal/terminal-preferences-dialog.c:708
 msgid "Down"
-msgstr "Avall"
+msgstr "پایین"
 
 #: ../terminal/terminal-preferences-dialog.c:716
 msgid "_Move to monitor with pointer"
@@ -670,25 +670,25 @@ msgstr ""
 #. * Appearance
 #: ../terminal/terminal-preferences-dialog.c:728
 msgid "Appearance"
-msgstr "Aparença"
+msgstr "ظاهر"
 
 #: ../terminal/terminal-preferences-dialog.c:738
 msgid "_Use system font"
-msgstr ""
+msgstr "استفاده از _قلم سامانه"
 
 #: ../terminal/terminal-preferences-dialog.c:742
 msgid "Enable this to use system-wide monospace font."
-msgstr ""
+msgstr "این گزینه را فعّال کنید تا از قلم یکپارچهٔ سامانه استفاده بشود."
 
 #: ../terminal/terminal-preferences-dialog.c:762
 msgid "_Allow bold text"
-msgstr ""
+msgstr "مجاز بودن متن _توپر"
 
 #: ../terminal/terminal-preferences-dialog.c:766
 msgid ""
 "Enable this to allow applications running inside the terminal windows to use"
 " bold font."
-msgstr ""
+msgstr "این گزینه را فعّال کنید تا به کاره‌هایی که درون پایانه اجرا می‌شوند، اجازه استفاده از متن توپر را بدهید."
 
 #: ../terminal/terminal-preferences-dialog.c:773
 msgid "Cursor blinks:"
@@ -696,61 +696,61 @@ msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:779
 msgid "Never"
-msgstr "Mai"
+msgstr "هرگز"
 
 #: ../terminal/terminal-preferences-dialog.c:780
 msgid "When focused"
-msgstr "Quan rep el focus"
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:781
 msgid "When unfocused"
-msgstr "Quan perd el focus"
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:782
 msgid "Always"
-msgstr "Sempre"
+msgstr "همیشه"
 
 #: ../terminal/terminal-preferences-dialog.c:795
 msgid "Cell spacing:"
-msgstr "Espaiat de cel·la:"
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:808
 msgid "x width"
-msgstr "amplada x"
+msgstr "x پهنا"
 
 #: ../terminal/terminal-preferences-dialog.c:821
 msgid "x height"
-msgstr "alçada y"
+msgstr "x بلندا"
 
 #: ../terminal/terminal-preferences-dialog.c:826
 #: ../terminal/terminal-preferences-dialog.c:1435
 #: ../terminal/terminal-window.c:2098
 msgid "Reset"
-msgstr "Restableix"
+msgstr "بازنشانی"
 
 #: ../terminal/terminal-preferences-dialog.c:838
 msgid "None (use solid color)"
-msgstr "Cap (utilitza un color sòlid)"
+msgstr "هیچ‌کدام (رنگ یکدست)"
 
 #: ../terminal/terminal-preferences-dialog.c:839
 msgid "Background image"
-msgstr "Imatge de fons"
+msgstr "تصویر پس‌زمینه"
 
 #: ../terminal/terminal-preferences-dialog.c:840
 msgid "Transparent Background"
-msgstr ""
+msgstr "پس‌زمینهٔ شفاف"
 
 #: ../terminal/terminal-preferences-dialog.c:909
 msgid "File:"
-msgstr ""
+msgstr "پرونده:"
 
 #: ../terminal/terminal-preferences-dialog.c:926
 msgid "All Files"
-msgstr "Tots els fitxers"
+msgstr "همهٔ پرونده‌ها"
 
 #: ../terminal/terminal-preferences-dialog.c:932
 msgid "Image Files"
-msgstr "Fitxers d'imatges"
+msgstr "پرونده‌های تصویری"
 
 #: ../terminal/terminal-preferences-dialog.c:940
 msgid "Adjustment:"
@@ -758,107 +758,107 @@ msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:946
 msgid "Tiled"
-msgstr "Mosaic"
+msgstr "کاشی‌وار"
 
 #: ../terminal/terminal-preferences-dialog.c:947
 msgid "Centered"
-msgstr "Centrat"
+msgstr "وسط‌چین"
 
 #: ../terminal/terminal-preferences-dialog.c:948
 msgid "Scaled"
-msgstr "Escalat"
+msgstr "با حفظ مقیاس"
 
 #: ../terminal/terminal-preferences-dialog.c:949
 msgid "Stretched"
-msgstr "Ampliat"
+msgstr "کشیده"
 
 #: ../terminal/terminal-preferences-dialog.c:950
 msgid "Filled"
-msgstr ""
+msgstr "بزرگنمایی شده"
 
 #: ../terminal/terminal-preferences-dialog.c:961
 msgid "Shading:"
-msgstr ""
+msgstr "سایه‌دهی:"
 
 #: ../terminal/terminal-preferences-dialog.c:979
 msgid "_Display menubar in new windows"
-msgstr ""
+msgstr "نمایش نوار _فهرست در پنجره‌های جدید"
 
 #: ../terminal/terminal-preferences-dialog.c:983
 msgid "Enable this option to show menubars in newly created terminal windows."
-msgstr ""
+msgstr "این گزینه را فعّال کنید تا نوار فهرست در پنجره‌های جدید پایانه نمایش داده شود."
 
 #: ../terminal/terminal-preferences-dialog.c:990
 msgid "_Display toolbar in new windows"
-msgstr ""
+msgstr "نمایش نوار _ابزار در پنجره‌های جدید"
 
 #: ../terminal/terminal-preferences-dialog.c:994
 msgid "Enable this option to show toolbar in newly created terminal windows."
-msgstr ""
+msgstr "این گزینه را فعّال کنید تا نوار ابزار در پنجره‌های جدید پایانه نمایش داده شود."
 
 #: ../terminal/terminal-preferences-dialog.c:1001
 msgid "_Display borders around new windows"
-msgstr ""
+msgstr "نمایش _حاشیه به دور پنجره‌های جدید"
 
 #: ../terminal/terminal-preferences-dialog.c:1005
 msgid ""
 "Enable this option to show window decorations around newly created terminal "
 "windows."
-msgstr "Habiliteu aquesta opció per mostrar la decoració de les finestres a les finestres de terminal que creeu noves."
+msgstr "این گزینه را فعّال کنید تا تزئینات پنجره دور تا دور پنجره‌های تازه ایجاد شدهٔ پایانه نمایش داده شود."
 
 #: ../terminal/terminal-preferences-dialog.c:1012
 msgid "Default geometry"
-msgstr ""
+msgstr "اندازه پیش‌گزیده"
 
 #: ../terminal/terminal-preferences-dialog.c:1027
 msgid "columns"
-msgstr ""
+msgstr "ستون"
 
 #: ../terminal/terminal-preferences-dialog.c:1042
 msgid "rows"
-msgstr ""
+msgstr "سطر"
 
 #: ../terminal/terminal-preferences-dialog.c:1056
 msgid "Reset tab activity indicator after"
-msgstr ""
+msgstr "بازنشانی شاخص وضعیت زبانهٔ در حال کار پس از"
 
 #: ../terminal/terminal-preferences-dialog.c:1069
 msgid "seconds"
-msgstr "segons"
+msgstr "ثانیه"
 
 #: ../terminal/terminal-preferences-dialog.c:1077
 msgid "_Use custom styling to make tabs slim (restart required)"
-msgstr ""
+msgstr "استفاده از سبک سفارشی برای _نازک کردن زبانه‌ها (مستلزم راه‌اندازی دوباره)"
 
 #. * Colors
 #: ../terminal/terminal-preferences-dialog.c:1089
 msgid "Colors"
-msgstr ""
+msgstr "رنگ"
 
 #: ../terminal/terminal-preferences-dialog.c:1147
 msgid "_Use system theme colors for text and background"
-msgstr "_Utilitza els colors del tema del sistema per al tex i el fons"
+msgstr "رنگ متن و پس‌زمینه بر مبنای زمینهٔ _سامانه تعیین شود"
 
 #: ../terminal/terminal-preferences-dialog.c:1157
 msgid "_Vary the background color for each tab"
-msgstr "_Varia el color del fons per a cadascuna de les pestanyes"
+msgstr "رنگ پس‌_زمینه برای هر زبانه، متفاوت باشد"
 
 #: ../terminal/terminal-preferences-dialog.c:1161
 msgid ""
 "The random color is based on the selected background color, keeping the same"
 " brightness."
-msgstr ""
+msgstr "مبنای رنگ تصادفی رنگ پس‌زمینهٔ انتخابی‌تان می‌باشد، با حفظ همان سطح روشنایی."
 
 #: ../terminal/terminal-preferences-dialog.c:1169
 msgid "_Cursor color:"
-msgstr ""
+msgstr "رنگ _نشانگر:"
 
 #: ../terminal/terminal-preferences-dialog.c:1173
 #: ../terminal/terminal-preferences-dialog.c:1207
 msgid ""
 "Enable this option to set custom text and background colors for cursor. If "
 "disabled the background and text colors will be reversed."
-msgstr ""
+msgstr "به منظور سفارشی‌سازی رنگ متن و پس‌زمینهٔ نشانگر، این گزینه را فعّال کنید. اگر غیرفعّال باشد، رنگ پس‌زمینه و متن وارونه خواهد شد."
 
 #: ../terminal/terminal-preferences-dialog.c:1203
 msgid "_Text selection color:"
@@ -872,11 +872,11 @@ msgstr ""
 msgid ""
 "Enable this option to set a custom bold color. If disabled the text color "
 "will be used."
-msgstr "Habiliteu aquesta opció per definir un color personalitzat de la negreta. Si està inhabilitat, s'utilitzarà el color del text."
+msgstr "به منظور سفارشی‌سازی رنگ متن توپر، این گزینه را فعّال کنید. اگر غیرفعّال باشد، «رنگ متن» استفاده خواهد شد."
 
 #: ../terminal/terminal-preferences-dialog.c:1281
 msgid "_Show bold text in bright colors:"
-msgstr ""
+msgstr "نمایش متن توپر با رنگ‌های _روشن:"
 
 #: ../terminal/terminal-preferences-dialog.c:1285
 msgid ""
@@ -888,14 +888,14 @@ msgstr ""
 #. * Compatibility
 #: ../terminal/terminal-preferences-dialog.c:1307
 msgid "Compatibility"
-msgstr "Compatibilitat"
+msgstr "سازگاری"
 
 #: ../terminal/terminal-preferences-dialog.c:1318
 msgid ""
 "These options may cause some applications to behave incorrectly.\n"
 "They are only here to allow you to work around certain applications\n"
 "and operating systems that expect different terminal behavior."
-msgstr ""
+msgstr "این گزینه‌ها ممکن است باعث عملکرد نادرست برخی کاره‌ها شوند.\nتنها هدف قرار دادن آنها در این بخش آن است که امکان کار کردن با کاره‌ها یا \nسیستم‌عامل‌های خاصی که انتظار عملکردی متفاوت از پایانه دارند را فراهم کنند."
 
 #: ../terminal/terminal-preferences-dialog.c:1331
 msgid "Backspace key generates:"
@@ -904,7 +904,7 @@ msgstr ""
 #: ../terminal/terminal-preferences-dialog.c:1337
 #: ../terminal/terminal-preferences-dialog.c:1360
 msgid "Auto-detect"
-msgstr "Autodetecta"
+msgstr "شناسایی خودکار"
 
 #: ../terminal/terminal-preferences-dialog.c:1338
 #: ../terminal/terminal-preferences-dialog.c:1361
@@ -914,17 +914,17 @@ msgstr ""
 #: ../terminal/terminal-preferences-dialog.c:1339
 #: ../terminal/terminal-preferences-dialog.c:1362
 msgid "Escape sequence"
-msgstr "Seqüència d'escapament"
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:1340
 #: ../terminal/terminal-preferences-dialog.c:1363
 msgid "Control-H"
-msgstr "Control-H"
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:1341
 #: ../terminal/terminal-preferences-dialog.c:1364
 msgid "Erase TTY"
-msgstr "Esborra TTY"
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:1354
 msgid "Delete key generates:"
@@ -936,20 +936,20 @@ msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:1383
 msgid "Narrow"
-msgstr "Estret"
+msgstr "باریک"
 
 #: ../terminal/terminal-preferences-dialog.c:1384
 msgid "Wide"
-msgstr "Ample"
+msgstr "پهن"
 
 #: ../terminal/terminal-preferences-dialog.c:1398
 msgid "Reset compatibility options to defaults"
-msgstr ""
+msgstr "بازنشانی گزینه‌های سازگاری به پیش‌گزیده"
 
 #. * Advanced
 #: ../terminal/terminal-preferences-dialog.c:1409
 msgid "Advanced"
-msgstr "Avançada"
+msgstr "پیشرفته"
 
 #: ../terminal/terminal-preferences-dialog.c:1419
 msgid "Consider the following characters part of a word when double clicking:"
@@ -957,55 +957,55 @@ msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:1445
 msgid "Default character encoding"
-msgstr ""
+msgstr "کدبندی پیش‌گزیدهٔ نویسه‌ها"
 
 #: ../terminal/terminal-preferences-dialog.c:1471
 msgid "_Disable all menu access keys (such as Alt + f)"
-msgstr ""
+msgstr "غیرفعّال کردن تمام کلید‌های _دسترسی به فهرست (مانند پ+Alt)"
 
 #: ../terminal/terminal-preferences-dialog.c:1481
 msgid "_Disable menu shortcut key (F10 by default)"
-msgstr ""
+msgstr "غیرفعّال کردن کلید میان‌بر _فهرست (پیش‌گزیده: F10)"
 
 #: ../terminal/terminal-preferences-dialog.c:1492
 msgid "_Use middle mouse click to close tabs"
-msgstr ""
+msgstr "استفاده از کلیک میانی برای بستن _زبانه‌ها"
 
 #: ../terminal/terminal-preferences-dialog.c:1502
 msgid "_Use middle mouse click to open urls"
-msgstr ""
+msgstr "استفاده از کلیک میانی برای باز کردن _نشانی‌ها"
 
 #: ../terminal/terminal-preferences-dialog.c:1512
 msgid "_Auto-hide mouse pointer"
-msgstr ""
+msgstr "_پنهان کردن خودکار نشانگر موشی"
 
 #: ../terminal/terminal-preferences-dialog.c:1522
 msgid "_Open new tab to the right of the active tab"
-msgstr ""
+msgstr "باز کردن زبانهٔ _جدید در سمت راستِ زبانهٔ فعّال"
 
 #: ../terminal/terminal-preferences-dialog.c:1532
 msgid "_Audible bell"
-msgstr "Avís _audible"
+msgstr "هشدار _صوتی"
 
 #: ../terminal/terminal-preferences-dialog.c:1542
 msgid "_Visual bell"
-msgstr "Avís _visual"
+msgstr "هشدار _تصویری"
 
 #: ../terminal/terminal-preferences-dialog.c:1552
 msgid "Right click action:"
-msgstr ""
+msgstr "کارِ کلیک راست:"
 
 #: ../terminal/terminal-preferences-dialog.c:1558
 msgid "Context Menu"
-msgstr "Menú contextual"
+msgstr ""
 
 #: ../terminal/terminal-preferences-dialog.c:1559
 msgid "Paste clipboard"
-msgstr ""
+msgstr "چسباندن تخته‌گیره"
 
 #: ../terminal/terminal-preferences-dialog.c:1560
 msgid "Paste selection"
-msgstr ""
+msgstr "چسباندن متن انتخاب‌شده"
 
 #: ../terminal/terminal-preferences-dialog.c:1573
 msgid "Enable Hyperlinks"
@@ -1018,17 +1018,17 @@ msgstr ""
 #. * Shortcuts
 #: ../terminal/terminal-preferences-dialog.c:1586
 msgid "Shortcuts"
-msgstr "Dreceres"
+msgstr "میان‌برها"
 
 #: ../terminal/terminal-preferences-dialog.c:1597
 msgid "Window"
-msgstr "Finestra"
+msgstr "پنجره"
 
 #: ../terminal/terminal-preferences-dialog.c:1598
 #: ../terminal/terminal-preferences.c:1190
 #: ../terminal/terminal-preferences.c:1271
 msgid "Terminal"
-msgstr "Terminal"
+msgstr "پایانه"
 
 #. default item + separator
 #: ../terminal/terminal-preferences-dialog.c:2005
@@ -1037,279 +1037,279 @@ msgstr ""
 
 #: ../terminal/terminal-screen.c:240
 msgid "Do not disable dialog"
-msgstr ""
+msgstr "پنجره را غیرفعّال نکن"
 
 #: ../terminal/terminal-screen.c:241
 msgid "Disable for 5 minutes"
-msgstr ""
+msgstr "غیرفعّال‌سازی برای ۵ دقیقه"
 
 #: ../terminal/terminal-screen.c:242
 msgid "Disable for 15 minutes"
-msgstr ""
+msgstr "غیرفعّال‌سازی برای ۱۵ دقیقه"
 
 #: ../terminal/terminal-screen.c:243
 msgid "Disable until program restart"
-msgstr ""
+msgstr "غیرفعّال‌سازی تا راه‌اندازی دوبارهٔ برنامه"
 
 #: ../terminal/terminal-screen.c:244
 msgid "Disable dialog (can be re-enabled in the Preferences)"
-msgstr ""
+msgstr "غیرفعّال‌سازی کامل (می‌توان در ترجیحات دوباره فعّالش کرد)"
 
 #: ../terminal/terminal-screen.c:496 ../terminal/terminal-screen.c:875
 #: ../terminal/terminal-screen.c:2348
 msgid "Untitled"
-msgstr "Sense títol"
+msgstr "بدون عنوان"
 
 #: ../terminal/terminal-screen.c:776
 #, c-format
 msgid "Unable to determine your login shell."
-msgstr "No es pot determinar el vostre shell d'inici de sessió."
+msgstr ""
 
 #: ../terminal/terminal-screen.c:1466
 msgid "_Relaunch"
-msgstr "To_rna a llançar"
+msgstr "_بازگشودن"
 
 #: ../terminal/terminal-screen.c:1472
 #, c-format
 msgid "The child process exited normally with status %d."
-msgstr "S'ha sortit normalment del procés fill amb l'estat %d."
+msgstr ""
 
 #: ../terminal/terminal-screen.c:1474
 #, c-format
 msgid "The child process was aborted by signal %d."
-msgstr "S'ha avortat el procés fill amb el senyal %d."
+msgstr ""
 
 #: ../terminal/terminal-screen.c:1476
 msgid "The child process was aborted."
-msgstr "S'ha avortat el procés fill."
+msgstr ""
 
 #: ../terminal/terminal-screen.c:1482 ../terminal/terminal-window.c:874
 msgid "Do _not ask me again"
-msgstr "_No tornis a mostrar aquest missatge"
+msgstr "دوباره نپرس"
 
 #: ../terminal/terminal-screen.c:1796
 msgid "Warning: Potentially Unsafe Paste"
-msgstr ""
+msgstr "هشدار: چسباندن ناامن"
 
 #: ../terminal/terminal-screen.c:1799
 msgid ""
 "Pasting this text to the terminal may be dangerous as it looks like some "
 "commands may be executed, potentially involving root access ('sudo')."
-msgstr "Enganxar aquest text al terminal pot ser perillós, ja que sembla que es poden executar algunes ordres, que poden implicar l'accés de root ('sudo')."
+msgstr "چسباندن این متن به پایانه ممکن است خطرناک باشد زیرا امکان دارد دستوراتی را اجرا کند که دسترسی ریشه ('sudo') در آنها دخیل است."
 
 #: ../terminal/terminal-screen.c:1802
 msgid ""
 "Pasting this text to the terminal may be dangerous as it looks like some "
 "commands may be executed."
-msgstr ""
+msgstr "چسباندن این متن به پایانه ممکن است خطرناک باشد زیرا امکان دارد دستوراتی را اجرا کند."
 
 #: ../terminal/terminal-screen.c:1812 ../terminal/terminal-window.c:797
 #: ../terminal/terminal-window.c:2271
 msgid "_Cancel"
-msgstr "_Cancel·la"
+msgstr "_لغو"
 
 #: ../terminal/terminal-screen.c:1815 ../terminal/terminal-window.c:326
 msgid "_Paste"
-msgstr "_Enganxa"
+msgstr "_رونویسی"
 
 #: ../terminal/terminal-screen.c:1966 ../terminal/terminal-screen.c:2049
 msgid "Failed to execute child"
-msgstr "Ha fallat l'execució del fill"
+msgstr "خطا در اجرای فرایند فرزند"
 
 #: ../terminal/terminal-screen.c:2705
 msgid "Close this tab"
-msgstr "Tanca aquesta pestanya"
+msgstr "این زبانه را ببندیداین زبانه را ببند"
 
 #: ../terminal/terminal-screen.c:2758
 #, c-format
 msgid "Failed to set encoding %s\n"
-msgstr "Ha fallat l'establiment de la codificació %s\n"
+msgstr "خطا در تعیین کدبندی %s\n"
 
 #: ../terminal/terminal-search-dialog.c:101
 msgid "Find"
-msgstr "Cerca"
+msgstr "جستجو"
 
 #: ../terminal/terminal-search-dialog.c:110
 msgid "_Previous"
-msgstr "_Anterior"
+msgstr "پی_شین"
 
 #: ../terminal/terminal-search-dialog.c:115
 msgid "_Next"
-msgstr "_Següent"
+msgstr "پ_سین"
 
 #: ../terminal/terminal-search-dialog.c:132
 msgid "_Search for:"
-msgstr "_Cerca:"
+msgstr "_جستجو برای:"
 
 #: ../terminal/terminal-search-dialog.c:145
 msgid "C_ase sensitive"
-msgstr "Distingeix _majúscules/minúscules"
+msgstr "_حساسیت به حروف بزرگ و کوچک"
 
 #: ../terminal/terminal-search-dialog.c:150
 msgid "Match as _regular expression"
-msgstr "Coincideix com a expressió _regular"
+msgstr ""
 
 #: ../terminal/terminal-search-dialog.c:155
 msgid "Match _entire word only"
-msgstr "Coincideix només amb la paraula s_encera"
+msgstr ""
 
 #: ../terminal/terminal-search-dialog.c:160
 msgid "_Wrap around"
-msgstr "Ajusta al _voltant"
+msgstr ""
 
 #: ../terminal/terminal-search-dialog.c:169
 msgid "_Opacity:"
-msgstr "_Opacitat:"
+msgstr ""
 
 #: ../terminal/terminal-util.c:81 ../xfce4-terminal-default-apps.xml.in.in.h:1
 msgid "Xfce Terminal Emulator"
-msgstr "Emulador de terminal de Xfce"
+msgstr "شبیه‌ساز پایانهٔ Xfce"
 
 #: ../terminal/terminal-util.c:90
 msgid "translator-credits"
-msgstr "Pau Rul·lan Ferragut <paurullan@bulma.net>\nCarles Muñoz Gorriz <carlesmu@internautas.org>\nRobert Antoni Buj Gelonch <rbuj@fedoraproject.org>"
+msgstr "Goudarz Jafari <goudarz.jafari@gmail.com>\nK2latmanesh <sudo.k2latmanesh@tutamail.com>"
 
 #: ../terminal/terminal-util.c:93
 msgid "Visit Xfce Terminal website"
-msgstr "Visita el lloc web de Terminal de Xfce"
+msgstr "مشاهدهٔ تارنمای پایانهٔ Xfce"
 
 #: ../terminal/terminal-widget.c:171
 msgid "Scroll one line Up"
-msgstr ""
+msgstr "یک خط به بالا پیمایش کن"
 
 #: ../terminal/terminal-widget.c:172
 msgid "Scroll one line Down"
-msgstr ""
+msgstr "یک خط به پایین پیمایش کن"
 
 #: ../terminal/terminal-widget.c:444
 msgid "Copy Email Address"
-msgstr "Copia l'adreça electrònica"
+msgstr "رونویسی نشانی رایانامه"
 
 #: ../terminal/terminal-widget.c:445
 msgid "Compose Email"
-msgstr "Escriu un correu electrònic"
+msgstr "تنظیم رایانامه"
 
 #: ../terminal/terminal-widget.c:449 ../terminal/terminal-widget.c:455
 msgid "Copy Link Address"
-msgstr "Copia l'adreça de l'enllaç"
+msgstr "رونویسی نشانی پیوند"
 
 #: ../terminal/terminal-widget.c:451 ../terminal/terminal-widget.c:456
 msgid "Open Link"
-msgstr "Obre l'enllaç"
+msgstr "باز کردن پیوند"
 
 #: ../terminal/terminal-widget.c:628
 #, c-format
 msgid ""
 "Unable to drop selection of type text/plain to terminal: Wrong format (%d) "
 "or length (%d)\n"
-msgstr "No es pot deixar la selecció de tipus «text/plain» al terminal: Format (%d) o longitud (%d) errònia\n"
+msgstr ""
 
 #: ../terminal/terminal-widget.c:644
 #, c-format
 msgid ""
 "Unable to drop Mozilla URL on terminal: Wrong format (%d) or length (%d)\n"
-msgstr "No es pot deixar caure l'URL de Mozilla al terminal: format incorrecte (%d) o longitud incorrecta (%d)\n"
+msgstr ""
 
 #: ../terminal/terminal-widget.c:671
 #, c-format
 msgid "Unable to drop URI list on terminal: Wrong format (%d) or length (%d)\n"
-msgstr "No es pot deixar la llista d'URI al terminal: format (%d) o longitud (%d) errònia.\n"
+msgstr ""
 
 #: ../terminal/terminal-widget.c:708
 #, c-format
 msgid "Received invalid color data: Wrong format (%d) or length (%d)\n"
-msgstr "S'ha rebut un color invàlid: format (%d) o longitud (%d) errònia\n"
+msgstr "دادهٔ رنگ نامعتبری دریافت شد: قالب (%d) یا درازای (%d) نادرست\n"
 
 #. tell the user that we were unable to open the responsible application
 #: ../terminal/terminal-widget.c:812
 #, c-format
 msgid "Failed to open the URL '%s'"
-msgstr "Ha fallat l'obriment de l'URL «%s»"
+msgstr "خطا در باز کردن پیوند '%s'"
 
 #: ../terminal/terminal-window-dropdown.c:284
 msgid "Keep window open when it loses focus"
-msgstr "Mantén la finestra oberta quan perdi el focus"
+msgstr "وقتی تمرکز از روی پنجره برداشته می‌شود آن را باز نگه دار"
 
 #: ../terminal/terminal-window-dropdown.c:402
 msgid "Drop-down Terminal"
-msgstr "Terminal desplegable"
+msgstr "پایانهٔ کرکره‌ای"
 
 #: ../terminal/terminal-window-dropdown.c:403
 msgid "Toggle Drop-down Terminal"
-msgstr "Commuta a terminal desplegable"
+msgstr "تغییر وضعیت پایانهٔ کرکره‌ای"
 
 #. Use old accelerator paths for backwards compatibility
 #: ../terminal/terminal-window.c:315
 msgid "_File"
-msgstr "_Fitxer"
+msgstr "_پرونده"
 
 #: ../terminal/terminal-window.c:316
 msgid "Open _Tab"
-msgstr "Obre una _pestanya"
+msgstr "باز کردن _زبانه"
 
 #: ../terminal/terminal-window.c:316
 msgid "Open a new terminal tab"
-msgstr "Obre una pestanya nova de terminal"
+msgstr "باز کردن یک زبانهٔ جدید پایانه"
 
 #: ../terminal/terminal-window.c:317
 msgid "Open T_erminal"
-msgstr "Obre un t_erminal"
+msgstr "باز کردن _پایانه"
 
 #: ../terminal/terminal-window.c:317
 msgid "Open a new terminal window"
-msgstr "Obre una finestra nova de terminal"
+msgstr "باز کردن یک پنجرهٔ جدید پایانه"
 
 #: ../terminal/terminal-window.c:318
 msgid "_Undo Close Tab"
-msgstr "_Desfés el tancament de la pestanya"
+msgstr "_برگرداندن زبانهٔ بسته‌شده"
 
 #: ../terminal/terminal-window.c:319
 msgid "_Detach Tab"
-msgstr "_Separa la pestanya"
+msgstr "_جداسازی زبانه"
 
 #: ../terminal/terminal-window.c:320 ../terminal/terminal-window.c:838
 msgid "Close T_ab"
-msgstr "Tanca la _pestanya"
+msgstr "ب_ستن زبانه"
 
 #: ../terminal/terminal-window.c:321
 msgid "Close Other Ta_bs"
-msgstr "Tanca les _altres pestanyes"
+msgstr "بستن زبانه‌های _دیگر"
 
 #: ../terminal/terminal-window.c:322 ../terminal/terminal-window.c:845
 msgid "Close _Window"
-msgstr "_Tanca la finestra"
+msgstr "بستن پن_جره"
 
 #: ../terminal/terminal-window.c:323
 msgid "_Edit"
-msgstr "_Edita"
+msgstr "_ویرایش"
 
 #: ../terminal/terminal-window.c:324
 msgid "_Copy"
-msgstr "_Copia"
+msgstr "_رونویسی"
 
 #: ../terminal/terminal-window.c:324
 msgid "Copy to clipboard"
-msgstr "Copia al porta-retalls"
+msgstr "رونویسی در تخته‌گیره"
 
 #: ../terminal/terminal-window.c:325
 msgid "Copy as _HTML"
-msgstr "Copia com a _HTML"
+msgstr "رونویسی به شکل _HTML"
 
 #: ../terminal/terminal-window.c:325
 msgid "Copy to clipboard as HTML"
-msgstr "Copia al porta-retalls com a HTML"
+msgstr "رونویسی در تخته‌گیره به شکل HTML"
 
 #: ../terminal/terminal-window.c:326
 msgid "Paste from clipboard"
-msgstr "Enganxa des del porta-retalls"
+msgstr "چسباندن از تخته‌گیره"
 
 #: ../terminal/terminal-window.c:327
 msgid "_Paste Alt"
-msgstr ""
+msgstr "_چسباندن Alt"
 
 #: ../terminal/terminal-window.c:328
 msgid "Paste _Selection"
-msgstr "Enganxa la _selecció"
+msgstr ""
 
 #: ../terminal/terminal-window.c:329
 msgid "Paste _Selection Alt"
@@ -1317,253 +1317,253 @@ msgstr ""
 
 #: ../terminal/terminal-window.c:330
 msgid "Select _All"
-msgstr "Selecciona-ho _tot"
+msgstr "انتخاب _همه"
 
 #: ../terminal/terminal-window.c:331
 msgid "Copy _Input To All Tabs..."
-msgstr "Cop_ia l'entrada a totes les pestanyes..."
+msgstr "رونویسی _ورودی در تمام زبانه‌ها..."
 
 #: ../terminal/terminal-window.c:332
 msgid "Pr_eferences..."
-msgstr "_Preferències..."
+msgstr "_ترجیحات..."
 
 #: ../terminal/terminal-window.c:332
 msgid "Open the preferences dialog"
-msgstr "Obre el diàleg de preferències"
+msgstr "باز کردن پنجرهٔ ترجیحات"
 
 #: ../terminal/terminal-window.c:333
 msgid "_View"
-msgstr "_Visualitza"
+msgstr "_نمایش"
 
 #: ../terminal/terminal-window.c:334
 msgid "Zoom _In"
-msgstr "Ampl_ia el zoom"
+msgstr "_بزرگ‌نمایی"
 
 #: ../terminal/terminal-window.c:334
 msgid "Zoom in with larger font"
-msgstr "Amplia el zoom amb una lletra més gran"
+msgstr "بزرگ‌نمایی با قلم بزرگتر"
 
 #: ../terminal/terminal-window.c:335
 msgid "Zoom In Alt"
-msgstr ""
+msgstr "بزرگ‌نمایی Alt"
 
 #: ../terminal/terminal-window.c:336
 msgid "Zoom _Out"
-msgstr "Redueix el z_oom"
+msgstr "_کوچک‌نمایی"
 
 #: ../terminal/terminal-window.c:336
 msgid "Zoom out with smaller font"
-msgstr "Redueix el zoom amb una lletra més petita"
+msgstr "کوچک‌نمایی با قلم کوچکتر"
 
 #: ../terminal/terminal-window.c:337
 msgid "Zoom Out Alt"
-msgstr ""
+msgstr "کوچک‌نمایی Alt"
 
 #: ../terminal/terminal-window.c:338
 msgid "_Normal Size"
-msgstr "Mida _normal"
+msgstr "اندازه  _معمول"
 
 #: ../terminal/terminal-window.c:338
 msgid "Zoom to default size"
-msgstr "Zoom a la mida predeterminada"
+msgstr "بازگشت به اندازه پیش‌گزیده"
 
 #: ../terminal/terminal-window.c:339
 msgid "_Normal Size Alt"
-msgstr ""
+msgstr "اندازه _معمول Alt"
 
 #: ../terminal/terminal-window.c:340
 msgid "_Terminal"
-msgstr "_Terminal"
+msgstr "پا_یانه"
 
 #: ../terminal/terminal-window.c:341
 msgid "_Set Title..."
-msgstr "Estableix el _títol..."
+msgstr "تعیین _عنوان..."
 
 #: ../terminal/terminal-window.c:342
 msgid "Set Title Co_lor..."
-msgstr "Estableix el co_lor del títol..."
+msgstr "تعیین _رنگ عنوان..."
 
 #: ../terminal/terminal-window.c:343
 msgid "_Find..."
-msgstr "_Troba..."
+msgstr "_جستجو..."
 
 #: ../terminal/terminal-window.c:343
 msgid "Search terminal contents"
-msgstr "Cerca al contingut del terminal"
+msgstr "جستجوی محتوای پایانه"
 
 #: ../terminal/terminal-window.c:344
 msgid "Find Ne_xt"
-msgstr "Troba el _següent"
+msgstr ""
 
 #: ../terminal/terminal-window.c:345
 msgid "Find Pre_vious"
-msgstr "Troba l'_anterior"
+msgstr ""
 
 #: ../terminal/terminal-window.c:346
 msgid "Sa_ve Contents..."
-msgstr "Desa el contin_gut..."
+msgstr "_ذخیره محتواها..."
 
 #: ../terminal/terminal-window.c:347 ../terminal/terminal-window.c:2138
 msgid "_Reset"
-msgstr "_Restableix"
+msgstr "_بازنشانی"
 
 #: ../terminal/terminal-window.c:348
 msgid "_Clear Scrollback and Reset"
-msgstr "_Neteja el desplaçament i restableix"
+msgstr "_پاک‌سازی صفحه و بازنشانی"
 
 #: ../terminal/terminal-window.c:349
 msgid "T_abs"
-msgstr "Pest_anyes"
+msgstr "_زبانه‌ها"
 
 #: ../terminal/terminal-window.c:350
 msgid "_Previous Tab"
-msgstr "Pestanya _anterior"
+msgstr "زبانهٔ پی_شین"
 
 #: ../terminal/terminal-window.c:350
 msgid "Switch to previous tab"
-msgstr "Canvia a la pestanya anterior"
+msgstr "رفتن به زبانهٔ پیشین"
 
 #: ../terminal/terminal-window.c:351
 msgid "_Next Tab"
-msgstr "Pestanya _següent"
+msgstr "زبانهٔ پ_سین"
 
 #: ../terminal/terminal-window.c:351
 msgid "Switch to next tab"
-msgstr "Canvia a la pestanya següent"
+msgstr "رفتن به زبانهٔ پسین"
 
 #: ../terminal/terminal-window.c:352
 msgid "Last _Active Tab"
-msgstr "Última pestanya _activa"
+msgstr "آخرین زبانهٔ _فعّال"
 
 #: ../terminal/terminal-window.c:352
 msgid "Switch to last active tab"
-msgstr "Canvia a l'última pestanya activa"
+msgstr "رفتن به آخرین زبانهٔ فعّال"
 
 #: ../terminal/terminal-window.c:353
 msgid "Move Tab _Left"
-msgstr "Mou la pestanya a _l'esquerra"
+msgstr "حرکت زبانه به _چپ"
 
 #: ../terminal/terminal-window.c:354
 msgid "Move Tab _Right"
-msgstr "Mou la pestanya a la d_reta"
+msgstr "حرکت زبانه به _راست"
 
 #: ../terminal/terminal-window.c:356
 msgid "_Contents"
-msgstr "_Contingut"
+msgstr "_محتوا"
 
 #: ../terminal/terminal-window.c:356
 msgid "Display help contents"
-msgstr "Mostra el contingut de l'ajuda"
+msgstr "نمایش محتوای راهنما"
 
 #: ../terminal/terminal-window.c:357
 msgid "_About"
-msgstr "_Quant a"
+msgstr "_درباره"
 
 #: ../terminal/terminal-window.c:358
 msgid "_Zoom"
-msgstr "_Zoom"
+msgstr "_بزرگنمایی"
 
 #: ../terminal/terminal-window.c:359
 msgid "Show _Menubar"
-msgstr "Mostra la barra de _menús"
+msgstr "نمایش نوار _فهرست"
 
 #: ../terminal/terminal-window.c:359
 msgid "Show/hide the menubar"
-msgstr "Mostra/oculta la barra de menús"
+msgstr "نمایان/پنهان کردن نوار فهرست"
 
 #: ../terminal/terminal-window.c:360
 msgid "Show _Toolbar"
-msgstr "Mos_tra la barra d'eines"
+msgstr "نمایش نوار _ابزار"
 
 #: ../terminal/terminal-window.c:360
 msgid "Show/hide the toolbar"
-msgstr "Mostra/oculta la barra d'eines"
+msgstr "نمایان/پنهان کردن نوار ابزار"
 
 #: ../terminal/terminal-window.c:361
 msgid "Show Window _Borders"
-msgstr "Mostra les _vores de la finestra"
+msgstr "نمایش _حاشیه‌های پنجره"
 
 #: ../terminal/terminal-window.c:361
 msgid "Show/hide the window decorations"
-msgstr "Mostra/oculta les decoracions de la finestra"
+msgstr "نمایان/پنهان کردن تزئینات پنجره"
 
 #: ../terminal/terminal-window.c:362
 msgid "_Fullscreen"
-msgstr "_Pantalla completa"
+msgstr "_تمام صفحه"
 
 #: ../terminal/terminal-window.c:362
 msgid "Toggle fullscreen mode"
-msgstr "Commuta el mode a pantalla completa"
+msgstr "تغییر وضعیت حالت تمام‌صفحه"
 
 #: ../terminal/terminal-window.c:363
 msgid "_Read-Only"
-msgstr "Només lectu_ra"
+msgstr "فقط _خواندنی"
 
 #: ../terminal/terminal-window.c:363
 msgid "Toggle read-only mode"
-msgstr "Commuta el mode de només lectura"
+msgstr "تغییر وضعیت حالت فقط خواندنی"
 
 #: ../terminal/terminal-window.c:364
 msgid "Scroll on _Output"
-msgstr "Desplaça amb la s_ortida"
+msgstr "پیمایش با _خروجی"
 
 #: ../terminal/terminal-window.c:364
 msgid "Toggle scroll on output"
-msgstr "Commuta el desplaçament amb la sortida"
+msgstr "تغییر وضعیت پیمایش با خروجی"
 
 #. used for changing the accelerator keys via the ShortcutsEditor, the logic
 #. is still handle by GtkActionEntries
 #: ../terminal/terminal-window.c:366
 msgid "Go to Tab 1"
-msgstr ""
+msgstr "برو به زبانهٔ ۱"
 
 #: ../terminal/terminal-window.c:367
 msgid "Go to Tab 2"
-msgstr ""
+msgstr "برو به زبانهٔ ۲"
 
 #: ../terminal/terminal-window.c:368
 msgid "Go to Tab 3"
-msgstr ""
+msgstr "برو به زبانهٔ ۳"
 
 #: ../terminal/terminal-window.c:369
 msgid "Go to Tab 4"
-msgstr ""
+msgstr "برو به زبانهٔ ۴"
 
 #: ../terminal/terminal-window.c:370
 msgid "Go to Tab 5"
-msgstr ""
+msgstr "برو به زبانهٔ ۵"
 
 #: ../terminal/terminal-window.c:371
 msgid "Go to Tab 6"
-msgstr ""
+msgstr "برو به زبانهٔ ۶"
 
 #: ../terminal/terminal-window.c:372
 msgid "Go to Tab 7"
-msgstr ""
+msgstr "برو به زبانهٔ ۷"
 
 #: ../terminal/terminal-window.c:373
 msgid "Go to Tab 8"
-msgstr ""
+msgstr "برو به زبانهٔ ۸"
 
 #: ../terminal/terminal-window.c:374
 msgid "Go to Tab 9"
-msgstr ""
+msgstr "برو به زبانهٔ ۹"
 
 #. create encoding action
 #: ../terminal/terminal-window.c:548
 msgid "Set _Encoding"
-msgstr "Establ_eix la codificació"
+msgstr "تعیین _کدبندی"
 
 #: ../terminal/terminal-window.c:795
 msgid "Warning"
-msgstr "Avís"
+msgstr "هشدار"
 
 #. and process running
 #: ../terminal/terminal-window.c:806
 msgid ""
 "There are still processes running in some tabs.\n"
 "Closing this window will kill all of them."
-msgstr "Encara hi ha processos en execució en algunes pestanyes.\nEl tancament d'aquesta finestra els matarà."
+msgstr "هنوز تعدادی فرآیند در برخی زبانه‌ها در حال اجرا است.\nبستن این پنجره، به تمامی آنها پایان خواهد داد."
 
 #. and no process running
 #: ../terminal/terminal-window.c:812
@@ -1571,90 +1571,90 @@ msgstr "Encara hi ha processos en execució en algunes pestanyes.\nEl tancament 
 msgid ""
 "This window has %d tabs open. Closing this window\n"
 "will also close all its tabs."
-msgstr "Aquesta finestra té %d pestanyes obertes. Si es tanca aquesta\nfinestra, també es tancaran totes les seves pestanyes."
+msgstr "در این پنجره، %d زبانه هنوز باز هستند. بستن این پنجره\nهمهٔ زبانه‌هایش را نیز خواهد بست."
 
 #: ../terminal/terminal-window.c:816
 msgid "Close all tabs?"
-msgstr "Voleu tancar totes les pestanyes?"
+msgstr "همهٔ زبانه‌ها بسته شوند؟"
 
 #. closing a tab, and process running
 #: ../terminal/terminal-window.c:823
 msgid ""
 "There is still a process running.\n"
 "Closing this tab will kill it."
-msgstr "Encara hi ha un procés en execució.\nEl tancament d'aquesta pestanya el matarà."
+msgstr "فرآیندی هنوز در حال اجرا است.\nبستن این زبانه به آن خاتمه خواهد داد."
 
 #: ../terminal/terminal-window.c:825
 msgid "Close tab?"
-msgstr "Voleu tancar la pestanya?"
+msgstr "زبانه بسته شود؟"
 
 #. closing a single tab window, and process running
 #: ../terminal/terminal-window.c:830
 msgid ""
 "There is still a process running.\n"
 "Closing this window will kill it."
-msgstr "Encara hi ha un procés en execució.\nEl tancament d'aquesta finestra el matarà."
+msgstr "فرآیندی هنوز در حال اجرا است.\nبستن این پنجره به آن خاتمه خواهد داد."
 
 #: ../terminal/terminal-window.c:832
 msgid "Close window?"
-msgstr "Voleu tancar la finestra?"
+msgstr "پنجره بسته شود؟"
 
 #: ../terminal/terminal-window.c:1750
 msgid "Copy _Input:"
-msgstr "Cop_ia l'entrada:"
+msgstr "رونویسی _ورودی:"
 
 #: ../terminal/terminal-window.c:1754
 msgid "Enter the text to be copied to all tabs"
-msgstr "Introduïu el text que voleu copiar a totes les pestanyes"
+msgstr "متنی را وارد کنید که در تمام زبانه‌ها رونویسی شود"
 
 #: ../terminal/terminal-window.c:1762
 msgid "Copy input"
-msgstr "Copia l'entrada"
+msgstr "رونویسی ورودی"
 
 #: ../terminal/terminal-window.c:2089
 msgid "_Title:"
-msgstr "_Títol:"
+msgstr "_عنوان:"
 
 #: ../terminal/terminal-window.c:2093
 msgid "Enter the title for the current terminal tab"
-msgstr "Introduïu el títol de la pestanya del terminal actual"
+msgstr "عنوانی برای زبانهٔ کنونی وارد کنید"
 
 #: ../terminal/terminal-window.c:2108
 msgid "Help"
-msgstr "Ajuda"
+msgstr "راهنما"
 
 #: ../terminal/terminal-window.c:2114
 msgid "Close"
-msgstr "Tanca"
+msgstr "بستن"
 
 #: ../terminal/terminal-window.c:2137
 msgid "Choose title color"
-msgstr "Trieu el color del títol"
+msgstr "گزینش رنگ عنوان"
 
 #: ../terminal/terminal-window.c:2228
 msgid "Failed to create the regular expression"
-msgstr "Ha fallat la creació de l'expressió regular"
+msgstr ""
 
 #: ../terminal/terminal-window.c:2268
 msgid "Save contents..."
-msgstr "Desa el contingut..."
+msgstr "ذخیره‌ محتوا..."
 
 #: ../terminal/terminal-window.c:2272
 msgid "_Save"
-msgstr "De_sa"
+msgstr "_ذخیره"
 
 #: ../terminal/terminal-window.c:2309
 msgid "Failed to save terminal contents"
-msgstr "Ha fallat el desament del contingut del terminal"
+msgstr "خطا در ذخیرهٔ محتوای پایانه"
 
 #: ../xfce4-terminal.desktop.in.h:2
 msgid "Terminal Emulator"
-msgstr "Emulador de terminal"
+msgstr "شبیه‌ساز پایانه"
 
 #: ../xfce4-terminal-settings.desktop.in.h:1
 msgid "Xfce Terminal Settings"
-msgstr "Ajusts del terminal de Xfce"
+msgstr "تنظیمات پایانهٔ Xfce"
 
 #: ../xfce4-terminal-settings.desktop.in.h:2
 msgid "Configure Xfce Terminal"
-msgstr "Configureu el terminal de Xfce"
+msgstr "پیکربندی پایانهٔ Xfce"

@@ -13,8 +13,7 @@ xfce4_terminal_built_sources = \
 	terminal-enum-types.c \
 	terminal-enum-types.h \
 	terminal-marshal.c \
-	terminal-marshal.h \
-	terminal-preferences-ui.h
+	terminal-marshal.h
 
 xfce4_terminal_headers = \
 	terminal-app.h \
@@ -74,7 +73,8 @@ xfce4_terminal_LDADD = \
 	$(LIBXFCE4UI_LIBS) \
 	$(LIBXFCE4KBD_PRIVATE_LIBS) \
 	$(XFCONF_LIBS) \
-	$(TERMINAL_LIBS)
+	$(TERMINAL_LIBS) \
+	$(PCRE2_LIBS)
 
 if HAVE_UTEMPTER
 xfce4_terminal_LDADD += -lutempter
@@ -103,9 +103,6 @@ DISTCLEANFILES = \
 
 BUILT_SOURCES = \
 	$(xfce4_terminal_built_sources)
-
-terminal-preferences-ui.h: $(srcdir)/terminal-preferences.glade Makefile
-	$(AM_V_GEN) xdt-csource --strip-comments --strip-content --static --name=terminal_preferences_ui $< >$@
 
 terminal-enum-types.h: stamp-terminal-enum-types.h
 	@true
@@ -156,7 +153,6 @@ clean-local:
 
 EXTRA_DIST = \
 	terminal-config.h.in \
-	terminal-marshal.list \
-	terminal-preferences.glade
+	terminal-marshal.list
 
 # vi:set ts=8 sw=8 noet ai nocindent:

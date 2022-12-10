@@ -56,12 +56,6 @@
 
 static void     terminal_app_finalize                 (GObject            *object);
 static void     terminal_app_update_accels            (TerminalApp        *app);
-static void     terminal_app_update_tab_key_accels    (TerminalApp        *app);
-static void     terminal_app_store_tab_key_accel      (gpointer            data,
-                                                       const gchar        *accel_path,
-                                                       guint               accel_key,
-                                                       GdkModifierType     accel_mods,
-                                                       gboolean            changed);
 static void     terminal_app_update_windows_accels    (gpointer            user_data);
 static gboolean terminal_app_accel_map_load           (gpointer            user_data);
 static gboolean terminal_app_accel_map_save           (gpointer            user_data);
@@ -101,7 +95,6 @@ struct _TerminalApp
   guint                accel_map_load_id;
   guint                accel_map_save_id;
   GtkAccelMap         *accel_map;
-  GSList              *tab_key_accels;
 };
 
 
@@ -137,8 +130,6 @@ terminal_app_init (TerminalApp *app)
 {
   app->preferences = terminal_preferences_get ();
   g_signal_connect_swapped (G_OBJECT (app->preferences), "notify::shortcuts-no-menukey",
-                            G_CALLBACK (terminal_app_update_accels), app);
-  g_signal_connect_swapped (G_OBJECT (app->preferences), "notify::shortcuts-no-helpkey",
                             G_CALLBACK (terminal_app_update_accels), app);
 
   /* remember the original menu bar accel */
@@ -191,10 +182,6 @@ terminal_app_finalize (GObject *object)
   if (app->session_client != NULL)
     g_object_unref (G_OBJECT (app->session_client));
 
-  for (lp = app->tab_key_accels; lp != NULL; lp = lp->next)
-    g_free (((TerminalAccel*) lp->data)->path);
-  g_slist_free_full (app->tab_key_accels, g_free);
-
   (*G_OBJECT_CLASS (terminal_app_parent_class)->finalize) (object);
 }
 
@@ -217,49 +204,6 @@ terminal_app_update_accels (TerminalApp *app)
   gtk_accelerator_parse (app->initial_menu_bar_accel, &key, &mod);
   gtk_accel_map_change_entry ("<Actions>/terminal-window/toggle-menubar",
                               no_key ? 0 : key, no_key ? 0 : mod, TRUE);
-
-  g_object_get (G_OBJECT (app->preferences),
-                "shortcuts-no-helpkey", &no_key,
-                NULL);
-  gtk_accel_map_change_entry ("<Actions>/terminal-window/contents",
-                              no_key ? 0 : GDK_KEY_F1, 0, TRUE);
-}
-
-
-
-static void
-terminal_app_update_tab_key_accels (TerminalApp *app)
-{
-  if (app->tab_key_accels != NULL)
-    {
-      GSList *lp;
-      for (lp = app->tab_key_accels; lp != NULL; lp = lp->next)
-        g_free (((TerminalAccel*) lp->data)->path);
-      g_slist_free_full (app->tab_key_accels, g_free);
-      app->tab_key_accels = NULL;
-    }
-  gtk_accel_map_foreach (app, terminal_app_store_tab_key_accel);
-}
-
-
-
-static void
-terminal_app_store_tab_key_accel   (gpointer         data,
-                                    const gchar     *accel_path,
-                                    guint            accel_key,
-                                    GdkModifierType  accel_mods,
-                                    gboolean         changed)
-{
-  if (accel_key == GDK_KEY_Tab || accel_key == GDK_KEY_ISO_Left_Tab)
-    {
-      TerminalApp *app = TERMINAL_APP (data);
-      TerminalAccel *accel = g_new0 (TerminalAccel, 1);
-
-      accel->path = g_strdup (g_strrstr (accel_path, "/") + 1); // <Actions>/terminal-window/action
-      accel->mods = accel_mods;
-
-      app->tab_key_accels = g_slist_prepend (app->tab_key_accels, accel);
-    }
 }
 
 
@@ -272,8 +216,6 @@ terminal_app_update_windows_accels (gpointer user_data)
 
   for (lp = app->windows; lp != NULL; lp = lp->next)
     {
-      terminal_window_update_tab_key_accels (TERMINAL_WINDOW (lp->data), app->tab_key_accels);
-
       /* the accel_map is loaded after the first windows are created, so they can't create the go-to actions on page-insert */
       terminal_window_update_goto_accels (TERMINAL_WINDOW (lp->data));
     }
@@ -318,9 +260,6 @@ terminal_app_accel_map_changed (TerminalApp *app)
   /* schedule new save */
   app->accel_map_save_id = gdk_threads_add_timeout_seconds (10, terminal_app_accel_map_save, app);
 
-  /* identify accelerators containing the Tab key */
-  terminal_app_update_tab_key_accels (app);
-
   /* update the tab-key accel list in each window */
   terminal_app_update_windows_accels (app);
 }
@@ -345,9 +284,6 @@ terminal_app_accel_map_load (gpointer user_data)
   app->accel_map = gtk_accel_map_get ();
   g_signal_connect_swapped (G_OBJECT (app->accel_map), "changed",
       G_CALLBACK (terminal_app_accel_map_changed), app);
-
-  /* identify accelerators containing the Tab key */
-  terminal_app_update_tab_key_accels (app);
 
   return FALSE;
 }
@@ -390,8 +326,6 @@ terminal_app_take_window (TerminalApp *app,
   g_signal_connect (G_OBJECT (window), "key-release-event",
                     G_CALLBACK (terminal_app_unset_urgent_bell), app);
   app->windows = g_slist_prepend (app->windows, window);
-
-  terminal_window_update_tab_key_accels (TERMINAL_WINDOW (window), app->tab_key_accels);
 }
 
 

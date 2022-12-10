@@ -61,8 +61,15 @@ typedef enum
   PATTERN_TYPE_NONE,
   PATTERN_TYPE_FULL_HTTP,
   PATTERN_TYPE_HTTP,
-  PATTERN_TYPE_EMAIL
+  PATTERN_TYPE_EMAIL,
+  PATTERN_TYPE_FILE
 } PatternType;
+
+enum
+{
+  PROP_ACCEL_GROUP = 1,
+  N_PROPERTIES
+};
 
 typedef struct
 {
@@ -70,33 +77,55 @@ typedef struct
   PatternType  type;
 } TerminalRegexPattern;
 
+typedef struct {
+    gchar      *uri;
+    PatternType type;
+} TerminalHyperlink;
+
 static const TerminalRegexPattern regex_patterns[] =
 {
   { REGEX_URL_AS_IS, PATTERN_TYPE_FULL_HTTP },
   { REGEX_URL_HTTP,  PATTERN_TYPE_HTTP },
-  { REGEX_URL_FILE,  PATTERN_TYPE_FULL_HTTP },
+  { REGEX_URL_FILE,  PATTERN_TYPE_FILE },
   { REGEX_EMAIL,     PATTERN_TYPE_EMAIL },
   { REGEX_NEWS_MAN,  PATTERN_TYPE_FULL_HTTP },
 };
 
 
 
-static void     terminal_widget_finalize              (GObject          *object);
-static gboolean terminal_widget_button_press_event    (GtkWidget        *widget,
-                                                       GdkEventButton   *event);
-static void     terminal_widget_drag_data_received    (GtkWidget        *widget,
-                                                       GdkDragContext   *context,
-                                                       gint              x,
-                                                       gint              y,
-                                                       GtkSelectionData *selection_data,
-                                                       guint             info,
-                                                       guint             time);
-static gboolean terminal_widget_key_press_event       (GtkWidget        *widget,
-                                                       GdkEventKey      *event);
-static void     terminal_widget_open_uri              (TerminalWidget   *widget,
-                                                       const gchar      *wlink,
-                                                       gint              tag);
-static void     terminal_widget_update_highlight_urls (TerminalWidget   *widget);
+static void               terminal_widget_finalize                    (GObject          *object);
+static void               terminal_widget_set_property                (GObject          *object,
+                                                                       guint             prop_id,
+                                                                       const GValue     *value,
+                                                                       GParamSpec       *pspec);
+static gboolean           terminal_widget_button_press_event          (GtkWidget        *widget,
+                                                                       GdkEventButton   *event);
+static void               terminal_widget_drag_data_received          (GtkWidget        *widget,
+                                                                       GdkDragContext   *context,
+                                                                       gint              x,
+                                                                       gint              y,
+                                                                       GtkSelectionData *selection_data,
+                                                                       guint             info,
+                                                                       guint             time);
+static gboolean           terminal_widget_key_press_event             (GtkWidget        *widget,
+                                                                       GdkEventKey      *event);
+static void               terminal_widget_open_uri                    (TerminalWidget   *widget,
+                                                                       const gchar      *wlink,
+                                                                       PatternType       type);
+static void               terminal_widget_update_highlight_urls       (TerminalWidget   *widget);
+static gboolean           terminal_widget_action_shift_scroll_up      (TerminalWidget   *widget);
+static gboolean           terminal_widget_action_shift_scroll_down    (TerminalWidget   *widget);
+static void               terminal_widget_connect_accelerators        (TerminalWidget   *widget);
+static void               terminal_widget_disconnect_accelerators     (TerminalWidget   *widget);
+static TerminalHyperlink  terminal_widget_get_link                    (TerminalWidget   *widget,
+                                                                       GdkEvent         *event);
+static gboolean           terminal_widget_link_clickable              (const gchar      *uri,
+                                                                       PatternType       type);
+#if VTE_CHECK_VERSION (0, 50, 0)
+static void               terminal_widget_hyperlink_hover_uri_changed (TerminalWidget     *widget,
+                                                                       const char         *uri,
+                                                                       const GdkRectangle *bbox G_GNUC_UNUSED);
+#endif
 
 
 
@@ -111,7 +140,9 @@ struct _TerminalWidget
 
   /*< private >*/
   TerminalPreferences *preferences;
+  GtkAccelGroup       *accel_group;
   gint                 regex_tags[G_N_ELEMENTS (regex_patterns)];
+  pcre2_code_8        *regex_pcre[G_N_ELEMENTS (regex_patterns)];
 };
 
 
@@ -135,6 +166,18 @@ static const GtkTargetEntry targets[] =
 
 
 
+static XfceGtkActionEntry action_entries[] =
+{
+  { TERMINAL_WIDGET_ACTION_SCROLL_UP,   "<Actions>/terminal-widget/shift-up",   "<Shift>Up",   XFCE_GTK_MENU_ITEM, N_ ("Scroll one line Up"),   NULL, NULL, G_CALLBACK (terminal_widget_action_shift_scroll_up),   },
+  { TERMINAL_WIDGET_ACTION_SCROLL_DOWN, "<Actions>/terminal-widget/shift-down", "<Shift>Down", XFCE_GTK_MENU_ITEM, N_ ("Scroll one line Down"), NULL, NULL, G_CALLBACK (terminal_widget_action_shift_scroll_down), },
+};
+
+#define get_action_entry(id) xfce_gtk_get_action_entry_by_id(action_entries, G_N_ELEMENTS(action_entries), id)
+
+static GParamSpec *terminal_widget_props[N_PROPERTIES] = { NULL, };
+
+
+
 G_DEFINE_TYPE (TerminalWidget, terminal_widget, VTE_TYPE_TERMINAL)
 
 
@@ -147,11 +190,14 @@ terminal_widget_class_init (TerminalWidgetClass *klass)
 
   gobject_class = G_OBJECT_CLASS (klass);
   gobject_class->finalize = terminal_widget_finalize;
+  gobject_class->set_property = terminal_widget_set_property;
 
   gtkwidget_class = GTK_WIDGET_CLASS (klass);
   gtkwidget_class->button_press_event = terminal_widget_button_press_event;
   gtkwidget_class->drag_data_received = terminal_widget_drag_data_received;
   gtkwidget_class->key_press_event    = terminal_widget_key_press_event;
+
+  xfce_gtk_translate_action_entries (action_entries, G_N_ELEMENTS (action_entries));
 
   /**
    * TerminalWidget::get-context-menu:
@@ -185,6 +231,15 @@ terminal_widget_class_init (TerminalWidgetClass *klass)
                   0, NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  terminal_widget_props[PROP_ACCEL_GROUP] =
+    g_param_spec_object ("accel-group",
+                         "accel-group",
+                         "accel-group",
+                         GTK_TYPE_ACCEL_GROUP,
+                         G_PARAM_WRITABLE);
+
+  g_object_class_install_properties (gobject_class, N_PROPERTIES, terminal_widget_props);
 }
 
 
@@ -210,8 +265,26 @@ terminal_widget_init (TerminalWidget *widget)
   g_signal_connect_swapped (G_OBJECT (widget->preferences), "notify::misc-highlight-urls",
                             G_CALLBACK (terminal_widget_update_highlight_urls), widget);
 
+#if VTE_CHECK_VERSION (0, 50, 0)
+  g_object_bind_property (G_OBJECT (widget->preferences), "misc-hyperlinks-enabled",
+                          G_OBJECT (widget), "allow-hyperlink",
+                          G_BINDING_SYNC_CREATE);
+#endif
+
   /* apply the initial misc-highlight-urls setting */
   terminal_widget_update_highlight_urls (widget);
+
+  widget->accel_group = NULL;
+
+  for (guint i = 0; i < G_N_ELEMENTS (regex_patterns); i++)
+    {
+      gint         error_number;
+      PCRE2_SIZE   error_offset;
+
+      widget->regex_pcre[i] = pcre2_compile_8 ((PCRE2_SPTR8) regex_patterns[i].pattern, PCRE2_ZERO_TERMINATED, 0, &error_number, &error_offset, NULL);
+      if (widget->regex_pcre[i] == NULL)
+        g_warning ("Failed to compile regex, error code \"%d\".", error_number);
+    }
 }
 
 
@@ -230,10 +303,51 @@ terminal_widget_finalize (GObject *object)
   /* disconnect the misc-highlight-urls watch */
   g_signal_handlers_disconnect_by_func (G_OBJECT (widget->preferences), G_CALLBACK (terminal_widget_update_highlight_urls), widget);
 
+#if VTE_CHECK_VERSION (0, 50, 0)
+  /* disconnect the hyperlink-hover-uri-changed callback */
+  g_signal_handlers_disconnect_by_func (G_OBJECT (widget), G_CALLBACK (terminal_widget_hyperlink_hover_uri_changed), widget);
+#endif
+
   /* disconnect from the preferences */
   g_object_unref (G_OBJECT (widget->preferences));
 
+  /* disconnect accelerators */
+  terminal_widget_disconnect_accelerators (widget);
+
+  for (guint i = 0; i < G_N_ELEMENTS (regex_patterns); i++)
+    {
+      if (widget->regex_pcre[i] != NULL)
+        {
+          pcre2_code_free_8 (widget->regex_pcre[i]);
+          widget->regex_pcre[i] = NULL;
+        }
+    }
+
   (*G_OBJECT_CLASS (terminal_widget_parent_class)->finalize) (object);
+}
+
+
+
+static void
+terminal_widget_set_property (GObject      *object,
+                              guint         prop_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+  TerminalWidget *widget = TERMINAL_WIDGET (object);
+
+  switch (prop_id)
+    {
+    case PROP_ACCEL_GROUP:
+      terminal_widget_disconnect_accelerators (widget);
+      widget->accel_group = g_value_dup_object (value);
+      terminal_widget_connect_accelerators (widget);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
 }
 
 
@@ -278,13 +392,13 @@ terminal_widget_context_menu_open (TerminalWidget *widget,
                                    GtkWidget      *item)
 {
   const gchar *wlink;
-  gint        *tag;
+  PatternType *type;
 
   wlink = g_object_get_data (G_OBJECT (item), "terminal-widget-link");
-  tag  = g_object_get_data (G_OBJECT (item), "terminal-widget-tag");
+  type = g_object_get_data (G_OBJECT (item), "terminal-widget-link-type");
 
-  if (G_LIKELY (wlink != NULL && tag != NULL))
-    terminal_widget_open_uri (widget, wlink, *tag);
+  if (wlink != NULL && type != NULL && terminal_widget_link_clickable (wlink, *type))
+    terminal_widget_open_uri (widget, wlink, *type);
 }
 
 
@@ -295,25 +409,22 @@ terminal_widget_context_menu (TerminalWidget *widget,
                               guint32         event_time,
                               GdkEvent       *event)
 {
-  VteTerminal *terminal = VTE_TERMINAL (widget);
-  GMainLoop   *loop;
-  GtkWidget   *menu = NULL;
-  GtkWidget   *item_copy = NULL;
-  GtkWidget   *item_open = NULL;
-  GtkWidget   *item_separator = NULL;
-  GList       *children;
-  gchar       *match;
-  guint        id, i;
-  gint         tag;
-  PatternType  pattern_type = PATTERN_TYPE_NONE;
+  GMainLoop        *loop;
+  GtkWidget        *menu            = NULL;
+  GtkWidget        *item_copy       = NULL;
+  GtkWidget        *item_open       = NULL;
+  GtkWidget        *item_separator  = NULL;
+  GList            *children;
+  guint             id;
+  TerminalHyperlink link;
 
   g_signal_emit (G_OBJECT (widget), widget_signals[GET_CONTEXT_MENU], 0, &menu);
   if (G_UNLIKELY (menu == NULL))
     return;
 
   /* check if we have a match */
-  match = vte_terminal_match_check_event (terminal, event, &tag);
-  if (G_UNLIKELY (match != NULL))
+  link = terminal_widget_get_link (widget, (GdkEvent *) event);
+  if (G_UNLIKELY (link.uri != NULL))
     {
       /* prepend a separator to the menu if it does not already contain one */
       children = gtk_container_get_children (GTK_CONTAINER (menu));
@@ -327,20 +438,17 @@ terminal_widget_context_menu (TerminalWidget *widget,
         item_separator = NULL;
       g_list_free (children);
 
-      /* lookup the pattern type */
-      for (i = 0; i < G_N_ELEMENTS (regex_patterns); i++)
-        if (widget->regex_tags[i] == tag)
-          {
-            pattern_type = regex_patterns[i].type;
-            break;
-          }
-      terminal_return_if_fail (pattern_type != PATTERN_TYPE_NONE);
-
-      /* create menu items with appriorate labels */
-      if (pattern_type == PATTERN_TYPE_EMAIL)
+      /* create menu items with appropriate labels */
+      if (link.type == PATTERN_TYPE_EMAIL)
         {
           item_copy = gtk_menu_item_new_with_label (_("Copy Email Address"));
           item_open = gtk_menu_item_new_with_label (_("Compose Email"));
+        }
+      else if (link.type == PATTERN_TYPE_FILE)
+        {
+          item_copy = gtk_menu_item_new_with_label (_("Copy Link Address"));
+          if (terminal_widget_link_clickable (link.uri, link.type))
+            item_open = gtk_menu_item_new_with_label (_("Open Link"));
         }
       else
         {
@@ -349,17 +457,20 @@ terminal_widget_context_menu (TerminalWidget *widget,
         }
 
       /* prepend the "COPY" menu item */
-      g_object_set_data_full (G_OBJECT (item_copy), I_("terminal-widget-link"), g_strdup (match), g_free);
+      g_object_set_data_full (G_OBJECT (item_copy), I_("terminal-widget-link"), g_strdup (link.uri), g_free);
       g_signal_connect_swapped (G_OBJECT (item_copy), "activate", G_CALLBACK (terminal_widget_context_menu_copy), widget);
       gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), item_copy);
 
       /* prepend the "OPEN" menu item */
-      g_object_set_data_full (G_OBJECT (item_open), I_("terminal-widget-link"), g_strdup (match), g_free);
-      g_object_set_data_full (G_OBJECT (item_open), I_("terminal-widget-tag"), g_memdup (&tag, sizeof (tag)), g_free);
-      g_signal_connect_swapped (G_OBJECT (item_open), "activate", G_CALLBACK (terminal_widget_context_menu_open), widget);
-      gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), item_open);
+      if (item_open != NULL)
+        {
+          g_object_set_data_full (G_OBJECT (item_open), I_("terminal-widget-link"), g_strdup (link.uri), g_free);
+          g_object_set_data_full (G_OBJECT (item_open), I_("terminal-widget-link-type"), g_memdup (&link.type, sizeof (link.type)), g_free);
+          g_signal_connect_swapped (G_OBJECT (item_open), "activate", G_CALLBACK (terminal_widget_context_menu_open), widget);
+          gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), item_open);
+        }
 
-      g_free (match);
+      g_free (link.uri);
     }
 
   gtk_widget_show_all (menu);
@@ -412,9 +523,7 @@ terminal_widget_button_press_event (GtkWidget       *widget,
   const GdkModifierType modifiers = gtk_accelerator_get_default_mod_mask ();
   gboolean              committed = FALSE;
   gboolean              middle_click_opens_uri;
-  gchar                *match;
   guint                 signal_id = 0;
-  gint                  tag;
 
   if (event->type == GDK_BUTTON_PRESS)
     {
@@ -427,11 +536,10 @@ terminal_widget_button_press_event (GtkWidget       *widget,
             : (event->button == 1 && (event->state & modifiers) == GDK_CONTROL_MASK))
         {
           /* clicking on an URI fires the responsible application */
-          match = vte_terminal_match_check_event (VTE_TERMINAL (widget), (GdkEvent *) event, &tag);
-          if (G_UNLIKELY (match != NULL))
+          TerminalHyperlink link = terminal_widget_get_link (TERMINAL_WIDGET (widget), (GdkEvent *) event);
+          if (G_UNLIKELY (link.uri != NULL && terminal_widget_link_clickable (link.uri, link.type)))
             {
-              terminal_widget_open_uri (TERMINAL_WIDGET (widget), match, tag);
-              g_free (match);
+              terminal_widget_open_uri (TERMINAL_WIDGET (widget), link.uri, link.type);
               return TRUE;
             }
         }
@@ -646,15 +754,11 @@ static gboolean
 terminal_widget_key_press_event (GtkWidget    *widget,
                                  GdkEventKey  *event)
 {
-  GtkAdjustment *adjustment = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (widget));
   gboolean       shortcuts_no_menukey;
-  gboolean       shift_arrows_scroll;
-  gdouble        value;
 
   /* determine current settings */
   g_object_get (G_OBJECT (TERMINAL_WIDGET (widget)->preferences),
                 "shortcuts-no-menukey", &shortcuts_no_menukey,
-                "misc-use-shift-arrows-to-scroll", &shift_arrows_scroll,
                 NULL);
 
   /* popup context menu if "Menu" or "<Shift>F10" is pressed */
@@ -663,22 +767,6 @@ terminal_widget_key_press_event (GtkWidget    *widget,
     {
       terminal_widget_context_menu (TERMINAL_WIDGET (widget), 0, event->time, (GdkEvent *) event);
       return TRUE;
-    }
-  else if (G_UNLIKELY (shift_arrows_scroll))
-    {
-      /* scroll up one line with "<Shift>Up" */
-      if ((event->state & GDK_SHIFT_MASK) != 0 && (event->keyval == GDK_KEY_Up || event->keyval == GDK_KEY_KP_Up))
-        {
-          gtk_adjustment_set_value (adjustment, gtk_adjustment_get_value (adjustment) - 1);
-          return TRUE;
-        }
-      /* scroll down one line with "<Shift>Down" */
-      else if ((event->state & GDK_SHIFT_MASK) != 0 && (event->keyval == GDK_KEY_Down || event->keyval == GDK_KEY_KP_Down))
-        {
-          value = MIN (gtk_adjustment_get_value (adjustment) + 1, gtk_adjustment_get_upper (adjustment) - gtk_adjustment_get_page_size (adjustment));
-          gtk_adjustment_set_value (adjustment, value);
-          return TRUE;
-        }
     }
 
   return (*GTK_WIDGET_CLASS (terminal_widget_parent_class)->key_press_event) (widget, event);
@@ -689,53 +777,43 @@ terminal_widget_key_press_event (GtkWidget    *widget,
 static void
 terminal_widget_open_uri (TerminalWidget *widget,
                           const gchar    *wlink,
-                          gint            tag)
+                          PatternType     type)
 {
   GtkWindow *window = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (widget)));
   GError    *error = NULL;
   gchar     *uri;
-  guint      i;
 
-  for (i = 0; i < G_N_ELEMENTS (regex_patterns); i++)
+  /* handle the pattern type */
+  switch (type)
     {
-      /* lookup the tag in our tags */
-      if (widget->regex_tags[i] != tag)
-        continue;
+      case PATTERN_TYPE_FULL_HTTP:
+      case PATTERN_TYPE_FILE:
+        uri = g_strdup (wlink);
+        break;
 
-      /* handle the pattern type */
-      switch (regex_patterns[i].type)
-        {
-          case PATTERN_TYPE_FULL_HTTP:
-            uri = g_strdup (wlink);
-            break;
+      case PATTERN_TYPE_HTTP:
+        uri = g_strconcat ("http://", wlink, NULL);
+        break;
 
-          case PATTERN_TYPE_HTTP:
-            uri = g_strconcat ("http://", wlink, NULL);
-            break;
+      case PATTERN_TYPE_EMAIL:
+        uri = strncmp (wlink, MAILTO, strlen (MAILTO)) == 0
+            ? g_strdup (wlink) : g_strconcat (MAILTO, wlink, NULL);
+        break;
 
-          case PATTERN_TYPE_EMAIL:
-            uri = strncmp (wlink, MAILTO, strlen (MAILTO)) == 0
-                ? g_strdup (wlink) : g_strconcat (MAILTO, wlink, NULL);
-            break;
-
-          default:
-            g_warning ("Invalid tag specified while trying to open link \"%s\".", wlink);
-            return;
-        }
-
-      /* try to open the URI with the responsible application */
-      if (!gtk_show_uri_on_window (window, uri, gtk_get_current_event_time (), &error))
-        {
-          /* tell the user that we were unable to open the responsible application */
-          xfce_dialog_show_error (window, error, _("Failed to open the URL '%s'"), uri);
-          g_error_free (error);
-        }
-
-      g_free (uri);
-
-      /* done */
-      return;
+      default:
+        g_warning ("Invalid tag specified while trying to open link \"%s\".", wlink);
+        return;
     }
+
+  /* try to open the URI with the responsible application */
+  if (gtk_show_uri_on_window (window, uri, gtk_get_current_event_time (), &error) == FALSE)
+    {
+      /* tell the user that we were unable to open the responsible application */
+      xfce_dialog_show_error (window, error, _("Failed to open the URL '%s'"), uri);
+      g_error_free (error);
+    }
+
+  g_free (uri);
 }
 
 
@@ -805,3 +883,183 @@ terminal_widget_update_highlight_urls (TerminalWidget *widget)
         }
     }
 }
+
+
+
+static gboolean
+terminal_widget_action_shift_scroll_up (TerminalWidget *widget)
+{
+  GtkAdjustment *adjustment = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (widget));
+
+  gtk_adjustment_set_value (adjustment, gtk_adjustment_get_value (adjustment) - 1);
+  return TRUE;
+}
+
+
+
+static gboolean
+terminal_widget_action_shift_scroll_down (TerminalWidget *widget)
+{
+  GtkAdjustment *adjustment = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (widget));
+  gdouble        value;
+
+  value = MIN (gtk_adjustment_get_value (adjustment) + 1, gtk_adjustment_get_upper (adjustment) - gtk_adjustment_get_page_size (adjustment));
+  gtk_adjustment_set_value (adjustment, value);
+  return TRUE;
+}
+
+
+
+static void
+terminal_widget_connect_accelerators (TerminalWidget *widget)
+{
+  terminal_return_if_fail (TERMINAL_IS_WIDGET (widget));
+
+  if (widget->accel_group == NULL)
+    return;
+
+  xfce_gtk_accel_map_add_entries (action_entries, G_N_ELEMENTS (action_entries));
+  xfce_gtk_accel_group_connect_action_entries (widget->accel_group,
+                                               action_entries,
+                                               G_N_ELEMENTS (action_entries),
+                                               widget);
+}
+
+
+
+static void
+terminal_widget_disconnect_accelerators (TerminalWidget *widget)
+{
+  terminal_return_if_fail (TERMINAL_IS_WIDGET (widget));
+
+  if (widget->accel_group == NULL)
+    return;
+
+  /* Don't listen to the accel keys defined by the action entries any more */
+  xfce_gtk_accel_group_disconnect_action_entries (widget->accel_group,
+                                                  action_entries,
+                                                  G_N_ELEMENTS (action_entries));
+
+  /* and release the accel group */
+  g_object_unref (widget->accel_group);
+  widget->accel_group = NULL;
+}
+
+
+
+XfceGtkActionEntry*
+terminal_widget_get_action_entries (void)
+{
+  return action_entries;
+}
+
+
+
+static TerminalHyperlink
+terminal_widget_get_link (TerminalWidget *widget,
+                          GdkEvent       *event)
+{
+  guint               i;
+  gint                tag;
+  gchar              *uri;
+  pcre2_match_data_8 *match_data;
+  TerminalHyperlink   result = {NULL, PATTERN_TYPE_NONE};
+  gboolean            hyperlinks_enabled;
+
+  g_object_get (G_OBJECT (TERMINAL_WIDGET (widget)->preferences), "misc-hyperlinks-enabled", &hyperlinks_enabled, NULL);
+
+#if VTE_CHECK_VERSION (0, 50, 0)
+  /* check if we have an OSC 8 uri */
+  if (hyperlinks_enabled && (uri = vte_terminal_hyperlink_check_event (VTE_TERMINAL (widget), (GdkEvent *) event)) != NULL)
+    {
+      gint rc;
+
+      for (i = 0; i < G_N_ELEMENTS (widget->regex_pcre); i++)
+        {
+          if (widget->regex_pcre[i] == NULL)
+            continue;
+
+          match_data = pcre2_match_data_create_from_pattern_8 (widget->regex_pcre[i], NULL);
+          rc = pcre2_match_8 (widget->regex_pcre[i], (PCRE2_SPTR8) uri, strlen (uri), 0, 0, match_data, NULL);
+          if (rc >= 0)
+            {
+              result.uri = uri;
+              result.type = regex_patterns[i].type;
+              return result;
+            }
+          else if (rc != PCRE2_ERROR_NOMATCH)
+            g_warning ("pcre2_match returned error code \"%d\".", rc);
+
+          pcre2_match_data_free_8(match_data);
+        }
+    }
+#endif
+
+  /* check if we have a regex match */
+  if ((uri = vte_terminal_match_check_event (VTE_TERMINAL (widget), event, &tag)) != NULL)
+    {
+      for (i = 0; i < G_N_ELEMENTS (regex_patterns); i++)
+        {
+          /* lookup the tag in our tags */
+          if (widget->regex_tags[i] == tag)
+            {
+              result.uri = uri;
+              result.type = regex_patterns[i].type;
+              return result;
+            }
+        }
+    }
+
+  /* freeing the uri if regex didn't match */
+  if (uri != NULL && result.uri == NULL)
+    g_free (uri);
+
+  return result;
+}
+
+
+
+/*
+ * Ensures that hostname component of a link with a file:// schema
+ * matches the current hostname or is "localhost".
+ *
+ * See: https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
+ */
+static gboolean
+terminal_widget_link_clickable (const gchar *uri,
+                                PatternType  type)
+{
+  gboolean result = FALSE;
+  gchar   *filename;
+  gchar   *hostname;
+
+  if (type != PATTERN_TYPE_FILE)
+    return TRUE;
+
+  filename = g_filename_from_uri (uri, &hostname, NULL);
+
+  if (hostname != NULL)
+    result = g_ascii_strcasecmp (hostname, "localhost") == 0 || g_ascii_strcasecmp (hostname, g_get_host_name ()) == 0;
+  else
+    result = TRUE; /* consider it a local link */
+
+  g_free(filename);
+  g_free(hostname);
+
+  return result;
+}
+
+
+
+#if VTE_CHECK_VERSION (0, 50, 0)
+static void
+terminal_widget_hyperlink_hover_uri_changed (TerminalWidget     *widget,
+                                             const char         *uri,
+                                             const GdkRectangle *bbox G_GNUC_UNUSED)
+{
+  if (gtk_widget_get_realized (GTK_WIDGET (widget)) == FALSE)
+    return;
+
+  gtk_widget_set_tooltip_text (GTK_WIDGET (widget), uri);
+}
+#endif
