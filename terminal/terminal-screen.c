@@ -602,7 +602,7 @@ terminal_screen_draw (GtkWidget *widget,
   viewport_width = gdk_screen_get_width (viewport_screen);
   viewport_height = gdk_screen_get_height (viewport_screen);
 
-  image = terminal_image_loader_load (screen->loader, width, height);
+  image = terminal_image_loader_load (screen->loader, viewport_width, viewport_height);
   if (G_UNLIKELY (image == NULL))
     return FALSE;
 
