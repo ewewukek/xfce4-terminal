@@ -35,7 +35,8 @@
 #include <terminal/terminal-private.h>
 #include <terminal/terminal-gdbus.h>
 #include <terminal/terminal-preferences-dialog.h>
-#include <xfconf/xfconf.h>
+#include <terminal/terminal-window.h>
+#include <terminal/terminal-widget.h>
 
 
 
@@ -174,7 +175,7 @@ main (int argc, char **argv)
   TerminalOptions  options;
   TerminalApp     *app;
   const gchar     *startup_id;
-  const gchar     *display;
+  GdkDisplay      *display;
   GError          *error = NULL;
   gchar          **nargv;
   gint             nargc;
@@ -203,15 +204,8 @@ main (int argc, char **argv)
   g_log_set_always_fatal (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING);
 #endif
 
-  /* initialize xfconf */
-  if (!xfconf_init (&error))
-    {
-      g_printerr (PACKAGE_NAME ": Failed to initialize Xfconf: %s\n\n", error->message);
-      g_clear_error (&error);
-
-      /* disable get/set properties */
-      terminal_preferences_xfconf_init_failed ();
-    }
+  /* initialize GTK: do this before our parsing so GTK parses its options first */
+  gtk_init (&argc, &argv);
 
   /* parse some options we need in main, not the windows attrs */
   terminal_options_parse (argc, argv, &options);
@@ -219,7 +213,7 @@ main (int argc, char **argv)
   if (G_UNLIKELY (options.show_version))
     {
       g_print ("%s %s (Xfce %s)\n\n", PACKAGE_NAME, PACKAGE_VERSION, xfce_version_string ());
-      g_print ("%s\n", "Copyright (c) 2003-2022");
+      g_print ("%s\n", "Copyright (c) 2003-2023");
       g_print ("\t%s\n\n", _("The Xfce development team. All rights reserved."));
       g_print ("%s\n", _("Written by Benedikt Meurer <benny@xfce.org>,"));
       g_print ("%s\n", _("Nick Schermer <nick@xfce.org>,"));
@@ -243,12 +237,24 @@ main (int argc, char **argv)
   else if (G_UNLIKELY (options.show_preferences))
     {
       GtkWidget *dialog;
-      gtk_init (&argc, &argv);
+
+      /* load the AccelMap for the XfceShortcutsEditor */
+      app = g_object_new (TERMINAL_TYPE_APP, NULL);
+      xfce_gtk_translate_action_entries (terminal_window_get_action_entries (), TERMINAL_WINDOW_ACTION_N);
+      xfce_gtk_translate_action_entries (terminal_widget_get_action_entries (), TERMINAL_WIDGET_ACTION_N);
+      xfce_gtk_accel_map_add_entries (terminal_window_get_action_entries (), TERMINAL_WINDOW_ACTION_N);
+      xfce_gtk_accel_map_add_entries (terminal_widget_get_action_entries (), TERMINAL_WIDGET_ACTION_N);
+      terminal_app_load_accels (app); /* manual execution, instead of the typical idle function */
+
+      /* create and run the dialog */
       dialog = terminal_preferences_dialog_new (TRUE, FALSE);
       g_signal_connect_after (G_OBJECT (dialog), "destroy",
           G_CALLBACK (gtk_main_quit), NULL);
       gtk_window_present (GTK_WINDOW (dialog));
       gtk_main ();
+
+      g_object_unref (G_OBJECT (app));
+
       return EXIT_SUCCESS;
     }
 
@@ -267,11 +273,9 @@ main (int argc, char **argv)
     }
 
   /* append default display if given */
-  display = g_getenv ("WAYLAND_DISPLAY");
-  if (display == NULL)
-    display = g_getenv ("DISPLAY");
+  display = gdk_display_get_default ();
   if (G_LIKELY (display != NULL))
-    nargv[nargc++] = g_strdup_printf ("--default-display=%s", display);
+    nargv[nargc++] = g_strdup_printf ("--default-display=%s", gdk_display_get_name (display));
 
   /* append all given arguments */
   for (n = 1; n < argc; ++n)
@@ -326,9 +330,6 @@ main (int argc, char **argv)
         }
     }
 
-  /* initialize Gtk+ */
-  gtk_init (&argc, &argv);
-
   /* set default window icon */
   gtk_window_set_default_icon_name ("org.xfce.terminal");
 
@@ -338,7 +339,7 @@ main (int argc, char **argv)
     {
       if (!terminal_gdbus_register_service (app, &error))
         {
-          g_printerr (_("Unable to register terminal service: %s\n"), error->message);
+          g_warning ("Unable to register terminal service: %s", error->message);
           g_clear_error (&error);
         }
     }

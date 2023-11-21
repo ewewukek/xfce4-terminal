@@ -115,17 +115,17 @@ static void               terminal_widget_open_uri                    (TerminalW
 static void               terminal_widget_update_highlight_urls       (TerminalWidget   *widget);
 static gboolean           terminal_widget_action_shift_scroll_up      (TerminalWidget   *widget);
 static gboolean           terminal_widget_action_shift_scroll_down    (TerminalWidget   *widget);
+static gboolean           terminal_widget_action_scroll_page_up       (TerminalWidget   *widget);
+static gboolean           terminal_widget_action_scroll_page_down     (TerminalWidget   *widget);
 static void               terminal_widget_connect_accelerators        (TerminalWidget   *widget);
 static void               terminal_widget_disconnect_accelerators     (TerminalWidget   *widget);
 static TerminalHyperlink  terminal_widget_get_link                    (TerminalWidget   *widget,
                                                                        GdkEvent         *event);
 static gboolean           terminal_widget_link_clickable              (const gchar      *uri,
                                                                        PatternType       type);
-#if VTE_CHECK_VERSION (0, 50, 0)
 static void               terminal_widget_hyperlink_hover_uri_changed (TerminalWidget     *widget,
                                                                        const char         *uri,
                                                                        const GdkRectangle *bbox G_GNUC_UNUSED);
-#endif
 
 
 
@@ -170,6 +170,8 @@ static XfceGtkActionEntry action_entries[] =
 {
   { TERMINAL_WIDGET_ACTION_SCROLL_UP,   "<Actions>/terminal-widget/shift-up",   "<Shift>Up",   XFCE_GTK_MENU_ITEM, N_ ("Scroll one line Up"),   NULL, NULL, G_CALLBACK (terminal_widget_action_shift_scroll_up),   },
   { TERMINAL_WIDGET_ACTION_SCROLL_DOWN, "<Actions>/terminal-widget/shift-down", "<Shift>Down", XFCE_GTK_MENU_ITEM, N_ ("Scroll one line Down"), NULL, NULL, G_CALLBACK (terminal_widget_action_shift_scroll_down), },
+  { TERMINAL_WIDGET_ACTION_SCROLL_PAGE_UP,   "<Actions>/terminal-widget/shift-pageup",   "<Shift>Page_Up",   XFCE_GTK_MENU_ITEM, N_ ("Scroll one Page Up"),   NULL, NULL, G_CALLBACK (terminal_widget_action_scroll_page_up),   },
+  { TERMINAL_WIDGET_ACTION_SCROLL_PAGE_DOWN, "<Actions>/terminal-widget/shift-pagedown", "<Shift>Page_Down", XFCE_GTK_MENU_ITEM, N_ ("Scroll one Page Down"), NULL, NULL, G_CALLBACK (terminal_widget_action_scroll_page_down), },
 };
 
 #define get_action_entry(id) xfce_gtk_get_action_entry_by_id(action_entries, G_N_ELEMENTS(action_entries), id)
@@ -265,11 +267,10 @@ terminal_widget_init (TerminalWidget *widget)
   g_signal_connect_swapped (G_OBJECT (widget->preferences), "notify::misc-highlight-urls",
                             G_CALLBACK (terminal_widget_update_highlight_urls), widget);
 
-#if VTE_CHECK_VERSION (0, 50, 0)
+  /* monitor the misc-hyperlinks-enabled setting */
   g_object_bind_property (G_OBJECT (widget->preferences), "misc-hyperlinks-enabled",
                           G_OBJECT (widget), "allow-hyperlink",
                           G_BINDING_SYNC_CREATE);
-#endif
 
   /* apply the initial misc-highlight-urls setting */
   terminal_widget_update_highlight_urls (widget);
@@ -303,10 +304,8 @@ terminal_widget_finalize (GObject *object)
   /* disconnect the misc-highlight-urls watch */
   g_signal_handlers_disconnect_by_func (G_OBJECT (widget->preferences), G_CALLBACK (terminal_widget_update_highlight_urls), widget);
 
-#if VTE_CHECK_VERSION (0, 50, 0)
   /* disconnect the hyperlink-hover-uri-changed callback */
   g_signal_handlers_disconnect_by_func (G_OBJECT (widget), G_CALLBACK (terminal_widget_hyperlink_hover_uri_changed), widget);
-#endif
 
   /* disconnect from the preferences */
   g_object_unref (G_OBJECT (widget->preferences));
@@ -625,8 +624,8 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
     case TARGET_TEXT_PLAIN:
       if (gtk_selection_data_get_format (selection_data) != 8 || gtk_selection_data_get_length (selection_data) == 0)
         {
-          g_printerr (_("Unable to drop selection of type text/plain to terminal: Wrong format (%d) or length (%d)\n"),
-                      gtk_selection_data_get_format (selection_data), gtk_selection_data_get_length (selection_data));
+          g_warning ("Unable to drop selection of type text/plain to terminal: Wrong format (%d) or length (%d)",
+                     gtk_selection_data_get_format (selection_data), gtk_selection_data_get_length (selection_data));
         }
       else
         {
@@ -641,8 +640,8 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
           || gtk_selection_data_get_length (selection_data) == 0
           || (gtk_selection_data_get_length (selection_data) % 2) != 0)
         {
-          g_printerr (_("Unable to drop Mozilla URL on terminal: Wrong format (%d) or length (%d)\n"),
-                      gtk_selection_data_get_format (selection_data), gtk_selection_data_get_length (selection_data));
+          g_warning ("Unable to drop Mozilla URL on terminal: Wrong format (%d) or length (%d)",
+                     gtk_selection_data_get_format (selection_data), gtk_selection_data_get_length (selection_data));
         }
       else
         {
@@ -668,8 +667,8 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
     case TARGET_URI_LIST:
       if (gtk_selection_data_get_format (selection_data) != 8 || gtk_selection_data_get_length (selection_data) == 0)
         {
-          g_printerr (_("Unable to drop URI list on terminal: Wrong format (%d) or length (%d)\n"),
-                      gtk_selection_data_get_format (selection_data), gtk_selection_data_get_length (selection_data));
+          g_warning ("Unable to drop URI list on terminal: Wrong format (%d) or length (%d)",
+                     gtk_selection_data_get_format (selection_data), gtk_selection_data_get_length (selection_data));
         }
       else
         {
@@ -705,8 +704,8 @@ terminal_widget_drag_data_received (GtkWidget        *widget,
     case TARGET_APPLICATION_X_COLOR:
       if (gtk_selection_data_get_format (selection_data) != 16 || gtk_selection_data_get_length (selection_data) != 8)
         {
-          g_printerr (_("Received invalid color data: Wrong format (%d) or length (%d)\n"),
-                      gtk_selection_data_get_format (selection_data), gtk_selection_data_get_length (selection_data));
+          g_warning ("Received invalid color data: Wrong format (%d) or length (%d)",
+                     gtk_selection_data_get_format (selection_data), gtk_selection_data_get_length (selection_data));
         }
       else
         {
@@ -887,6 +886,28 @@ terminal_widget_update_highlight_urls (TerminalWidget *widget)
 
 
 static gboolean
+terminal_widget_action_scroll_page_up (TerminalWidget *widget)
+{
+  GtkAdjustment *adjustment = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (widget));
+
+  gtk_adjustment_set_value (adjustment, gtk_adjustment_get_value (adjustment) - gtk_adjustment_get_page_size (adjustment));
+  return TRUE;
+}
+
+
+
+static gboolean
+terminal_widget_action_scroll_page_down (TerminalWidget *widget)
+{
+  GtkAdjustment *adjustment = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (widget));
+
+  gtk_adjustment_set_value (adjustment, gtk_adjustment_get_value (adjustment) + gtk_adjustment_get_page_size (adjustment));
+  return TRUE;
+}
+
+
+
+static gboolean
 terminal_widget_action_shift_scroll_up (TerminalWidget *widget)
 {
   GtkAdjustment *adjustment = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (widget));
@@ -968,7 +989,6 @@ terminal_widget_get_link (TerminalWidget *widget,
 
   g_object_get (G_OBJECT (TERMINAL_WIDGET (widget)->preferences), "misc-hyperlinks-enabled", &hyperlinks_enabled, NULL);
 
-#if VTE_CHECK_VERSION (0, 50, 0)
   /* check if we have an OSC 8 uri */
   if (hyperlinks_enabled && (uri = vte_terminal_hyperlink_check_event (VTE_TERMINAL (widget), (GdkEvent *) event)) != NULL)
     {
@@ -993,7 +1013,6 @@ terminal_widget_get_link (TerminalWidget *widget,
           pcre2_match_data_free_8(match_data);
         }
     }
-#endif
 
   /* check if we have a regex match */
   if ((uri = vte_terminal_match_check_event (VTE_TERMINAL (widget), event, &tag)) != NULL)
@@ -1051,7 +1070,6 @@ terminal_widget_link_clickable (const gchar *uri,
 
 
 
-#if VTE_CHECK_VERSION (0, 50, 0)
 static void
 terminal_widget_hyperlink_hover_uri_changed (TerminalWidget     *widget,
                                              const char         *uri,
@@ -1062,4 +1080,3 @@ terminal_widget_hyperlink_hover_uri_changed (TerminalWidget     *widget,
 
   gtk_widget_set_tooltip_text (GTK_WIDGET (widget), uri);
 }
-#endif

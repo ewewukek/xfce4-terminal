@@ -124,6 +124,7 @@ enum
   PROP_SCROLLING_ON_OUTPUT,
   PROP_SCROLLING_ON_KEYSTROKE,
   PROP_SCROLLING_UNLIMITED,
+  PROP_KINETIC_SCROLLING,
   PROP_SHORTCUTS_NO_MENUKEY,
   PROP_SHORTCUTS_NO_MNEMONICS,
   PROP_TITLE_INITIAL,
@@ -134,6 +135,7 @@ enum
   PROP_TEXT_BLINK_MODE,
   PROP_CELL_WIDTH_SCALE,
   PROP_CELL_HEIGHT_SCALE,
+  PROP_ENABLE_SIXEL,
   N_PROPERTIES,
 };
 
@@ -166,8 +168,6 @@ struct _TerminalPreferences
   GObject        __parent__;
 
   XfconfChannel *channel;
-
-  gulong         property_changed_id;
 };
 
 
@@ -248,11 +248,6 @@ transform_string_to_enum (const GValue *src,
     genum_value = genum_class->values;
   g_value_set_enum (dst, genum_value->value);
 }
-
-
-
-/* don't do anything in case xfconf_init() failed */
-static gboolean no_xfconf = FALSE;
 
 
 
@@ -1139,6 +1134,16 @@ terminal_preferences_class_init (TerminalPreferencesClass *klass)
                             G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
   /**
+   * TerminalPreferences:kinetic-scrolling:
+   **/
+  preferences_props[PROP_KINETIC_SCROLLING] =
+      g_param_spec_boolean ("kinetic-scrolling",
+                            NULL,
+                            "KineticScrolling",
+                            FALSE,
+                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  /**
    * TerminalPreferences:scrolling-on-output:
    **/
   preferences_props[PROP_SCROLLING_ON_OUTPUT] =
@@ -1242,6 +1247,16 @@ terminal_preferences_class_init (TerminalPreferencesClass *klass)
                            1.0, 2.0, 1.0,
                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
+  /**
+   * TerminalPreferences:enable-sixel:
+   **/
+  preferences_props[PROP_ENABLE_SIXEL] =
+      g_param_spec_boolean ("enable-sixel",
+                            NULL,
+                            "EnableSixel",
+                            TRUE,
+                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
   /* install all properties */
   g_object_class_install_properties (gobject_class, N_PROPERTIES, preferences_props);
 }
@@ -1251,29 +1266,30 @@ terminal_preferences_class_init (TerminalPreferencesClass *klass)
 static void
 terminal_preferences_init (TerminalPreferences *preferences)
 {
-  const gchar check_prop[] = "/title-initial";
+  GError *error = NULL;
+  gchar **channels;
 
   /* don't set a channel if xfconf init failed */
-  if (no_xfconf)
-    return;
+  if (!xfconf_init (&error))
+    {
+      g_warning ("Failed to initialize Xfconf: %s", error->message);
+      g_error_free (error);
+      return;
+    }
 
   /* load the channel */
   preferences->channel = xfconf_channel_get ("xfce4-terminal");
 
-  /* check one of the property to see if there are values */
-  if (!xfconf_channel_has_property (preferences->channel, check_prop))
+  channels = xfconf_list_channels ();
+  if (!g_strv_contains ((const gchar * const *) channels, "xfce4-terminal"))
     {
       /* try to load the old config file & save changes */
       terminal_preferences_load_rc_file (preferences);
-
-      /* set the string we check */
-      if (!xfconf_channel_has_property (preferences->channel, check_prop))
-        xfconf_channel_set_string (preferences->channel, check_prop, _("Terminal"));
     }
+  g_strfreev (channels);
 
-  preferences->property_changed_id =
-    g_signal_connect (G_OBJECT (preferences->channel), "property-changed",
-                      G_CALLBACK (terminal_preferences_prop_changed), preferences);
+  g_signal_connect (G_OBJECT (preferences->channel), "property-changed",
+                    G_CALLBACK (terminal_preferences_prop_changed), preferences);
 }
 
 
@@ -1281,6 +1297,11 @@ terminal_preferences_init (TerminalPreferences *preferences)
 static void
 terminal_preferences_finalize (GObject *object)
 {
+  TerminalPreferences *preferences = TERMINAL_PREFERENCES (object);
+
+  if (G_LIKELY (preferences->channel != NULL))
+    xfconf_shutdown ();
+
   (*G_OBJECT_CLASS (terminal_preferences_parent_class)->finalize) (object);
 }
 
@@ -1320,7 +1341,7 @@ terminal_preferences_get_property (GObject    *object,
       if (G_VALUE_TYPE (value) == G_VALUE_TYPE (&src))
         g_value_copy (&src, value);
       else if (!g_value_transform (&src, value))
-        g_printerr ("Terminal: Failed to transform property %s\n", prop_name);
+        g_warning ("Failed to transform property %s", prop_name);
       g_value_unset (&src);
     }
   else
@@ -1493,10 +1514,8 @@ terminal_preferences_load_rc_file (TerminalPreferences *preferences)
 
   g_object_thaw_notify (G_OBJECT (preferences));
 
-  g_print ("\n\n"
-           "Your Terminal settings have been migrated to Xfconf.\n"
-           "The config file \"%s\"\n"
-           "is not used anymore.\n\n", filename);
+  g_message ("Your Terminal settings have been migrated to Xfconf."
+             " The config file \"%s\" is not used anymore.", filename);
 
   g_free (filename);
 }
@@ -1585,12 +1604,4 @@ terminal_preferences_get_color (TerminalPreferences *preferences,
   g_free (spec);
 
   return succeed;
-}
-
-
-
-void
-terminal_preferences_xfconf_init_failed (void)
-{
-  no_xfconf = TRUE;
 }

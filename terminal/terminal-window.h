@@ -41,6 +41,7 @@ typedef enum
     TERMINAL_WINDOW_ACTION_FILE_MENU,
     TERMINAL_WINDOW_ACTION_NEW_TAB,
     TERMINAL_WINDOW_ACTION_NEW_WINDOW,
+    TERMINAL_WINDOW_ACTION_OPEN_FOLDER,
     TERMINAL_WINDOW_ACTION_UNDO_CLOSE_TAB,
     TERMINAL_WINDOW_ACTION_DETACH_TAB,
     TERMINAL_WINDOW_ACTION_CLOSE_TAB,
@@ -82,6 +83,7 @@ typedef enum
     TERMINAL_WINDOW_ACTION_CONTENTS,
     TERMINAL_WINDOW_ACTION_ABOUT,
     TERMINAL_WINDOW_ACTION_ZOOM_MENU,
+    TERMINAL_WINDOW_ACTION_TOGGLE_MENUBAR,
     TERMINAL_WINDOW_ACTION_SHOW_MENUBAR,
     TERMINAL_WINDOW_ACTION_SHOW_TOOLBAR,
     TERMINAL_WINDOW_ACTION_SHOW_BORDERS,
@@ -185,8 +187,6 @@ void               terminal_window_set_drop_down            (TerminalWindow     
 gint               terminal_window_get_menubar_height       (TerminalWindow     *window);
 
 gint               terminal_window_get_toolbar_height       (TerminalWindow     *window);
-
-void               terminal_window_action_show_menubar      (TerminalWindow     *window);
 
 void               terminal_window_update_goto_accels       (TerminalWindow     *window);
 

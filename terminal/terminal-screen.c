@@ -49,6 +49,7 @@
 #include <libxfce4ui/libxfce4ui.h>
 #include <xfconf/xfconf.h>
 
+#include <terminal/terminal-private.h>
 #include <terminal/terminal-util.h>
 #include <terminal/terminal-enum-types.h>
 #include <terminal/terminal-image-loader.h>
@@ -58,9 +59,6 @@
 #include <terminal/terminal-window.h>
 #include <terminal/terminal-window-dropdown.h>
 
-#if defined(GDK_WINDOWING_X11)
-#include <gdk/gdkx.h>
-#endif
 #include <glib/gstdio.h>
 
 /* offset of saturation random value */
@@ -150,6 +148,7 @@ static void       terminal_screen_update_misc_rewrap_on_resize  (TerminalScreen 
 static void       terminal_screen_update_scrolling_lines        (TerminalScreen        *screen);
 static void       terminal_screen_update_scrolling_on_output    (TerminalScreen        *screen);
 static void       terminal_screen_update_scrolling_on_keystroke (TerminalScreen        *screen);
+static void       terminal_screen_update_kinetic_scrolling      (TerminalScreen        *screen);
 static void       terminal_screen_update_text_blink_mode        (TerminalScreen        *screen);
 static void       terminal_screen_update_title                  (TerminalScreen        *screen);
 static void       terminal_screen_update_word_chars             (TerminalScreen        *screen);
@@ -182,6 +181,7 @@ static GtkWidget* terminal_screen_unsafe_paste_dialog_new       (TerminalScreen 
 static void       terminal_screen_paste_unsafe_text             (TerminalScreen        *screen,
                                                                  const gchar           *text,
                                                                  GdkAtom                original_clipboard);
+static void       terminal_screen_update_sixel                  (TerminalScreen        *screen);
 
 
 
@@ -348,8 +348,6 @@ terminal_screen_init (TerminalScreen *screen)
       G_CALLBACK (terminal_screen_vte_window_title_changed), screen);
   g_signal_connect (G_OBJECT (screen->terminal), "resize-window",
       G_CALLBACK (terminal_screen_vte_resize_window), screen);
-  g_signal_connect (G_OBJECT (screen->terminal), "draw",
-      G_CALLBACK (terminal_screen_draw), screen);
   g_signal_connect_swapped (G_OBJECT (screen->terminal), "paste-selection-request",
       G_CALLBACK (terminal_screen_paste_primary), screen);
   g_signal_connect_swapped (G_OBJECT (screen->terminal), "paste-clipboard-request",
@@ -392,14 +390,14 @@ terminal_screen_init (TerminalScreen *screen)
   terminal_screen_update_scrolling_lines (screen);
   terminal_screen_update_scrolling_on_output (screen);
   terminal_screen_update_scrolling_on_keystroke (screen);
+  terminal_screen_update_kinetic_scrolling (screen);
   terminal_screen_update_text_blink_mode (screen);
   terminal_screen_update_word_chars (screen);
   terminal_screen_update_background (screen);
   terminal_screen_update_colors (screen);
+  terminal_screen_update_sixel (screen);
 
-#if VTE_CHECK_VERSION (0, 50, 0)
-  vte_terminal_set_allow_hyperlink(VTE_TERMINAL (screen->terminal), TRUE);
-#endif
+  vte_terminal_set_allow_hyperlink (VTE_TERMINAL (screen->terminal), TRUE);
 
   /* last, connect contents-changed to avoid a race with updates above */
   g_signal_connect_swapped (G_OBJECT (screen->terminal), "contents-changed",
@@ -579,11 +577,11 @@ terminal_screen_draw (GtkWidget *widget,
                       gpointer   user_data)
 {
   TerminalScreen     *screen = TERMINAL_SCREEN (user_data);
-  TerminalBackground  background_mode;
   GdkPixbuf          *image;
   gint                width, height;
   cairo_surface_t    *surface;
   cairo_t            *ctx;
+  gint                scale_factor;
 
   GtkWindow          *window;
   gint                window_x, window_y;
@@ -593,13 +591,9 @@ terminal_screen_draw (GtkWidget *widget,
   terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
   terminal_return_val_if_fail (VTE_IS_TERMINAL (screen->terminal), FALSE);
 
-  g_object_get (G_OBJECT (screen->preferences), "background-mode", &background_mode, NULL);
-
-  if (G_LIKELY (background_mode != TERMINAL_BACKGROUND_IMAGE))
-    return FALSE;
-
-  width = gtk_widget_get_allocated_width (screen->terminal);
-  height = gtk_widget_get_allocated_height (screen->terminal);
+  scale_factor = gtk_widget_get_scale_factor (widget);
+  width = scale_factor * gtk_widget_get_allocated_width (screen->terminal);
+  height = scale_factor * gtk_widget_get_allocated_height (screen->terminal);
 
   window = gtk_widget_get_window (widget);
   gdk_window_get_origin (window, &window_x, &window_y);
@@ -608,10 +602,7 @@ terminal_screen_draw (GtkWidget *widget,
   viewport_width = gdk_screen_get_width (viewport_screen);
   viewport_height = gdk_screen_get_height (viewport_screen);
 
-  if (screen->loader == NULL)
-    screen->loader = terminal_image_loader_get ();
-  image = terminal_image_loader_load (screen->loader, viewport_width, viewport_height);
-
+  image = terminal_image_loader_load (screen->loader, width, height);
   if (G_UNLIKELY (image == NULL))
     return FALSE;
 
@@ -622,12 +613,15 @@ terminal_screen_draw (GtkWidget *widget,
 
   /* draw background image; cairo_set_operator() allows PNG transparency */
   gdk_cairo_set_source_pixbuf (cr, image, -window_x, -window_y);
+  cairo_pattern_get_surface (cairo_get_source (cr), &surface);
+  cairo_surface_set_device_scale (surface, scale_factor, scale_factor);
   cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
   cairo_paint (cr);
   g_object_unref (G_OBJECT (image));
 
   /* draw vte terminal */
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+  cairo_surface_set_device_scale (surface, scale_factor, scale_factor);
   ctx = cairo_create (surface);
   gtk_widget_draw (screen->terminal, ctx);
   cairo_set_source_surface (cr, surface, 0, 0);
@@ -693,6 +687,8 @@ terminal_screen_preferences_changed (TerminalPreferences *preferences,
     terminal_screen_update_scrolling_on_output (screen);
   else if (strcmp ("scrolling-on-keystroke", name) == 0)
     terminal_screen_update_scrolling_on_keystroke (screen);
+  else if (strcmp ("kinetic-scrolling", name) == 0)
+    terminal_screen_update_kinetic_scrolling (screen);
   else if (strcmp ("text-blink-mode", name) == 0)
     terminal_screen_update_text_blink_mode (screen);
   else if (strncmp ("title-", name, strlen ("title-")) == 0)
@@ -701,6 +697,8 @@ terminal_screen_preferences_changed (TerminalPreferences *preferences,
     terminal_screen_update_word_chars (screen);
   else if (strcmp ("misc-tab-position", name) == 0)
     terminal_screen_update_label_orientation (screen);
+  else if (strcmp ("enable-sixel", name) == 0)
+    terminal_screen_update_sixel (screen);
 }
 
 
@@ -744,7 +742,17 @@ terminal_screen_get_child_command (TerminalScreen   *screen,
           g_object_get (G_OBJECT (screen->preferences),
                         "custom-command", &custom_command,
                         NULL);
-          shell_fullpath = custom_command;
+
+          if (!g_shell_parse_argv (custom_command, NULL, argv, error))
+            {
+              g_free (custom_command);
+              return FALSE;
+            }
+
+          *command = g_strdup (*argv[0]);
+
+          g_free (custom_command);
+          return TRUE;
         }
       else
         {
@@ -806,9 +814,6 @@ terminal_screen_get_child_command (TerminalScreen   *screen,
       else
         (*argv)[0] = g_strdup (shell_name);
       (*argv)[1] = NULL;
-
-      if (custom_command != NULL)
-        g_free (custom_command);
     }
 
   return TRUE;
@@ -904,8 +909,6 @@ terminal_screen_parse_title (TerminalScreen *screen,
 static gchar**
 terminal_screen_get_child_environment (TerminalScreen *screen)
 {
-  GtkWidget     *toplevel;
-  const gchar   *display_name;
   gchar        **result;
   gchar        **p;
   guint          n;
@@ -950,16 +953,15 @@ terminal_screen_get_child_environment (TerminalScreen *screen)
 
   result[n++] = g_strdup_printf ("COLORTERM=%s", PACKAGE_NAME);
 
-#ifdef GDK_WINDOWING_X11
-  /* determine the toplevel widget */
-  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (screen));
-  if (toplevel != NULL && gtk_widget_get_realized (toplevel) && GDK_IS_X11_WINDOW (gtk_widget_get_window (toplevel)))
+#ifdef ENABLE_X11
+  if (WINDOWING_IS_X11 ())
     {
-      result[n++] = g_strdup_printf ("WINDOWID=%ld", (glong) gdk_x11_window_get_xid (gtk_widget_get_window (toplevel)));
-
-      /* determine the DISPLAY value for the command */
-      display_name = gdk_display_get_name (gdk_screen_get_display (gtk_widget_get_screen (toplevel)));
-      result[n++] = g_strdup_printf ("DISPLAY=%s", display_name);
+      GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (screen));
+      if (toplevel != NULL && gtk_widget_get_realized (toplevel))
+        {
+          result[n++] = g_strdup_printf ("WINDOWID=%ld", (glong) gdk_x11_window_get_xid (gtk_widget_get_window (toplevel)));
+          result[n++] = g_strdup_printf ("DISPLAY=%s", gdk_display_get_name (gdk_display_get_default ()));
+        }
     }
 #endif
 
@@ -979,12 +981,23 @@ terminal_screen_update_background (TerminalScreen *screen)
   terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
   terminal_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
 
+  if (screen->loader != NULL)
+    {
+      g_signal_handlers_disconnect_by_func (screen->terminal, terminal_screen_draw, screen);
+      g_object_unref (screen->loader);
+      screen->loader = NULL;
+    }
+
   g_object_get (G_OBJECT (screen->preferences), "background-mode", &background_mode, NULL);
 
   if (G_UNLIKELY (background_mode == TERMINAL_BACKGROUND_TRANSPARENT))
     g_object_get (G_OBJECT (screen->preferences), "background-darkness", &background_alpha, NULL);
   else if (G_UNLIKELY (background_mode == TERMINAL_BACKGROUND_IMAGE))
-    g_object_get (G_OBJECT (screen->preferences), "background-image-shading", &background_alpha, NULL);
+    {
+      screen->loader = terminal_image_loader_get ();
+      g_signal_connect (G_OBJECT (screen->terminal), "draw", G_CALLBACK (terminal_screen_draw), screen);
+      g_object_get (G_OBJECT (screen->preferences), "background-image-shading", &background_alpha, NULL);
+    }
   else
     background_alpha = 1.0;
 
@@ -1364,6 +1377,19 @@ terminal_screen_update_scrolling_on_keystroke (TerminalScreen *screen)
   gboolean scroll;
   g_object_get (G_OBJECT (screen->preferences), "scrolling-on-keystroke", &scroll, NULL);
   vte_terminal_set_scroll_on_keystroke (VTE_TERMINAL (screen->terminal), scroll);
+}
+
+
+
+static void
+terminal_screen_update_kinetic_scrolling (TerminalScreen *screen)
+{
+  gboolean kinetic;
+  g_object_get (G_OBJECT (screen->preferences), "kinetic-scrolling", &kinetic, NULL);
+  g_object_set (screen->terminal,
+                "enable-fallback-scrolling", !kinetic,
+                "scroll-unit-is-pixels", kinetic,
+                NULL);
 }
 
 
@@ -1819,7 +1845,9 @@ terminal_screen_unsafe_paste_dialog_new (TerminalScreen *screen,
   gtk_container_set_border_width (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), 0);
   gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), box);
 
+#if !LIBXFCE4UI_CHECK_VERSION (4, 19, 3)
   xfce_titled_dialog_create_action_area (XFCE_TITLED_DIALOG (dialog));
+#endif
 
   button = xfce_gtk_button_new_mixed ("gtk-cancel", _("_Cancel"));
   xfce_titled_dialog_add_action_widget (XFCE_TITLED_DIALOG (dialog), button, GTK_RESPONSE_CANCEL);
@@ -1849,7 +1877,7 @@ terminal_screen_unsafe_paste_dialog_new (TerminalScreen *screen,
 
   combo = gtk_combo_box_text_new ();
   for (gint i = 0; i < DISABLE_PASTE_DIALOG_N; i++)
-    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), disable_unsafe_past_dialog_texts[i].string);
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), _(disable_unsafe_past_dialog_texts[i].string));
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
   gtk_container_add (GTK_CONTAINER (box), combo);
 
@@ -2764,10 +2792,10 @@ terminal_screen_set_encoding (TerminalScreen *screen,
                               const gchar    *charset)
 {
   terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  if (charset == NULL)
+  if (!IS_STRING (charset))
     g_get_charset (&charset);
   if (!vte_terminal_set_encoding (VTE_TERMINAL (screen->terminal), charset, NULL))
-    g_printerr (_("Failed to set encoding %s\n"), charset);
+    g_warning ("Failed to set encoding %s", charset);
 }
 
 
@@ -2879,7 +2907,6 @@ terminal_screen_update_font (TerminalScreen *screen)
   PangoFontDescription *font_desc;
   glong                 grid_w = 0, grid_h = 0;
   GSettings            *settings;
-  XfconfChannel        *channel;
   gdouble               font_scale = PANGO_SCALE_MEDIUM;
   gdouble               cell_width_scale, cell_height_scale;
 
@@ -2895,11 +2922,13 @@ terminal_screen_update_font (TerminalScreen *screen)
   if (font_use_system)
     {
       /* read Xfce settings */
-      xfconf_init (NULL);
-      channel = xfconf_channel_get ("xsettings");
-      if (xfconf_channel_has_property (channel, "/Gtk/MonospaceFontName"))
-        font_name = xfconf_channel_get_string (channel, "/Gtk/MonospaceFontName", "");
-      xfconf_shutdown ();
+      if (xfconf_init (NULL))
+        {
+          XfconfChannel *channel = xfconf_channel_get ("xsettings");
+          if (xfconf_channel_has_property (channel, "/Gtk/MonospaceFontName"))
+            font_name = xfconf_channel_get_string (channel, "/Gtk/MonospaceFontName", "");
+          xfconf_shutdown ();
+        }
 
       /* if font isn't set, read GNOME settings */
       if (!IS_STRING (font_name))
@@ -3136,4 +3165,17 @@ terminal_screen_widget_append_accels (TerminalScreen *screen,
 
   if (G_LIKELY (G_IS_OBJECT (screen->terminal)))
     g_object_set (G_OBJECT (screen->terminal), "accel-group", accel_group, NULL);
+}
+
+
+
+void terminal_screen_update_sixel (TerminalScreen *screen)
+{
+#if VTE_CHECK_VERSION (0, 61, 90)
+  gboolean enable_sixel;
+  g_object_get (G_OBJECT (screen->preferences),
+                "enable-sixel", &enable_sixel,
+                NULL);
+  vte_terminal_set_enable_sixel (VTE_TERMINAL (screen->terminal), enable_sixel);
+#endif
 }

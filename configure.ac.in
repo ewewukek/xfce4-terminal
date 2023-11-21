@@ -9,13 +9,24 @@ dnl ***************************
 dnl *** Version information ***
 dnl ***************************
 m4_define([terminal_version_major], [1])
-m4_define([terminal_version_minor], [0])
-m4_define([terminal_version_micro], [4])
+m4_define([terminal_version_minor], [1])
+m4_define([terminal_version_micro], [1])
 m4_define([terminal_version_nano], [])
 m4_define([terminal_version_build], [@REVISION@])
-m4_define([terminal_version_tag], [git])
+m4_define([terminal_version_tag], [])
 m4_define([terminal_version_dbus], [5])
 m4_define([terminal_version], [terminal_version_major().terminal_version_minor().terminal_version_micro()ifelse(terminal_version_nano(), [], [], [.terminal_version_nano()])ifelse(terminal_version_tag(), [git], [terminal_version_tag()-terminal_version_build()], [terminal_version_tag()])])
+
+dnl minimum required versions
+m4_define([glib_min_version], [2.44.0])
+m4_define([gtk_min_version], [3.22.0])
+m4_define([vte_min_version], [0.51.3])
+m4_define([pcre2_min_version], [10.00])
+m4_define([libxfce4ui_min_version], [4.17.5])
+m4_define([xfconf_min_version], [4.16.0])
+
+m4_define([libx11_min_version], [1.6.7])
+m4_define([gtk_layer_shell_min_version], [0.7.0])
 
 dnl *******************************************
 dnl *** Debugging support for GIT snapshots ***
@@ -30,7 +41,7 @@ m4_define([intltool_minimum_version], [0.35])
 dnl ***************************
 dnl *** Initialize autoconf ***
 dnl ***************************
-AC_COPYRIGHT([Copyright (c) 2003-2020
+AC_COPYRIGHT([Copyright (c) 2003-2023
         The Xfce development team. All rights reserved.
         os-cillation e.K. All rights reserved.
 
@@ -84,26 +95,47 @@ dnl *** Check for i18n support ***
 dnl ******************************
 XDT_I18N([@LINGUAS@])
 
-dnl ********************************
-dnl *** Check for X11 (optional) ***
-dnl ********************************
-XDT_CHECK_LIBX11()
+dnl ***********************************
+dnl *** Check for optional packages ***
+dnl ***********************************
+XDT_CHECK_OPTIONAL_FEATURE([X11],
+                           [x11],
+                           [
+                             XDT_FEATURE_DEPENDENCY([LIBX11], [x11], [libx11_min_version])
+                             XDT_FEATURE_DEPENDENCY([GDK_X11], [gdk-x11-3.0], [gtk_min_version])
+                           ],
+                           [the X11 windowing system])
+XDT_CHECK_OPTIONAL_FEATURE([WAYLAND],
+                           [wayland],
+                           [
+                             XDT_FEATURE_DEPENDENCY([GDK_WAYLAND], [gdk-wayland-3.0], [gtk_min_version])
+                           ],
+                           [the Wayland windowing system])
+if test x"$ENABLE_X11" != x"yes" -a x"$ENABLE_WAYLAND" != x"yes"; then
+  AC_MSG_ERROR([Either both X11 and Wayland support was disabled, or required dependencies are missing. One of the two must be enabled.])
+fi
+if test x"$ENABLE_WAYLAND" != x"yes"; then
+  dnl Do not check for optional Wayland packages if Wayland is disabled
+  enable_gtk_layer_shell=no
+fi
+XDT_CHECK_OPTIONAL_PACKAGE([GTK_LAYER_SHELL], [gtk-layer-shell-0], [gtk_layer_shell_min_version], [gtk-layer-shell], [Gtk Layer Shell support])
 
 dnl ***********************************
 dnl *** Check for required packages ***
 dnl ***********************************
-XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.22.0])
-XDT_CHECK_PACKAGE([VTE], [vte-2.91], [0.51.3])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_min_version])
+XDT_CHECK_PACKAGE([GIO], [gio-2.0], [glib_min_version])
+XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_min_version])
+XDT_CHECK_PACKAGE([VTE], [vte-2.91], [vte_min_version])
 XDT_CHECK_PACKAGE([PCRE2], [libpcre2-8], [10.00])
-XDT_CHECK_PACKAGE([GIO], [gio-2.0], [2.42.0])
-XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.17.5])
-XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.16.0])
-XDT_CHECK_PACKAGE([LIBXFCE4KBD_PRIVATE], [libxfce4kbd-private-3], [4.16.0])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [libxfce4ui_min_version])
+XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [xfconf_min_version])
+XDT_CHECK_PACKAGE([LIBXFCE4KBD_PRIVATE], [libxfce4kbd-private-3], [libxfce4ui_min_version])
 
 dnl ****************************************
 dnl *** Check if we need to use utempter ***
 dnl ****************************************
-AC_ARG_WITH([utempter], [AC_HELP_STRING([--with-utempter],
+AC_ARG_WITH([utempter], [AS_HELP_STRING([--with-utempter],
             [Support for utmp/wtmp files (requires libutempter) [default=no]])],, [with_utempter=no])
 if test x"$with_utempter" = x"yes"; then
     AC_CHECK_LIB([utempter],[utempter_add_record],,[with_utempter=no])
@@ -113,28 +145,6 @@ if test x"$with_utempter" = x"yes"; then
     fi
 fi
 AM_CONDITIONAL([HAVE_UTEMPTER], [test x"$with_utempter" = x"yes"])
-
-dnl ****************************************
-dnl *** Register in Gnome Control Center ***
-dnl ****************************************
-AC_ARG_WITH([gnome-default-appsdir],
-            [AC_HELP_STRING([--with-gnome-default-appsdir=PATH],
-                            [Specify where to install the Gnome default applications file (default=autodetect)])],
-            [gnome_default_appsdir="$withval"])
-AC_MSG_CHECKING([for Gnome default applications dir])
-if test x"$gnome_default_appsdir" = x""; then
-  GNOME_DEFAULT_APPSDIR="`$PKG_CONFIG --variable=defappsdir gnome-default-applications`"
-  if test -n "$GNOME_DEFAULT_APPSDIR"; then
-    AC_MSG_RESULT([Using path supplied by gnome-control-center])
-  else
-    AC_MSG_RESULT([Using prefix of terminal])
-  fi
-else
-  GNOME_DEFAULT_APPSDIR="$gnome_default_appsdir"
-  AC_MSG_RESULT([Using path supplied by user])
-fi
-AM_CONDITIONAL([HAVE_GNOME_DEFAULT_APPSDIR], [test -n "$GNOME_DEFAULT_APPSDIR"])
-AC_SUBST([GNOME_DEFAULT_APPSDIR])
 
 dnl *************************
 dnl *** Check for gtk-doc ***
@@ -176,6 +186,8 @@ icons/16x16/Makefile
 icons/24x24/Makefile
 icons/32x32/Makefile
 icons/48x48/Makefile
+icons/64x64/Makefile
+icons/96x96/Makefile
 icons/128x128/Makefile
 icons/scalable/Makefile
 ])
@@ -187,5 +199,10 @@ dnl ***************************
 echo
 echo "Build Configuration:"
 echo
-echo "* Debug support:           $enable_debug"
+echo "* Debug support:             $enable_debug"
+echo "* X11 support:               ${ENABLE_X11:-no}"
+echo "* Wayland support:           ${ENABLE_WAYLAND:-no}"
+if test x"$ENABLE_WAYLAND" = x"yes"; then
+echo "  * Gtk Layer Shell support: ${GTK_LAYER_SHELL_FOUND:-no}"
+fi
 echo
