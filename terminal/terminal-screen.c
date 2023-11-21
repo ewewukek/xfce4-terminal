@@ -588,8 +588,8 @@ terminal_screen_draw (GtkWidget *widget,
   GdkScreen          *viewport_screen;
   gint                viewport_width, viewport_height;
 
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
-  terminal_return_val_if_fail (VTE_IS_TERMINAL (screen->terminal), FALSE);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
+  g_return_val_if_fail (VTE_IS_TERMINAL (screen->terminal), FALSE);
 
   scale_factor = gtk_widget_get_scale_factor (widget);
   width = scale_factor * gtk_widget_get_allocated_width (screen->terminal);
@@ -647,13 +647,13 @@ terminal_screen_preferences_changed (TerminalPreferences *preferences,
 {
   const gchar *name;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (TERMINAL_IS_PREFERENCES (preferences));
-  terminal_return_if_fail (screen->preferences == preferences);
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_PREFERENCES (preferences));
+  g_return_if_fail (screen->preferences == preferences);
 
   /* get name */
   name = g_param_spec_get_name (pspec);
-  terminal_assert (name != NULL);
+  g_assert (name != NULL);
 
   if (strncmp ("background-", name, strlen ("background-")) == 0)
     terminal_screen_update_background (screen);
@@ -800,7 +800,7 @@ terminal_screen_get_child_command (TerminalScreen   *screen,
             }
         }
 
-      terminal_assert (shell_fullpath != NULL);
+      g_assert (shell_fullpath != NULL);
       shell_name = strrchr (shell_fullpath, '/');
       if (shell_name != NULL)
         ++shell_name;
@@ -832,7 +832,7 @@ terminal_screen_parse_title (TerminalScreen *screen,
   gchar       *base_name;
   const gchar *vte_title;
 
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
 
   if (G_UNLIKELY (title == NULL))
     return g_strdup ("");
@@ -978,8 +978,8 @@ terminal_screen_update_background (TerminalScreen *screen)
   TerminalBackground background_mode;
   gdouble            background_alpha;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
 
   if (screen->loader != NULL)
     {
@@ -1030,7 +1030,7 @@ terminal_screen_binding_vte (TerminalEraseBinding binding)
       return VTE_ERASE_TTY;
 
     default:
-      terminal_assert_not_reached ();
+      g_assert_not_reached ();
     }
 
   return VTE_ERASE_AUTO;
@@ -1317,7 +1317,7 @@ terminal_screen_update_misc_cursor_shape (TerminalScreen *screen)
         break;
 
       default:
-        terminal_assert_not_reached ();
+        g_assert_not_reached ();
     }
 
   vte_terminal_set_cursor_shape (VTE_TERMINAL (screen->terminal), shape);
@@ -1420,7 +1420,7 @@ terminal_screen_update_text_blink_mode (TerminalScreen *screen)
         break;
 
       default:
-        terminal_assert_not_reached ();
+        g_assert_not_reached ();
     }
 
   vte_terminal_set_text_blink_mode (VTE_TERMINAL (screen->terminal), mode);
@@ -1441,9 +1441,9 @@ terminal_screen_update_word_chars (TerminalScreen *screen)
 {
   gchar *word_chars;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (TERMINAL_IS_PREFERENCES (screen->preferences));
-  terminal_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_PREFERENCES (screen->preferences));
+  g_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
 
   g_object_get (G_OBJECT (screen->preferences), "word-chars", &word_chars, NULL);
   if (G_LIKELY (word_chars != NULL))
@@ -1488,8 +1488,8 @@ terminal_screen_vte_child_exited (VteTerminal    *terminal,
 {
   gboolean show_relaunch_dialog;
 
-  terminal_return_if_fail (VTE_IS_TERMINAL (terminal));
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   g_object_get (G_OBJECT (screen->preferences), "misc-show-relaunch-dialog", &show_relaunch_dialog, NULL);
 
@@ -1535,8 +1535,8 @@ static void
 terminal_screen_vte_eof (VteTerminal    *terminal,
                          TerminalScreen *screen)
 {
-  terminal_return_if_fail (VTE_IS_TERMINAL (terminal));
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   if (G_LIKELY (!screen->hold))
     gtk_widget_destroy (GTK_WIDGET (screen));
@@ -1561,8 +1561,8 @@ terminal_screen_vte_selection_changed (VteTerminal    *terminal,
 {
   gboolean copy_on_select;
 
-  terminal_return_if_fail (VTE_IS_TERMINAL (terminal));
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   /* copy vte selection to GDK_SELECTION_CLIPBOARD if option is set */
   g_object_get (G_OBJECT (screen->preferences),
@@ -1579,8 +1579,8 @@ static void
 terminal_screen_vte_window_title_changed (VteTerminal    *terminal,
                                           TerminalScreen *screen)
 {
-  terminal_return_if_fail (VTE_IS_TERMINAL (terminal));
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   terminal_screen_update_title (screen);
 }
@@ -1595,8 +1595,8 @@ terminal_screen_vte_resize_window (VteTerminal    *terminal,
 {
   GtkWidget *toplevel;
 
-  terminal_return_if_fail (VTE_IS_TERMINAL (terminal));
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   /* don't do anything if the window is already fullscreen/maximized */
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (screen));
@@ -1664,9 +1664,9 @@ terminal_screen_vte_window_contents_changed (TerminalScreen *screen)
   GdkRGBA         label_color;
   gboolean        has_color;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (GTK_IS_LABEL (screen->tab_label));
-  terminal_return_if_fail (TERMINAL_IS_PREFERENCES (screen->preferences));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (GTK_IS_LABEL (screen->tab_label));
+  g_return_if_fail (TERMINAL_IS_PREFERENCES (screen->preferences));
 
   /* leave if we should not start an update */
   if (screen->tab_label == NULL
@@ -1718,8 +1718,8 @@ terminal_screen_update_label_orientation (TerminalScreen *screen)
   PangoEllipsizeMode  ellipsize;
   GtkWidget          *box;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (screen->tab_label == NULL || GTK_IS_LABEL (screen->tab_label));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (screen->tab_label == NULL || GTK_IS_LABEL (screen->tab_label));
 
   if (G_UNLIKELY (screen->tab_label == NULL))
     return;
@@ -1751,7 +1751,7 @@ terminal_screen_update_label_orientation (TerminalScreen *screen)
   gtk_label_set_ellipsize (GTK_LABEL (screen->tab_label), ellipsize);
 
   box = gtk_widget_get_parent (screen->tab_label);
-  terminal_return_if_fail (GTK_IS_ORIENTABLE (box));
+  g_return_if_fail (GTK_IS_ORIENTABLE (box));
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
     angle == 0.0 ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL);
 }
@@ -1764,7 +1764,7 @@ terminal_screen_urgent_bell (TerminalWidget *widget,
 {
   gboolean enabled;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   g_object_get (G_OBJECT (screen->preferences), "misc-bell-urgent", &enabled, NULL);
 
@@ -1778,7 +1778,7 @@ static void
 terminal_screen_set_custom_command (TerminalScreen *screen,
                                     gchar         **command)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   if (G_UNLIKELY (screen->custom_command != NULL))
     g_strfreev (screen->custom_command);
@@ -1904,7 +1904,7 @@ terminal_screen_paste_unsafe_text (TerminalScreen *screen,
 {
   GtkWidget *dialog;
 
-  terminal_return_if_fail (original_clipboard != GDK_SELECTION_CLIPBOARD && original_clipboard != GDK_SELECTION_PRIMARY);
+  g_return_if_fail (original_clipboard != GDK_SELECTION_CLIPBOARD && original_clipboard != GDK_SELECTION_PRIMARY);
 
   dialog = terminal_screen_unsafe_paste_dialog_new (screen, text);
   gtk_widget_show_all (dialog);
@@ -1995,8 +1995,8 @@ terminal_screen_spawn_async_cb (VteTerminal *terminal,
 {
   TerminalScreen *screen = TERMINAL_SCREEN (user_data);
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
 
   screen->pid = pid;
 
@@ -2075,12 +2075,7 @@ terminal_screen_launch_child (TerminalScreen *screen)
   VtePtyFlags   pty_flags = VTE_PTY_DEFAULT;
   GSpawnFlags   spawn_flags = G_SPAWN_SEARCH_PATH;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-
-#ifdef G_ENABLE_DEBUG
-  if (!gtk_widget_get_realized (GTK_WIDGET (screen)))
-    g_error ("Tried to launch command in a TerminalScreen that is not realized");
-#endif
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   if (!terminal_screen_get_child_command (screen, &command, &argv, &error))
     {
@@ -2132,7 +2127,7 @@ terminal_screen_launch_child (TerminalScreen *screen)
 const gchar *
 terminal_screen_get_custom_title (TerminalScreen *screen)
 {
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
 
   return screen->custom_title;
 }
@@ -2148,7 +2143,7 @@ void
 terminal_screen_set_custom_title (TerminalScreen *screen,
                                   const gchar    *title)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   if (g_strcmp0 (screen->custom_title, title) != 0)
     {
@@ -2171,7 +2166,7 @@ terminal_screen_get_size (TerminalScreen *screen,
                           glong          *width_chars,
                           glong          *height_chars)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   if (width_chars)
     *width_chars = vte_terminal_get_column_count (VTE_TERMINAL (screen->terminal));
@@ -2189,7 +2184,7 @@ terminal_screen_set_size (TerminalScreen *screen,
                           glong           width_chars,
                           glong           height_chars)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   vte_terminal_set_size (VTE_TERMINAL (screen->terminal),
                          width_chars, height_chars);
@@ -2206,8 +2201,8 @@ terminal_screen_get_geometry (TerminalScreen *screen,
 {
   GtkBorder border;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
 
   if (char_width != NULL)
     *char_width = vte_terminal_get_char_width (VTE_TERMINAL (screen->terminal));
@@ -2249,10 +2244,10 @@ terminal_screen_set_window_geometry_hints (TerminalScreen *screen,
   glong          chrome_width, chrome_height;
   gint           csd_width, csd_height;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
-  terminal_return_if_fail (gtk_widget_get_realized (GTK_WIDGET (screen)));
-  terminal_return_if_fail (gtk_widget_get_realized (GTK_WIDGET (window)));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
+  g_return_if_fail (gtk_widget_get_realized (GTK_WIDGET (screen)));
+  g_return_if_fail (gtk_widget_get_realized (GTK_WIDGET (window)));
 
   terminal_screen_get_geometry (screen, &char_width, &char_height, NULL, NULL);
   terminal_screen_get_size (screen, &grid_width, &grid_height);
@@ -2304,9 +2299,9 @@ terminal_screen_force_resize_window (TerminalScreen *screen,
   glong          char_width;
   glong          char_height;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
-  terminal_return_if_fail (GTK_IS_WINDOW (window));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
+  g_return_if_fail (GTK_IS_WINDOW (window));
 
   terminal_screen_set_window_geometry_hints (screen, window);
 
@@ -2356,7 +2351,7 @@ terminal_screen_get_title (TerminalScreen *screen)
   gchar         *initial, *tmp;
   gchar         *title;
 
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
 
   if (G_UNLIKELY (screen->custom_title != NULL))
     return terminal_screen_parse_title (screen, screen->custom_title);
@@ -2407,7 +2402,7 @@ terminal_screen_get_title (TerminalScreen *screen)
       break;
 
     default:
-      terminal_assert_not_reached ();
+      g_assert_not_reached ();
       title = NULL;
     }
 
@@ -2429,13 +2424,10 @@ terminal_screen_get_title (TerminalScreen *screen)
 const gchar*
 terminal_screen_get_working_directory (TerminalScreen *screen)
 {
-  gchar        buffer[4096 + 1];
-  gchar       *file;
   gchar       *cwd;
   const gchar *uri;
-  gint         length;
 
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
 
   /* try to use vte functionality first: see bug #13902 */
   uri = vte_terminal_get_current_directory_uri (VTE_TERMINAL (screen->terminal));
@@ -2446,39 +2438,12 @@ terminal_screen_get_working_directory (TerminalScreen *screen)
     }
   else if (screen->pid >= 0)
     {
-      /* make sure that we use linprocfs on all systems */
-#if defined(__FreeBSD__)
-      file = g_strdup_printf ("/compat/linux/proc/%d/cwd", screen->pid);
-#elif defined(__NetBSD__) || defined(__OpenBSD__)
-      file = g_strdup_printf ("/emul/linux/proc/%d/cwd", screen->pid);
-#else
-      file = g_strdup_printf ("/proc/%d/cwd", screen->pid);
-#endif
-
-      length = readlink (file, buffer, sizeof (buffer) - 1);
-      if (length > 0 && *buffer == '/')
+      cwd = terminal_util_get_process_cwd (screen->pid);
+      if (G_LIKELY (cwd != NULL))
         {
-          buffer[length] = '\0';
           g_free (screen->working_directory);
-          screen->working_directory = g_strdup (buffer);
+          screen->working_directory = cwd;
         }
-      else if (length == 0)
-        {
-          cwd = g_get_current_dir ();
-          if (G_LIKELY (cwd != NULL))
-            {
-              if (chdir (file) == 0)
-                {
-                  g_free (screen->working_directory);
-                  screen->working_directory = g_get_current_dir ();
-                  if (chdir (cwd) == 0) {};
-                }
-
-              g_free (cwd);
-            }
-        }
-
-      g_free (file);
     }
 
   return screen->working_directory;
@@ -2495,8 +2460,8 @@ void
 terminal_screen_set_working_directory (TerminalScreen *screen,
                                        const gchar    *directory)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (directory != NULL);
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (directory != NULL);
 
   g_free (screen->working_directory);
   screen->working_directory = g_strdup (directory);
@@ -2516,7 +2481,7 @@ terminal_screen_set_working_directory (TerminalScreen *screen,
 gboolean
 terminal_screen_has_selection (TerminalScreen *screen)
 {
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
   return vte_terminal_get_has_selection (VTE_TERMINAL (screen->terminal));
 }
 
@@ -2531,7 +2496,7 @@ terminal_screen_has_selection (TerminalScreen *screen)
 void
 terminal_screen_copy_clipboard (TerminalScreen *screen)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_copy_clipboard_format (VTE_TERMINAL (screen->terminal), VTE_FORMAT_TEXT);
 }
 
@@ -2547,7 +2512,7 @@ terminal_screen_copy_clipboard (TerminalScreen *screen)
 void
 terminal_screen_copy_clipboard_html (TerminalScreen *screen)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_copy_clipboard_format (VTE_TERMINAL (screen->terminal), VTE_FORMAT_HTML);
 }
 
@@ -2567,7 +2532,7 @@ terminal_screen_paste_clipboard (TerminalScreen *screen)
   gboolean  show_dialog;
   gchar    *text = gtk_clipboard_wait_for_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD));
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   g_object_get (G_OBJECT (screen->preferences), "misc-show-unsafe-paste-dialog", &show_dialog, NULL);
 
@@ -2596,7 +2561,7 @@ terminal_screen_paste_primary (TerminalScreen *screen)
   gboolean  show_dialog;
   gchar    *text = gtk_clipboard_wait_for_text (gtk_clipboard_get (GDK_SELECTION_PRIMARY));
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   g_object_get (G_OBJECT (screen->preferences), "misc-show-unsafe-paste-dialog", &show_dialog, NULL);
 
@@ -2619,7 +2584,7 @@ terminal_screen_paste_primary (TerminalScreen *screen)
 void
 terminal_screen_select_all (TerminalScreen *screen)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_select_all (VTE_TERMINAL (screen->terminal));
 }
 
@@ -2636,7 +2601,7 @@ void
 terminal_screen_reset (TerminalScreen *screen,
                        gboolean        clear)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_reset (VTE_TERMINAL (screen->terminal), TRUE, clear);
 
   if (clear)
@@ -2657,7 +2622,7 @@ terminal_screen_get_restart_command (TerminalScreen *screen)
   const gchar *directory;
   GSList      *result = NULL;
 
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
 
   if (screen->custom_command != NULL)
     {
@@ -2691,7 +2656,7 @@ terminal_screen_reset_activity (TerminalScreen *screen)
 {
   GdkRGBA label_color;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   if (screen->activity_timeout_id != 0)
     g_source_remove (screen->activity_timeout_id);
@@ -2720,7 +2685,7 @@ terminal_screen_get_tab_label (TerminalScreen *screen)
 {
   GtkWidget *hbox, *button, *image;
 
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
 
   /* create the box */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -2772,7 +2737,7 @@ terminal_screen_get_tab_label (TerminalScreen *screen)
 void
 terminal_screen_focus (TerminalScreen *screen)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   gtk_widget_grab_focus (GTK_WIDGET (screen->terminal));
 }
 
@@ -2781,7 +2746,7 @@ terminal_screen_focus (TerminalScreen *screen)
 const gchar *
 terminal_screen_get_encoding (TerminalScreen *screen)
 {
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
   return vte_terminal_get_encoding (VTE_TERMINAL (screen->terminal));
 }
 
@@ -2791,7 +2756,7 @@ void
 terminal_screen_set_encoding (TerminalScreen *screen,
                               const gchar    *charset)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   if (!IS_STRING (charset))
     g_get_charset (&charset);
   if (!vte_terminal_set_encoding (VTE_TERMINAL (screen->terminal), charset, NULL))
@@ -2805,7 +2770,7 @@ terminal_screen_search_set_gregex (TerminalScreen *screen,
                                    VteRegex       *regex,
                                    gboolean        wrap_around)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_search_set_regex (VTE_TERMINAL (screen->terminal), regex, 0);
   vte_terminal_search_set_wrap_around (VTE_TERMINAL (screen->terminal), wrap_around);
 }
@@ -2815,7 +2780,7 @@ terminal_screen_search_set_gregex (TerminalScreen *screen,
 gboolean
 terminal_screen_search_has_gregex (TerminalScreen *screen)
 {
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
   return vte_terminal_search_get_regex (VTE_TERMINAL (screen->terminal)) != NULL;
 }
 
@@ -2824,7 +2789,7 @@ terminal_screen_search_has_gregex (TerminalScreen *screen)
 void
 terminal_screen_search_find_next (TerminalScreen *screen)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_search_find_next (VTE_TERMINAL (screen->terminal));
 }
 
@@ -2833,7 +2798,7 @@ terminal_screen_search_find_next (TerminalScreen *screen)
 void
 terminal_screen_search_find_previous (TerminalScreen *screen)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_search_find_previous (VTE_TERMINAL (screen->terminal));
 }
 
@@ -2910,9 +2875,9 @@ terminal_screen_update_font (TerminalScreen *screen)
   gdouble               font_scale = PANGO_SCALE_MEDIUM;
   gdouble               cell_width_scale, cell_height_scale;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (TERMINAL_IS_PREFERENCES (screen->preferences));
-  terminal_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_PREFERENCES (screen->preferences));
+  g_return_if_fail (VTE_IS_TERMINAL (screen->terminal));
 
   g_object_get (G_OBJECT (screen->preferences),
                 "font-use-system", &font_use_system,
@@ -3001,7 +2966,7 @@ terminal_screen_update_font (TerminalScreen *screen)
 gboolean
 terminal_screen_get_input_enabled (TerminalScreen *screen)
 {
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
   return vte_terminal_get_input_enabled (VTE_TERMINAL (screen->terminal));
 }
 
@@ -3011,7 +2976,7 @@ void
 terminal_screen_set_input_enabled (TerminalScreen *screen,
                                    gboolean        enabled)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_set_input_enabled (VTE_TERMINAL (screen->terminal), enabled);
 }
 
@@ -3020,7 +2985,7 @@ terminal_screen_set_input_enabled (TerminalScreen *screen,
 gboolean
 terminal_screen_get_scroll_on_output (TerminalScreen *screen)
 {
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), FALSE);
   return vte_terminal_get_scroll_on_output (VTE_TERMINAL (screen->terminal));
 }
 
@@ -3030,7 +2995,7 @@ void
 terminal_screen_set_scroll_on_output (TerminalScreen *screen,
                                       gboolean        enabled)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_set_scroll_on_output (VTE_TERMINAL (screen->terminal), enabled);
 }
 
@@ -3041,7 +3006,7 @@ terminal_screen_save_contents (TerminalScreen *screen,
                                GOutputStream  *stream,
                                GError         *error)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_write_contents_sync (VTE_TERMINAL (screen->terminal),
                                     stream, VTE_WRITE_DEFAULT, NULL, &error);
 }
@@ -3085,7 +3050,7 @@ void
 terminal_screen_feed_text (TerminalScreen *screen,
                            const char     *text)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
   vte_terminal_feed_child (VTE_TERMINAL (screen->terminal), text, strlen (text));
 }
 
@@ -3094,7 +3059,7 @@ terminal_screen_feed_text (TerminalScreen *screen,
 const gchar *
 terminal_screen_get_custom_fg_color (TerminalScreen *screen)
 {
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
   return screen->custom_fg_color;
 }
 
@@ -3103,7 +3068,7 @@ terminal_screen_get_custom_fg_color (TerminalScreen *screen)
 const gchar *
 terminal_screen_get_custom_bg_color (TerminalScreen *screen)
 {
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
   return screen->custom_bg_color;
 }
 
@@ -3112,7 +3077,7 @@ terminal_screen_get_custom_bg_color (TerminalScreen *screen)
 const gchar *
 terminal_screen_get_custom_title_color (TerminalScreen *screen)
 {
-  terminal_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (TERMINAL_IS_SCREEN (screen), NULL);
   return screen->custom_title_color;
 }
 
@@ -3124,7 +3089,7 @@ terminal_screen_set_custom_title_color (TerminalScreen *screen,
 {
   GdkRGBA label_color;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
   g_free (screen->custom_title_color);
   screen->custom_title_color = NULL;
@@ -3146,9 +3111,9 @@ terminal_screen_send_signal (TerminalScreen *screen,
 {
   int fgpid;
 
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
-  terminal_return_if_fail (screen->pid > 0);
-  terminal_return_if_fail (signum >= 1 && signum <= 31);
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (screen->pid > 0);
+  g_return_if_fail (signum >= 1 && signum <= 31);
 
   fgpid = tcgetpgrp (vte_pty_get_fd (vte_terminal_get_pty (VTE_TERMINAL (screen->terminal))));
   if (fgpid != -1 && fgpid != screen->pid)
@@ -3161,10 +3126,9 @@ void
 terminal_screen_widget_append_accels (TerminalScreen *screen,
                                       GtkAccelGroup  *accel_group)
 {
-  terminal_return_if_fail (TERMINAL_IS_SCREEN (screen));
+  g_return_if_fail (TERMINAL_IS_SCREEN (screen));
 
-  if (G_LIKELY (G_IS_OBJECT (screen->terminal)))
-    g_object_set (G_OBJECT (screen->terminal), "accel-group", accel_group, NULL);
+  g_object_set (G_OBJECT (screen->terminal), "accel-group", accel_group, NULL);
 }
 
 

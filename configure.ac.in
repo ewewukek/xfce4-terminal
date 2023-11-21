@@ -13,7 +13,7 @@ m4_define([terminal_version_minor], [1])
 m4_define([terminal_version_micro], [1])
 m4_define([terminal_version_nano], [])
 m4_define([terminal_version_build], [@REVISION@])
-m4_define([terminal_version_tag], [])
+m4_define([terminal_version_tag], [git])
 m4_define([terminal_version_dbus], [5])
 m4_define([terminal_version], [terminal_version_major().terminal_version_minor().terminal_version_micro()ifelse(terminal_version_nano(), [], [], [.terminal_version_nano()])ifelse(terminal_version_tag(), [git], [terminal_version_tag()-terminal_version_build()], [terminal_version_tag()])])
 
@@ -145,6 +145,16 @@ if test x"$with_utempter" = x"yes"; then
     fi
 fi
 AM_CONDITIONAL([HAVE_UTEMPTER], [test x"$with_utempter" = x"yes"])
+
+dnl ****************
+dnl *** Check OS ***
+dnl ****************
+AC_CANONICAL_HOST
+AS_CASE([$host],
+		[*-*freebsd*], [freebsd=yes],
+		[freebsd=no])
+
+AM_CONDITIONAL([FREEBSD], [test x$freebsd = xyes])
 
 dnl *************************
 dnl *** Check for gtk-doc ***
