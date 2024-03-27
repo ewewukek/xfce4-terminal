@@ -201,6 +201,7 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
   GtkWidget     *combo;
   gchar         *current;
   gint           row = 0;
+  const gchar   *text;
 
   /* grab a reference on the preferences */
   dialog->preferences = terminal_preferences_get ();
@@ -795,8 +796,10 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
   /* next row */
   row++;
 
-  label = gtk_label_new_with_mnemonic (_("Cursor blinks:"));
+  label = gtk_label_new_with_mnemonic (_("Text blinks:"));
+  text = _("Controls whether text in the terminal is allowed to blink when '\\e[5m' escape codes are used.");
   gtk_label_set_xalign (GTK_LABEL (label), 0.0f);
+  gtk_widget_set_tooltip_text (label, text);
   gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
   gtk_widget_show (label);
 
@@ -809,6 +812,7 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
                           G_OBJECT (combo), "active",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
   gtk_widget_set_hexpand (combo, TRUE);
+  gtk_widget_set_tooltip_text (combo, text);
   gtk_grid_attach (GTK_GRID (grid), combo, 1, row, 5, 1);
   terminal_gtk_label_set_a11y_relation (GTK_LABEL (label), combo);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
@@ -1121,7 +1125,7 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
   /* section: General */
   terminal_preferences_dialog_new_section (&frame, &vbox, &grid, &label, &row, _("General"));
 
-  label = gtk_label_new ("Text Color:");
+  label = gtk_label_new (_("Text Color:"));
   gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
   gtk_widget_show (label);
 
@@ -1136,7 +1140,7 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
   gtk_grid_attach (GTK_GRID (grid), button, 1, row, 1, 1);
   gtk_widget_show (button);
 
-  label = gtk_label_new ("Background Color:");
+  label = gtk_label_new (_("Background Color:"));
   gtk_grid_attach (GTK_GRID (grid), label, 2, row, 1, 1);
   gtk_widget_show (label);
 
@@ -1151,7 +1155,7 @@ terminal_preferences_dialog_init (TerminalPreferencesDialog *dialog)
   gtk_grid_attach (GTK_GRID (grid), button, 3, row, 1, 1);
   gtk_widget_show (button);
 
-  label = gtk_label_new ("Tab activity color:");
+  label = gtk_label_new (_("Tab activity color:"));
   gtk_grid_attach (GTK_GRID (grid), label, 4, row, 1, 1);
   gtk_widget_show (label);
 
@@ -1893,7 +1897,7 @@ terminal_preferences_dialog_presets_changed (TerminalPreferencesDialog *dialog,
   GValue        src = { 0, };
   GValue        dst = { 0, };
 
-  g_return_if_fail (TERMINAL_IS_PREFERENCES_DIALOG (widget));
+  g_return_if_fail (TERMINAL_IS_PREFERENCES_DIALOG (dialog));
   g_return_if_fail (GTK_IS_COMBO_BOX (widget));
 
   combobox = GTK_COMBO_BOX (widget);
